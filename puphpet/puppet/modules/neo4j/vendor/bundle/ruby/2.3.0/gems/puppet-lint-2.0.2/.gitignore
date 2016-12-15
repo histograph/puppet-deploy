@@ -1,0 +1,10 @@
+*.gem
+.bundle/
+.rbenv-version
+.ruby-version
+Gemfile.lock
+vendor/
+coverage/
+*.swp
+/_site/
+.idea

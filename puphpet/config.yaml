@@ -1,0 +1,316 @@
+vagrantfile:
+    target: local
+    vm:
+        provider:
+            local:
+                box: puphpet/ubuntu1604-x64
+                box_url: puphpet/ubuntu1604-x64
+                box_version: '0'
+                chosen_virtualizer: virtualbox
+                virtualizers:
+                    virtualbox:
+                        modifyvm:
+                            natdnshostresolver1: false
+                        showgui: 0
+                    vmware:
+                        numvcpus: 1
+                    parallels:
+                        linked_clone: 0
+                        check_guest_tools: 0
+                        update_guest_tools: 0
+                machines:
+                    vflm_z0hq0o0rwzjy:
+                        id: histograph.id
+                        hostname: histograph.hostname
+                        network:
+                            private_network: 192.168.56.101
+                            forwarded_port:
+                                vflmnfp_gaea7pksrhj3:
+                                    host: '7334'
+                                    guest: '22'
+                        memory: '4096'
+                        cpus: '1'
+        provision:
+            puppet:
+                manifests_path: puphpet/puppet/manifests
+                module_path:
+                    - puphpet/puppet/modules
+                    - puphpet/puppet/manifests
+                options:
+                    - '--verbose'
+                    - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
+        synced_folder:
+            vflsf_1kpkovsc2gq3:
+                source: ../histograph
+                target: /home/histograph/src
+                sync_type: nfs
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+                owner: www-data
+                group: www-data
+        usable_port_range:
+            start: 10200
+            stop: 10500
+        post_up_message: ''
+    ssh:
+        host: 'false'
+        port: 'false'
+        private_key_path: 'false'
+        username: vagrant
+        guest_port: 'false'
+        keep_alive: '1'
+        forward_agent: 'false'
+        forward_x11: 'false'
+        shell: 'bash -l'
+        insert_key: 'false'
+    vagrant:
+        host: detect
+    proxy:
+        http: ''
+        https: ''
+        ftp: ''
+        no_proxy: ''
+server:
+    install: '1'
+    packages: {  }
+users_groups:
+    install: '1'
+    groups:
+        - histograph
+    users:
+        - 'histograph:histograph'
+locale:
+    install: '1'
+    settings:
+        default_locale: en_US.UTF-8
+        locales:
+            - en_GB.UTF-8
+            - en_US.UTF-8
+            - nl_NL.UTF-8
+        timezone: Europe/Amsterdam
+firewall:
+    install: '1'
+    rules: {  }
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    install: '1'
+    settings:
+        version: present
+        default_vhost: 1
+        proxy_buffers: '4 256k'
+        proxy_buffer_size: 128k
+        proxy_connect_timeout: 600s
+        proxy_send_timeout: 600s
+        proxy_read_timeout: 600s
+        names_hash_bucket_size: 128
+    upstreams: {  }
+    vhosts:
+        nxv_86u1jdkghumv:
+            server_name: api.histograph.io
+            server_aliases:
+                - api.local
+            www_root: /var/www/api
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+        nxv_i1voe7flrzkn:
+            server_name: thesaurus.erfgeo.nl
+            server_aliases:
+                - thesaurus.local
+            www_root: /var/www/thesaurus
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+        nxv_drknsbb5edqn:
+            server_name: importeren.erfgeo.nl
+            server_aliases:
+                - importeren.local
+            www_root: /var/www/importeren
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+    proxies: {  }
+apache:
+    install: '0'
+    settings:
+        version: 2.4
+        user: www-data
+        group: www-data
+        default_vhost: true
+        manage_user: false
+        manage_group: false
+        sendfile: 0
+    modules:
+        - proxy_fcgi
+        - rewrite
+    vhosts:
+        av_9aqa1f936vfb:
+            servername: thesaurus.erfgeo.nl
+            serveraliases:
+                - thesaurus.local
+            docroot: /var/www/thesaurus
+            port: '80'
+            setenv:
+                - 'APP_ENV dev'
+            setenvif:
+                - 'Authorization "(.*)" HTTP_AUTHORIZATION=$1'
+            custom_fragment: ''
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+            ssl_protocol: ''
+            ssl_cipher: ''
+            directories:
+                avd_xi7lzksgxeav:
+                    path: /var/www/thesaurus
+                    options:
+                        - Indexes
+                        - FollowSymlinks
+                        - MultiViews
+                    allow_override:
+                        - All
+                    require:
+                        - 'all granted'
+                    custom_fragment: ''
+                    files_match:
+                        avdfm_te4a6r7wvlfk:
+                            path: \.php$
+                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
+                            custom_fragment: ''
+                            provider: filesmatch
+                    provider: directory
+        av_3sve4o7af6gc:
+            servername: erfgeo.nl
+            docroot: ''
+            port: '80'
+            custom_fragment: ''
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+            ssl_protocol: ''
+            ssl_cipher: ''
+letsencrypt:
+    install: '1'
+    settings:
+        email: histograph@api.histograph.io
+    domains: {  }
+php:
+    install: '1'
+    settings:
+        version: '7.0'
+    modules:
+        php:
+            - cli
+            - intl
+            - xml
+        pear: {  }
+        pecl: {  }
+    ini:
+        display_errors: 'On'
+        error_reporting: '-1'
+        session.save_path: /var/lib/php/session
+        date.timezone: UTC
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+    fpm_pools:
+        phpfp_l5al3m7gvfde:
+            ini:
+                prefix: www
+                listen: '127.0.0.1:9000'
+                security.limit_extensions: .php
+                user: www-user
+                group: www-data
+    composer: '1'
+    composer_home: ''
+nodejs:
+    install: '1'
+    settings:
+        version: '6'
+    npm_packages: {  }
+hhvm:
+    install: '0'
+    composer: '1'
+    composer_home: ''
+    settings: {  }
+    server_ini:
+        hhvm.server.host: 127.0.0.1
+        hhvm.server.port: '9000'
+        hhvm.log.use_log_file: '1'
+        hhvm.log.file: /var/log/hhvm/error.log
+    php_ini:
+        display_errors: 'On'
+        error_reporting: '-1'
+        date.timezone: UTC
+redis:
+    install: '1'
+    settings:
+        port: '6379'
+elastic_search:
+    install: '1'
+    settings:
+        version: 5.1.1
+        java_install: true
+        restart_on_change: true
+    instances:
+        esi_qw50fjtgvbjn:
+            name: histograph
+            heap_size: 1g
+neo4j:
+    install: '1'
+    settings:
+        version: 5.1.1
+        java_install: true
+        restart_on_change: true
+    instances:
+        esi_qw50fjtgvbjn:
+            name: histograph
+            heap_size: 1g
+# neo4j:
+#     install: '1'
+#     settings:
+#         version: 3.1.0
+#         edition: community
+#         # install_prefix:
+#         allow_remote_connections: false
+#         address: 0.0.0.0
