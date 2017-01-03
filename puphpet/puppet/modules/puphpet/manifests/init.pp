@@ -21,6 +21,13 @@ class puphpet  (
     content => inline_template('<%= scope.to_hash.reject { |k,v| !( k.is_a?(String) && v.is_a?(String) ) }.to_yaml %>'),
   }
 
+  notify{"Dump of all hiera values: ${puphpet::params::hiera}": }
+
+
+  if array_true($puphpet::params::hiera['java'], 'install') {
+    include ::puphpet::java::install
+  }
+
   if array_true($puphpet::params::hiera['apache'], 'install') {
     include ::puphpet::apache::install
   }
@@ -113,10 +120,7 @@ class puphpet  (
     include ::puphpet::wpcli
   }
 
-  notify{"The value is all: ${puphpet::params::hiera}": }
-  notify{"The value is out: ${puphpet::params::hiera['neo4j']}": }
   if array_true($puphpet::params::hiera['neo4j'], 'install') {
-    notify{"The value is: ${puphpet::params::hiera['neo4j']}": }
     include ::puphpet::neo4j::install
   }
 

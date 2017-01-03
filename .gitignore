@@ -1,1 +1,4 @@
 .vagrant/
+neo4j-wrapper.conf.p
+neo4j.conf
+neo4j.conf.p

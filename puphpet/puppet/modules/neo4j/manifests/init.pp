@@ -10,18 +10,12 @@
 # [*data_prefix*]
 # [*dbms_active_database*]
 # [*dbms_allow_format_migration*]
-# [*dbms_backup_address*]
-# [*dbms_backup_enabled*]
 # [*dbms_checkpoint_iops_limit*]
-# [*dbms_connector_bolt_accept_non_local_connections*]
 # [*dbms_connector_bolt_port*]
 # [*dbms_connector_bolt_tls_level*]
-# [*dbms_connector_http_accept_non_local_connections*]
 # [*dbms_connector_http_enabled*]
 # [*dbms_connector_http_port*]
-# [*dbms_connector_https_accept_non_local_connections*]
 # [*dbms_connector_https_enabled*]
-# [*dbms_connector_https_encryption*]
 # [*dbms_connector_https_port*]
 # [*dbms_directories_certificates*]
 # [*dbms_directories_data*]
@@ -142,26 +136,26 @@ class neo4j (
   $allow_load_csv                                     = $neo4j::params::allow_load_csv,
   $dbms_active_database                               = $neo4j::params::dbms_active_database,
   $dbms_allow_format_migration                        = $neo4j::params::dbms_allow_format_migration,
-  $dbms_backup_address                                = $neo4j::params::dbms_backup_address,
-  $dbms_backup_enabled                                = $neo4j::params::dbms_backup_enabled,
+  $config_dir                                         = $neo4j::params::config_dir,
   $dbms_directories_certificates                      = $neo4j::params::dbms_directories_certificates,
   $dbms_directories_data                              = $neo4j::params::dbms_directories_data,
   $dbms_directories_import                            = $neo4j::params::dbms_directories_import,
+  $dbms_directories_lib                               = $neo4j::params::dbms_directories_lib,
+  $dbms_directories_logs                              = $neo4j::params::dbms_directories_logs,
   $dbms_directories_plugins                           = $neo4j::params::dbms_directories_plugins,
+  $dbms_directories_run                               = $neo4j::params::dbms_directories_run,
   $dbms_memory_pagecache_size                         = $neo4j::params::dbms_memory_pagecache_size,
   $dbms_security_auth_enabled                         = $neo4j::params::dbms_security_auth_enabled,
 
   ### variables neo4j.conf - network
-  $dbms_connector_bolt_accept_non_local_connections   = $neo4j::params::dbms_connector_bolt_accept_non_local_connections,
+  $dbms_connector_default_listen_address              = $neo4j::params::dbms_connector_default_listen_address,
+  $dbms_connectors_default_advertised_address         = $neo4j::params::dbms_connectors_default_advertised_address,
   $dbms_connector_bolt_enabled                        = $neo4j::params::dbms_connector_bolt_enabled,
   $dbms_connector_bolt_port                           = $neo4j::params::dbms_connector_bolt_port,
   $dbms_connector_bolt_tls_level                      = $neo4j::params::dbms_connector_bolt_tls_level,
-  $dbms_connector_http_accept_non_local_connections   = $neo4j::params::dbms_connector_http_accept_non_local_connections,
   $dbms_connector_http_enabled                        = $neo4j::params::dbms_connector_http_enabled,
   $dbms_connector_http_port                           = $neo4j::params::dbms_connector_http_port,
-  $dbms_connector_https_accept_non_local_connections  = $neo4j::params::dbms_connector_https_accept_non_local_connections,
   $dbms_connector_https_enabled                       = $neo4j::params::dbms_connector_https_enabled,
-  $dbms_connector_https_encryption                    = $neo4j::params::dbms_connector_https_encryption,
   $dbms_connector_https_port                          = $neo4j::params::dbms_connector_https_port,
   $dbms_threads_worker_count                          = $neo4j::params::dbms_threads_worker_count,
 
@@ -238,12 +232,8 @@ class neo4j (
   validate_bool(
     $allow_load_csv,
     $dbms_allow_format_migration,
-    $dbms_backup_enabled,
-    $dbms_connector_bolt_accept_non_local_connections,
     $dbms_connector_bolt_enabled,
-    $dbms_connector_http_accept_non_local_connections,
     $dbms_connector_http_enabled,
-    $dbms_connector_https_accept_non_local_connections,
     $dbms_connector_https_enabled,
     $dbms_jvm_additional_jmxremote_ssl,
     $dbms_logs_gc_enabled,
@@ -259,6 +249,10 @@ class neo4j (
     $service_enable,
   )
 
+  # notify{"values ${dbms_checkpoint_iops_limit} ,${dbms_connector_bolt_port}, ${dbms_connector_http_port}, ${dbms_connector_https_port}, ${dbms_jvm_additional_jmxremote_port}, \
+  # ${dbms_logs_debug_rotation_keep_number}, ${dbms_logs_gc_rotation_keep_number}, ${dbms_logs_http_rotation_keep_number}, ${dbms_logs_query_rotation_keep_number}, \
+  # ${dbms_logs_query_threshold}, ${dbms_memory_heap_initial_size}, ${dbms_memory_heap_max_size}, ${dbms_shell_port}, ${ha_pull_interval}":}
+
   validate_integer([
     $dbms_checkpoint_iops_limit,
     $dbms_connector_bolt_port,
@@ -270,8 +264,6 @@ class neo4j (
     $dbms_logs_http_rotation_keep_number,
     $dbms_logs_query_rotation_keep_number,
     $dbms_logs_query_threshold,
-    $dbms_memory_heap_initial_size,
-    $dbms_memory_heap_max_size,
     $dbms_shell_port,
     $ha_pull_interval,
   ])
@@ -281,7 +273,6 @@ class neo4j (
   validate_string(
     $dbms_active_database,
     $dbms_connector_bolt_tls_level,
-    $dbms_connector_https_encryption,
     $dbms_directories_certificates,
     $dbms_directories_data,
     $dbms_directories_import,
@@ -291,7 +282,15 @@ class neo4j (
     $group,
     $ha_branched_data_policy,
     $ha_tx_push_strategy,
-    $user
+    $user,
+    $dbms_memory_heap_initial_size,
+    $dbms_memory_heap_max_size,
+    $config_dir,
+    $dbms_directories_lib,
+    $dbms_directories_logs,
+    $dbms_directories_run,
+    $dbms_connector_default_listen_address,
+    $dbms_connectors_default_advertised_address,
   )
 
   #http://www.neo4j.com/customer/download/neo4j-enterprise-2.1.4-unix.tar.gz

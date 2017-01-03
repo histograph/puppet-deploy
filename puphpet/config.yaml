@@ -60,8 +60,8 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
-                owner: www-data
-                group: www-data
+                owner: histograph
+                group: histograph
         usable_port_range:
             start: 10200
             stop: 10500
@@ -167,69 +167,6 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
     proxies: {  }
-apache:
-    install: '0'
-    settings:
-        version: 2.4
-        user: www-data
-        group: www-data
-        default_vhost: true
-        manage_user: false
-        manage_group: false
-        sendfile: 0
-    modules:
-        - proxy_fcgi
-        - rewrite
-    vhosts:
-        av_9aqa1f936vfb:
-            servername: thesaurus.erfgeo.nl
-            serveraliases:
-                - thesaurus.local
-            docroot: /var/www/thesaurus
-            port: '80'
-            setenv:
-                - 'APP_ENV dev'
-            setenvif:
-                - 'Authorization "(.*)" HTTP_AUTHORIZATION=$1'
-            custom_fragment: ''
-            ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_chain: ''
-            ssl_certs_dir: ''
-            ssl_protocol: ''
-            ssl_cipher: ''
-            directories:
-                avd_xi7lzksgxeav:
-                    path: /var/www/thesaurus
-                    options:
-                        - Indexes
-                        - FollowSymlinks
-                        - MultiViews
-                    allow_override:
-                        - All
-                    require:
-                        - 'all granted'
-                    custom_fragment: ''
-                    files_match:
-                        avdfm_te4a6r7wvlfk:
-                            path: \.php$
-                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
-                            custom_fragment: ''
-                            provider: filesmatch
-                    provider: directory
-        av_3sve4o7af6gc:
-            servername: erfgeo.nl
-            docroot: ''
-            port: '80'
-            custom_fragment: ''
-            ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_chain: ''
-            ssl_certs_dir: ''
-            ssl_protocol: ''
-            ssl_cipher: ''
 letsencrypt:
     install: '1'
     settings:
@@ -268,20 +205,6 @@ nodejs:
     settings:
         version: '6'
     npm_packages: {  }
-hhvm:
-    install: '0'
-    composer: '1'
-    composer_home: ''
-    settings: {  }
-    server_ini:
-        hhvm.server.host: 127.0.0.1
-        hhvm.server.port: '9000'
-        hhvm.log.use_log_file: '1'
-        hhvm.log.file: /var/log/hhvm/error.log
-    php_ini:
-        display_errors: 'On'
-        error_reporting: '-1'
-        date.timezone: UTC
 redis:
     install: '1'
     settings:
@@ -299,18 +222,94 @@ elastic_search:
 neo4j:
     install: '1'
     settings:
-        version: 5.1.1
-        java_install: true
-        restart_on_change: true
-    instances:
-        esi_qw50fjtgvbjn:
-            name: histograph
-            heap_size: 1g
-# neo4j:
-#     install: '1'
+        version: 3.1.0
+        edition: community
+        install_java: false
+        dbms_security_auth_enabled: false
+        dbms_logs_http_enabled: false
+        dbms_logs_http_rotation_keep_number: 5
+        # install_prefix:
+        # allow_remote_connections: false
+        # address: 0.0.0.0
+java:
+    install: '1'
+    settings:
+        # version: 3.1.0
+        distribution: 'jdk'
+# apache:
+#     install: '0'
 #     settings:
-#         version: 3.1.0
-#         edition: community
-#         # install_prefix:
-#         allow_remote_connections: false
-#         address: 0.0.0.0
+#         version: 2.4
+#         user: www-data
+#         group: www-data
+#         default_vhost: true
+#         manage_user: false
+#         manage_group: false
+#         sendfile: 0
+#     modules:
+#         - proxy_fcgi
+#         - rewrite
+#     vhosts:
+#         av_9aqa1f936vfb:
+#             servername: thesaurus.erfgeo.nl
+#             serveraliases:
+#                 - thesaurus.local
+#             docroot: /var/www/thesaurus
+#             port: '80'
+#             setenv:
+#                 - 'APP_ENV dev'
+#             setenvif:
+#                 - 'Authorization "(.*)" HTTP_AUTHORIZATION=$1'
+#             custom_fragment: ''
+#             ssl: '0'
+#             ssl_cert: ''
+#             ssl_key: ''
+#             ssl_chain: ''
+#             ssl_certs_dir: ''
+#             ssl_protocol: ''
+#             ssl_cipher: ''
+#             directories:
+#                 avd_xi7lzksgxeav:
+#                     path: /var/www/thesaurus
+#                     options:
+#                         - Indexes
+#                         - FollowSymlinks
+#                         - MultiViews
+#                     allow_override:
+#                         - All
+#                     require:
+#                         - 'all granted'
+#                     custom_fragment: ''
+#                     files_match:
+#                         avdfm_te4a6r7wvlfk:
+#                             path: \.php$
+#                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
+#                             custom_fragment: ''
+#                             provider: filesmatch
+#                     provider: directory
+#         av_3sve4o7af6gc:
+#             servername: erfgeo.nl
+#             docroot: ''
+#             port: '80'
+#             custom_fragment: ''
+#             ssl: '0'
+#             ssl_cert: ''
+#             ssl_key: ''
+#             ssl_chain: ''
+#             ssl_certs_dir: ''
+#             ssl_protocol: ''
+#             ssl_cipher: ''
+# hhvm:
+#     install: '0'
+#     composer: '1'
+#     composer_home: ''
+#     settings: {  }
+#     server_ini:
+#         hhvm.server.host: 127.0.0.1
+#         hhvm.server.port: '9000'
+#         hhvm.log.use_log_file: '1'
+#         hhvm.log.file: /var/log/hhvm/error.log
+#     php_ini:
+#         display_errors: 'On'
+#         error_reporting: '-1'
+#         date.timezone: UTC

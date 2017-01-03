@@ -31,6 +31,7 @@ class puphpet::elasticsearch::install
     'repo_version' => '5.x',
   })
 
+  # create_resources('class', { 'elasticsearch' => $merged }, { 'require' => Class['java'] })
   create_resources('class', { 'elasticsearch' => $merged })
 
   # config file could contain no instance keys

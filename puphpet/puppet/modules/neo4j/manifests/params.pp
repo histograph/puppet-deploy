@@ -1,29 +1,29 @@
 # == Class: neo4j::params
 #
 class neo4j::params {
-  $allow_load_csv                                     = false
+  $allow_load_csv                                     = true
   $cypher_default_language_version                    = 3.0
   $data_prefix                                        = undef
   $dbms_active_database                               = 'graph.db'
-  $dbms_allow_format_migration                        = true
-  $dbms_backup_address                                = '127.0.0.1:6362'
-  $dbms_backup_enabled                                = true
+  $dbms_allow_format_migration                        = false
   $dbms_checkpoint_iops_limit                         = 1000
-  $dbms_connector_bolt_accept_non_local_connections   = false
   $dbms_connector_bolt_enabled                        = true
   $dbms_connector_bolt_port                           = 7687
   $dbms_connector_bolt_tls_level                      = 'OPTIONAL'
-  $dbms_connector_http_accept_non_local_connections   = true
+  $dbms_connector_default_listen_address              = '0.0.0.0'
+  $dbms_connectors_default_advertised_address         = 'localhost'
   $dbms_connector_http_enabled                        = true
   $dbms_connector_http_port                           = 7474
-  $dbms_connector_https_accept_non_local_connections  = true
   $dbms_connector_https_enabled                       = true
-  $dbms_connector_https_encryption                    = 'TLS'
   $dbms_connector_https_port                          = 7473
-  $dbms_directories_certificates                      = 'certificates'
-  $dbms_directories_data                              = 'data'
+  $config_dir                                         = '/etc/neo4j'
+  $dbms_directories_certificates                      = '/var/lib/neo4j/certificates'
+  $dbms_directories_data                              = '/var/lib/neo4j/data'
   $dbms_directories_import                            = 'import'
-  $dbms_directories_plugins                           = 'plugins'
+  $dbms_directories_lib                               = '/usr/share/neo4j/lib'
+  $dbms_directories_logs                              = '/var/log/neo4j'
+  $dbms_directories_plugins                           = '/var/lib/neo4j/plugins'
+  $dbms_directories_run                               = '/var/run/neo4j'
   $dbms_ids_reuse_types_override                      = [ 'node',
                                                           'relationship'
                                                         ]
@@ -43,7 +43,7 @@ class neo4j::params {
   $dbms_jvm_additional_use_g1gc                       = '-XX:+UseG1GC'
   $dbms_logs_debug_rotation_keep_number               = 7
   $dbms_logs_debug_rotation_size                      = '20m'
-  $dbms_logs_gc_enabled                               = true
+  $dbms_logs_gc_enabled                               = false
   $dbms_logs_gc_options                               = [
                                                           'PrintGCDetails',
                                                           'PrintGCDateStamps',
@@ -53,28 +53,28 @@ class neo4j::params {
                                                         ]
   $dbms_logs_gc_rotation_keep_number                  = 5
   $dbms_logs_gc_rotation_size                         = '20m'
-  $dbms_logs_http_enabled                             = true
+  $dbms_logs_http_enabled                             = false
   $dbms_logs_http_rotation_keep_number                = 5
   $dbms_logs_http_rotation_size                       = '20m'
   $dbms_logs_query_enabled                            = true
   $dbms_logs_query_rotation_keep_number               = 7
   $dbms_logs_query_rotation_size                      = '20m'
   $dbms_logs_query_threshold                          = 0
-  $dbms_memory_heap_initial_size                      = 512
-  $dbms_memory_heap_max_size                          = 512
+  $dbms_memory_heap_initial_size                      = '512m'
+  $dbms_memory_heap_max_size                          = '512m'
   $dbms_memory_pagecache_size                         = '10g'
-  $dbms_mode                                          = 'HA'
+  $dbms_mode                                          = 'SINGLE'
   $dbms_read_only                                     = false
-  $dbms_security_allow_csv_import_from_file_urls      = true
+  $dbms_security_allow_csv_import_from_file_urls      = false
   $dbms_security_auth_enabled                         = false
   $dbms_security_ha_status_auth_enabled               = true
-  $dbms_shell_enabled                                 = true
+  $dbms_shell_enabled                                 = false
   $dbms_shell_host                                    = '127.0.0.1'
   $dbms_shell_port                                    = 1337
   $dbms_threads_worker_count                          = undef
   $dbms_tx_log_rotation_retention_policy              = '7 days'
   $dbms_unmanaged_extension_classes                   = {
-                                                          'org.neo4j.examples.server.unmanaged' => '/examples/managed'
+                                                          'org.neo4j.examples.server.unmanaged' => '/examples/unmanaged'
                                                         }
   $edition                                            = 'community'
   $group                                              = 'neo4j'

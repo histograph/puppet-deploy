@@ -1,23 +1,22 @@
-# == Class: puphpet::neo4j::install
+# == Class: puphpet::java::install
 #
-# Installs Neo4j engine.
-# Installs Java and opens ports
+# Installs java
 #
 # Usage:
 #
-#  class { 'puphpet::neo4j::install': }
+#  class { 'puphpet::java::install': }
 #
-class puphpet::neo4j::install
+class puphpet::java::install
   inherits puphpet::params
 {
 
-  $neo4j = $puphpet::params::hiera['neo4j']
+  $java = $puphpet::params::hiera['java']
 
   # if ! defined(Puphpet::Firewall::Port['7474']) {
   #   puphpet::firewall::port { '7474': }
   # }
 
-  $settings = $neo4j['settings']
+  $settings = $java['settings']
 
   # if ! defined(Class['java']) and $settings['java_install'] {
   #   class { 'java':
@@ -31,8 +30,7 @@ class puphpet::neo4j::install
   #   'repo_version' => '5.x',
   # })
 
-  # create_resources('class', { 'neo4j' => $settings}, { 'require' => Class['java'] })
-  create_resources('class', { 'neo4j' => $settings })
+  create_resources('class', { 'java' => $settings })
 
 
 }
