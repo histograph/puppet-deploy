@@ -64,6 +64,17 @@ machines.each do |i, machine|
       machine_id.vm.post_up_message = "#{data['vm']['post_up_message']}"
     end
 
+    # BEGIN Landrush (https://github.com/phinze/landrush) configuration
+    # This section will only be triggered if you have installed "landrush"
+    #     vagrant plugin install landrush
+    if Vagrant.has_plugin?('landrush')
+        config.landrush.enable
+        # let's use the Google free DNS
+        config.landrush.upstream '8.8.8.8'
+        config.landrush.guest_redirect_dns = false
+    end
+    # END Landrush configuration
+
     # https://github.com/tmatilai/vagrant-proxyconf
     if Vagrant.has_plugin?('vagrant-proxyconf')
       case data['proxy']['enabled']

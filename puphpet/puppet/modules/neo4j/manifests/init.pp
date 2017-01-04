@@ -266,6 +266,7 @@ class neo4j (
     $dbms_logs_query_threshold,
     $dbms_shell_port,
     $ha_pull_interval,
+    $dbms_threads_worker_count
   ])
 
   validate_re( $ha_join_timeout, '[1-9][0-9]*(ms|s|m)?' )

@@ -4,8 +4,8 @@
 #*****************************************************************
 
 # With default configuration Neo4j only accepts local connections.
-# To accept non-local connections, uncomment this line:
-#dbms.connectors.default_listen_address=<%= scope['neo4j::dbms_connector_default_listen_address'] %>
+# To accept non-local connections, use 0.0.0.0:
+dbms.connectors.default_listen_address=<%= scope['neo4j::dbms_connector_default_listen_address'] %>
 
 # You can also choose a specific network interface, and configure a non-default
 # port for each connector, by setting their individual listen_address.
@@ -13,7 +13,7 @@
 # The address at which this server can be reached by its clients. This may be the server's IP address or DNS name, or
 # it may be the address of a reverse proxy which sits in front of the server. This setting may be overridden for
 # individual connectors below.
-#dbms.connectors.default_advertised_address=<%= scope['neo4j::dbms_connectors_default_advertised_address'] %>
+dbms.connectors.default_advertised_address=<%= scope['neo4j::dbms_connectors_default_advertised_address'] %>
 
 # You can also choose a specific advertised hostname or IP address, and
 # configure an advertised port for each connector, by setting their
@@ -21,16 +21,16 @@
 
 # Bolt connector
 dbms.connector.bolt.enabled=<%= scope['neo4j::dbms_connector_bolt_enabled'] %>
-#dbms.connector.bolt.tls_level=<%= scope['neo4j::dbms_connector_bolt_tls_level'] %>
-#dbms.connector.bolt.listen_address=:<%= scope['neo4j::dbms_connector_bolt_port'] %>
+dbms.connector.bolt.tls_level=<%= scope['neo4j::dbms_connector_bolt_tls_level'] %>
+dbms.connector.bolt.listen_address=:<%= scope['neo4j::dbms_connector_bolt_port'] %>
 
 # HTTP Connector. There must be exactly one HTTP connector.
 dbms.connector.http.enabled=<%= scope['neo4j::dbms_connector_http_enabled'] %>
-#dbms.connector.http.listen_address=:<%= scope['neo4j::dbms_connector_http_port'] %>
+dbms.connector.http.listen_address=:<%= scope['neo4j::dbms_connector_http_port'] %>
 
 # HTTPS Connector. There can be zero or one HTTPS connectors.
 dbms.connector.https.enabled=<%= scope['neo4j::dbms_connector_https_enabled'] %>
-#dbms.connector.https.listen_address=:<%= scope['neo4j::dbms_connector_https_port'] %>
+dbms.connector.https.listen_address=:<%= scope['neo4j::dbms_connector_https_port'] %>
 
 # Number of Neo4j worker threads.
-#dbms.threads.worker_count=<%= scope['neo4j::dbms_threads_worker_count'] %>
+dbms.threads.worker_count=<%= scope['neo4j::dbms_threads_worker_count'] %>

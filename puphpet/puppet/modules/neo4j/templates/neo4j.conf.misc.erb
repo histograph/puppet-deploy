@@ -44,7 +44,7 @@ dbms.read_only=<%= scope['neo4j::dbms_read_only'] %>
 # org.neo4j.examples.server.unmanaged.HelloWorldResource.java from
 # neo4j-server-examples under /examples/unmanaged, resulting in a final URL of
 # http://localhost:7474/examples/unmanaged/helloworld/{nodeId}
-#dbms.unmanaged_extension_classes=<% scope['neo4j::dbms_unmanaged_extension_classes'].each do |key,value| %><%= key %>=<%= value %><% end %>
+dbms.unmanaged_extension_classes=<% scope['neo4j::dbms_unmanaged_extension_classes'].each do |key,value| %><%= key %>=<%= value %><% end %>
 
 # Specified comma separated list of id types (like node or relationship) that should be reused.
 # When some type is specified database will try to reuse corresponding ids as soon as it will be safe to do so.

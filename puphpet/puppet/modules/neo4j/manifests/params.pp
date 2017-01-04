@@ -7,10 +7,10 @@ class neo4j::params {
   $dbms_active_database                               = 'graph.db'
   $dbms_allow_format_migration                        = false
   $dbms_checkpoint_iops_limit                         = 1000
-  $dbms_connector_bolt_enabled                        = true
+  $dbms_connector_bolt_enabled                        = false
   $dbms_connector_bolt_port                           = 7687
   $dbms_connector_bolt_tls_level                      = 'OPTIONAL'
-  $dbms_connector_default_listen_address              = '0.0.0.0'
+  $dbms_connector_default_listen_address              = 'localhost'
   $dbms_connectors_default_advertised_address         = 'localhost'
   $dbms_connector_http_enabled                        = true
   $dbms_connector_http_port                           = 7474
@@ -68,10 +68,10 @@ class neo4j::params {
   $dbms_security_allow_csv_import_from_file_urls      = false
   $dbms_security_auth_enabled                         = false
   $dbms_security_ha_status_auth_enabled               = true
-  $dbms_shell_enabled                                 = false
+  $dbms_shell_enabled                                 = true
   $dbms_shell_host                                    = '127.0.0.1'
   $dbms_shell_port                                    = 1337
-  $dbms_threads_worker_count                          = undef
+  $dbms_threads_worker_count                          = 2
   $dbms_tx_log_rotation_retention_policy              = '7 days'
   $dbms_unmanaged_extension_classes                   = {
                                                           'org.neo4j.examples.server.unmanaged' => '/examples/unmanaged'
