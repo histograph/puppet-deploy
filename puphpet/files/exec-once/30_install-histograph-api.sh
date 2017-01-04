@@ -48,9 +48,5 @@ cd ${SRC_HOME}/api
 sudo su $MYUSER -c "npm install"
 
 
-# # create init.d scripts
-# install_service api
-#
-# # start it now ?
-# service histograph-api start
-# service histograph-api status
+# install service and start it
+install_service api

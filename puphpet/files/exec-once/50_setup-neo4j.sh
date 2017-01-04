@@ -6,12 +6,10 @@ echo "----%%%%% INSTALLING NEO4J PLUGIN %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
-SRC_HOME="/home/histograph/src"
-MYUSER=histograph
-NEO_PLUGIN_DIR="/var/lib/neo4j/plugins"
+source $(dirname $0)/set-vars.sh
 
 # install maven
-apt-get install -y maven
+apt-get install -y maven >/dev/null
 
 if [ ! -d ${SRC_HOME}/neo4j-plugin/ ]
 then
@@ -22,7 +20,7 @@ fi
 
 # build and install plugin
 cd ${SRC_HOME}/neo4j-plugin/
-sudo su $MYUSER -c "mvn package"
+sudo su $MYUSER -c "mvn package >/dev/null"
 cp ${SRC_HOME}/neo4j-plugin/target/histograph-plugin-*.jar ${NEO_PLUGIN_DIR}
 chown neo4j:adm ${NEO_PLUGIN_DIR}/histograph-plugin-*.jar
 

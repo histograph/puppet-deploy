@@ -42,7 +42,7 @@ vagrantfile:
         synced_folder:
             vflsf_1kpkovsc2gq3:
                 source: ../histograph
-                target: /home/histograph/src
+                target: /home/vagrant/src
                 sync_type: nfs
                 smb:
                     smb_host: ''
@@ -204,7 +204,8 @@ nodejs:
     install: '1'
     settings:
         version: '6'
-    npm_packages: {  }
+    npm_packages:
+      - forever
 redis:
     install: '1'
     settings:

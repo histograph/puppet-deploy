@@ -27,6 +27,5 @@ sudo su $MYUSER -c "npm install"
 # create init.d scripts
 #install_service core
 
-# start it now ?
-#service histograph-core start
-#service histograph-core status
+# install service and start it
+install_service core
