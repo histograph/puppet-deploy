@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # run as root
 echo
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
-echo "----%%%%% INSTALLING NEO4J PLUGIN%%%%%----"
+echo "----%%%%% INSTALLING NEO4J PLUGIN %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
