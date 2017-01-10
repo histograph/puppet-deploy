@@ -7,11 +7,20 @@
 # echo
 
 export SRC_HOME="/home/histograph/src"
+export DEV_HOME="/home/vagrant/src"
 export MYUSER=histograph
 export UPLOADS_DIR="/uploads"
 export NEO_PLUGIN_DIR="/var/lib/neo4j/plugins"
+export BASEPORT=3000
+export BASEURL="http://localhost:${BASEPORT}"
+export MY_TAG=""
+export MY_BRANCH="puppetdeploy"
 
+export RUN_DIR="/var/run/histograph"
+export LOG_DIR="/var/log/histograph"
 
+export NPM_INSTALL="npm install 1>/dev/null"
+# export MY_TAG="v0.5.1"
 
 install_service()
 {
@@ -26,8 +35,8 @@ cat > ${FOREVER_CONFIG} << FOREVER
     "watch": false,
     "script": "index.js",
     "sourceDir": "${SRC_HOME}/${SERVICE}",
-    "pidFile": "/var/run/histograph/${SERVICE}.pid",
-    "logFile": "/var/log/histograph/${SERVICE}.log",
+    "pidFile": "${RUN_DIR}/${SERVICE}.pid",
+    "logFile": "${LOG_DIR}/${SERVICE}.log",
     "args": ["--config", "${SRC_HOME}/config.yaml"]
 }
 FOREVER
@@ -63,15 +72,15 @@ FOREVER_USER=${MYUSER}
 
 case "\$1" in
     start)
-        su "\$FOREVER_USER" -c "NODE_ENV=production forever start \$FOREVER_CONFIG"
+        su "\$FOREVER_USER" -c "NODE_ENV=production forever start --uid \$FOREVER_UID \$FOREVER_CONFIG"
         RETVAL=\$?
         ;;
     stop)
-        su "\$FOREVER_USER" -c "NODE_ENV=production forever stop --uid \$FOREVER_UID"
+        su "\$FOREVER_USER" -c "NODE_ENV=production forever stop \$FOREVER_UID"
         RETVAL=\$?
         ;;
     restart)
-        su "\$FOREVER_USER" -c "NODE_ENV=production forever restart --uid \$FOREVER_UID"
+        su "\$FOREVER_USER" -c "NODE_ENV=production forever restart \$FOREVER_UID"
         RETVAL=\$?
         ;;
     status)
@@ -96,8 +105,36 @@ service histograph-${SERVICE} status
 }
 
 
-if [ ! -d ${SRC_HOME} ]
+if [ -d ${DEV_HOME} ]
+then
+  # we are in developer mode, change variables
+  SRC_HOME="${DEV_HOME}"
+  MYUSER=vagrant
+elif [ ! -d ${SRC_HOME} ]
 then
   mkdir ${SRC_HOME}
-  chown ${MYUSER}:${MYUSER} ${SRC_HOME} 2>/dev/null
 fi
+
+chown -R ${MYUSER}:${MYUSER} ${SRC_HOME} 2>/dev/null
+
+# create upload directory
+if [ ! -d ${UPLOADS_DIR} ]
+then
+  mkdir ${UPLOADS_DIR}
+fi
+
+chown -R ${MYUSER}:${MYUSER} ${UPLOADS_DIR}
+chmod ug+rwX ${UPLOADS_DIR}
+
+# dirs for log and PID files
+if [ ! -d ${LOG_DIR} ]
+then
+  mkdir -p ${LOG_DIR}
+fi
+
+if [ ! -d ${RUN_DIR} ]
+then
+  mkdir -p ${RUN_DIR}
+fi
+
+chown ${MYUSER}:${MYUSER} ${LOG_DIR} ${RUN_DIR}

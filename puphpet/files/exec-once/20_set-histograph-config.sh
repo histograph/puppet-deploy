@@ -8,16 +8,16 @@ echo
 
 source $(dirname $0)/set-vars.sh
 
-if [ ! -f ${SRC_HOME}/config.yaml ]
-then
+# if [ ! -f ${SRC_HOME}/config.yaml ]
+# then
 
   # histograph config file
 cat > ${SRC_HOME}/config.yaml << HISTOGRAPH
 api:
   bindHost: 0.0.0.0
-  bindPort: 3000
-  baseUrl: https://api.erfgeo.nl/
-  dataDir: /tmp/uploads
+  bindPort: ${BASEPORT}
+  baseUrl: ${BASEURL}
+  dataDir: ${UPLOADS_DIR}
   admin:
     name: histograph
     password: histograph
@@ -29,7 +29,7 @@ core:
 import:
   dirs:
     - ${SRC_HOME}/data/
-    - ${SRC_HOME}/extra-data/
+    # - ${SRC_HOME}/extra-data/
 
 redis:
   host: 127.0.0.1
@@ -43,8 +43,9 @@ elasticsearch:
 
 neo4j:
   host: 127.0.0.1
-  ports: 7474
+  port: 7474
 HISTOGRAPH
-fi
+
+# fi
 
 chown ${MYUSER}:${MYUSER} ${SRC_HOME}/config.yaml 2>/dev/null

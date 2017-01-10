@@ -2,20 +2,20 @@
 # run as root
 echo
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
-echo "----%%%%% INSTALLING HISTOGRAPH CORE %%%%%----"
+echo "----%%%%% INSTALLING HISTOGRAPH IMPORT %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 source $(dirname $0)/set-vars.sh
 
 # install histograph-core
-
+set -x
 cd ${SRC_HOME}
 
-if [ ! -d ${SRC_HOME}/core ]
+if [ ! -d ${SRC_HOME}/import ]
 then
   # clone master branch
-  sudo su $MYUSER -c "git clone https://github.com/histograph/core"
+  sudo su $MYUSER -c "git clone https://github.com/histograph/import.git"
   if [ ! "${MY_BRANCH} " == " " ]
   then
     sudo su $MYUSER -c "git checkout ${MY_BRANCH}"
@@ -24,16 +24,12 @@ then
     sudo su $MYUSER -c "git checkout tags/${MY_TAG}"
   fi
 else
-  sudo su $MYUSER -c "git -C ${SRC_HOME}/core/ pull"
+  sudo su $MYUSER -c "git -C ${SRC_HOME}/import/ pull"
 fi
 # install node dependencies
 
-cd ${SRC_HOME}/core
+cd ${SRC_HOME}/import
 sudo su $MYUSER -c "rm -rf node_modules/"
 sudo su $MYUSER -c "${NPM_INSTALL}"
 
-# create init.d scripts
-#install_service core
-
-# install service and start it
-install_service core
+sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml geonames"

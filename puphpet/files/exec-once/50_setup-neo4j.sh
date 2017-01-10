@@ -14,6 +14,13 @@ apt-get install -y maven >/dev/null
 if [ ! -d ${SRC_HOME}/neo4j-plugin/ ]
 then
 	sudo su $MYUSER -c "git clone https://github.com/histograph/neo4j-plugin.git ${SRC_HOME}/neo4j-plugin/"
+	if [ ! "${MY_BRANCH} " == " " ]
+  then
+    sudo su $MYUSER -c "git checkout ${MY_BRANCH}"
+  elif [ ! "${MY_TAG} " == " " ]
+	then
+		sudo su $MYUSER -c "git checkout tags/${MY_TAG}"
+	fi
 else
 	sudo su $MYUSER -c "git -C ${SRC_HOME}/neo4j-plugin/ pull"
 fi
