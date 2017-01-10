@@ -104,7 +104,13 @@ locale:
         timezone: Europe/Amsterdam
 firewall:
     install: '1'
-    rules: {  }
+    rules:
+      fr_cqfgv4r494fr:
+        port:
+            - 3000
+        priority: '200'
+        proto: tcp
+        action: accept
 cron:
     install: '1'
     jobs: {  }
@@ -161,6 +167,21 @@ nginx:
             ssl: '0'
             ssl_cert: ''
             ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+        ggggfgqeryefgdfgdv:
+            server_name: viewer.histograph.io
+            server_aliases:
+                - viewer.histograph.vagrant.test
+            www_root: /var/www/viewer
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
             ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''

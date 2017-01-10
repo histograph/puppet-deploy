@@ -8,14 +8,15 @@ echo
 
 source $(dirname $0)/set-vars.sh
 
-# install histograph-core
+MY_MODULE="data"
+# install histograph-data
 
 cd ${SRC_HOME}
 
-if [ ! -d ${SRC_HOME}/data ]
+if [ ! -d ${SRC_HOME}/${MY_MODULE} ]
 then
   # clone master branch
-  sudo su $MYUSER -c "git clone https://github.com/histograph/data.git"
+  sudo su $MYUSER -c "git clone https://github.com/histograph/${MY_MODULE}.git"
   if [ ! "${MY_BRANCH} " == " " ]
   then
     sudo su $MYUSER -c "git checkout ${MY_BRANCH}"
@@ -24,12 +25,12 @@ then
     sudo su $MYUSER -c "git checkout tags/${MY_TAG}"
   fi
 else
-  sudo su $MYUSER -c "git -C ${SRC_HOME}/data/ pull"
+  sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_MODULE}/ pull"
 fi
 # install node dependencies
 
-cd ${SRC_HOME}/data
-sudo su $MYUSER -c "rm -rf node_modules/"
+cd ${SRC_HOME}/${MY_MODULE}
+
 sudo su $MYUSER -c "${NPM_INSTALL}"
 
-sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml geonames"
+sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REPOSITORIES}"

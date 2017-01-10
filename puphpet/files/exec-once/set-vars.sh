@@ -8,19 +8,26 @@
 
 export SRC_HOME="/home/histograph/src"
 export DEV_HOME="/home/vagrant/src"
-export MYUSER=histograph
 export UPLOADS_DIR="/uploads"
 export NEO_PLUGIN_DIR="/var/lib/neo4j/plugins"
-export BASEPORT=3000
-export BASEURL="http://localhost:${BASEPORT}"
-export MY_TAG=""
-export MY_BRANCH="puppetdeploy"
-
 export RUN_DIR="/var/run/histograph"
 export LOG_DIR="/var/log/histograph"
 
-export NPM_INSTALL="npm install 1>/dev/null"
+export MYUSER=histograph
+
+export BASEPORT=3000
+# export BASEHOST=localhost
+export BASEHOST="histograph.vagrant.test"
+export BASEURL="http://${BASEHOST}:${BASEPORT}"
+
+export MY_BRANCH="puppetdeploy"
+export MY_TAG=""
 # export MY_TAG="v0.5.1"
+
+export NPM_INSTALL="npm prune && npm install 1>/dev/null"
+
+# export DATA_REPOSITORIES="bag bag-geonames-tgn cshapes geonames geonames-tgn nwb tgn whosonfirst"
+export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
 
 install_service()
 {
