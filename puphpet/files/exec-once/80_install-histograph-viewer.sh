@@ -6,7 +6,7 @@ echo "----%%%%% INSTALLING HISTOGRAPH VIEWER %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
-set -x
+#set -x
 source $(dirname $0)/set-vars.sh
 
 MY_MODULE="viewer"

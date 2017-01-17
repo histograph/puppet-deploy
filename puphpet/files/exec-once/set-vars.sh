@@ -28,6 +28,9 @@ export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
 # export DATA_REPOSITORIES="bag bag-geonames-tgn cshapes geonames geonames-tgn nwb tgn whosonfirst"
 export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
+export PAGE_SIZE=1000
+export SHARD_NR=1
+export REPLICA_NR=0
 
 install_service()
 {

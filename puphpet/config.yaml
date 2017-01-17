@@ -236,11 +236,14 @@ redis:
 elastic_search:
     install: '1'
     settings:
-        version: 5.1.1
+        version: 5.1.2
         java_install: true
         restart_on_change: true
         config:
           action.auto_create_index: false
+        # plugins:
+        #   royrusso/elasticsearch-HQ:
+        #     instances: histograph
     instances:
         esi_qw50fjtgvbjn:
             name: histograph

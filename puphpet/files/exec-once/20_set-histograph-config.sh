@@ -40,6 +40,9 @@ redis:
 elasticsearch:
   host: 127.0.0.1
   port: 9200
+  pagesize: ${PAGE_SIZE}
+  number_of_shards: ${SHARD_NR}
+  number_of_replicas: ${REPLICA_NR}
 
 neo4j:
   host: 127.0.0.1
