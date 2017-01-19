@@ -69,6 +69,9 @@ machines.each do |i, machine|
     #     vagrant plugin install landrush
     if Vagrant.has_plugin?('landrush')
         config.landrush.enable
+
+        config.landrush.tld = "#{machine_id.vm.hostname}"
+
         # let's use the Google free DNS
         config.landrush.upstream '8.8.8.8'
         config.landrush.guest_redirect_dns = false
@@ -399,7 +402,7 @@ machines.each do |i, machine|
 
     machine_id.vm.provision :shell do |s|
       s.path = 'puphpet/shell/execute-files.sh'
-      s.args = ['exec-once', 'exec-always']
+      s.args = ['exec-once', 'exec-always', "#{machine_id.vm.hostname}"]
     end
     machine_id.vm.provision :shell, run: 'always' do |s|
       s.path = 'puphpet/shell/execute-files.sh'

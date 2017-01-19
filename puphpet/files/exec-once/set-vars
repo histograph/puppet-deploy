@@ -6,6 +6,7 @@
 # echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 # echo
 
+# set -x
 export SRC_HOME="/home/histograph/src"
 export DEV_HOME="/home/vagrant/src"
 export UPLOADS_DIR="/uploads"
@@ -17,7 +18,14 @@ export MYUSER=histograph
 
 export BASEPORT=3000
 # export BASEHOST=localhost
-export BASEHOST="histograph.vagrant.test"
+
+if [ "${1} " != " " ]
+then
+  export BASEHOST="${1}"
+else
+  export BASEHOST="histograph.local"
+fi
+
 export BASEURL="http://${BASEHOST}:${BASEPORT}"
 
 export MY_BRANCH="puppetdeploy"
@@ -27,10 +35,19 @@ export MY_TAG=""
 export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
 # export DATA_REPOSITORIES="bag bag-geonames-tgn cshapes geonames geonames-tgn nwb tgn whosonfirst"
-export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
+# export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
+export DATA_REPOSITORIES="geonames tgn whosonfirst"
 export PAGE_SIZE=1000
 export SHARD_NR=1
 export REPLICA_NR=0
+
+if [ -d ${DEV_HOME} ]
+then
+  # we are in developer mode, change variables
+  SRC_HOME="${DEV_HOME}"
+  MYUSER=vagrant
+fi
+
 
 install_service()
 {
@@ -109,42 +126,37 @@ INITD
 chmod +x /etc/init.d/histograph-${SERVICE}
 update-rc.d histograph-${SERVICE} defaults
 
-service histograph-${SERVICE} start
+service histograph-${SERVICE} restart
 service histograph-${SERVICE} status
 
 }
 
+install_code()
+{
+  cd ${SRC_HOME}
 
-if [ -d ${DEV_HOME} ]
-then
-  # we are in developer mode, change variables
-  SRC_HOME="${DEV_HOME}"
-  MYUSER=vagrant
-elif [ ! -d ${SRC_HOME} ]
-then
-  mkdir ${SRC_HOME}
-fi
+  if [ ! -d ${SRC_HOME}/${MY_MODULE} ]
+  then
+    # clone master branch
+    sudo su $MYUSER -c "git clone https://github.com/histograph/${MY_MODULE}"
+    if [ ! "${MY_BRANCH} " == " " ]
+    then
+      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_MODULE}/ checkout ${MY_BRANCH}"
+    elif [ ! "${MY_TAG} " == " " ]
+    then
+      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_MODULE}/ checkout tags/${MY_TAG}"
+    fi
+  else
+    sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_MODULE}/ pull"
+  fi
 
-chown -R ${MYUSER}:${MYUSER} ${SRC_HOME} 2>/dev/null
+  if [ "${MY_MODULE}" != "neo4j-plugin" ]
+  then
+    # install node dependencies
+    cd ${SRC_HOME}/${MY_MODULE}
+    sudo su $MYUSER -c "${NPM_INSTALL}"
+  fi
+}
 
-# create upload directory
-if [ ! -d ${UPLOADS_DIR} ]
-then
-  mkdir ${UPLOADS_DIR}
-fi
 
-chown -R ${MYUSER}:${MYUSER} ${UPLOADS_DIR}
-chmod ug+rwX ${UPLOADS_DIR}
-
-# dirs for log and PID files
-if [ ! -d ${LOG_DIR} ]
-then
-  mkdir -p ${LOG_DIR}
-fi
-
-if [ ! -d ${RUN_DIR} ]
-then
-  mkdir -p ${RUN_DIR}
-fi
-
-chown ${MYUSER}:${MYUSER} ${LOG_DIR} ${RUN_DIR}
+# set +x

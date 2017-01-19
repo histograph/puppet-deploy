@@ -6,7 +6,9 @@ echo "----%%%%% INSTALLING HISTOGRAPH CONFIG %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
-source $(dirname $0)/set-vars.sh
+#set -x
+source $(dirname $0)/set-vars "${1}"
+
 
 # if [ ! -f ${SRC_HOME}/config.yaml ]
 # then

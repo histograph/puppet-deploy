@@ -6,6 +6,7 @@ VAGRANT_CORE_FOLDER=$(cat '/.puphpet-stuff/vagrant-core-folder.txt')
 
 EXEC_ONCE_DIR="$1"
 EXEC_ALWAYS_DIR="$2"
+HOSTNAME_VM="$3"
 
 echo "Running files in files/${EXEC_ONCE_DIR}"
 
@@ -25,7 +26,7 @@ find "${VAGRANT_CORE_FOLDER}/files/${EXEC_ONCE_DIR}" -maxdepth 1 -type f -name '
         sudo /bin/bash -c "echo \"${SHA1}\" >> \"/.puphpet-stuff/${EXEC_ONCE_DIR}-ran\""
 
         chmod +x "${FILENAME}"
-        /bin/bash "${FILENAME}"
+        /bin/bash "${FILENAME}" "${HOSTNAME_VM}"
     else
         echo "Skipping executing ${FILENAME} as contents have not changed"
     fi

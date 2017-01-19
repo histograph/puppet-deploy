@@ -21,7 +21,7 @@ vagrantfile:
                 machines:
                     vflm_z0hq0o0rwzjy:
                         id: histograph_id
-                        hostname: histograph.vagrant.test
+                        hostname: histograph.local
                         network:
                             private_network: 192.168.56.101
                             forwarded_port:
@@ -127,10 +127,10 @@ nginx:
         names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        nxv_86u1jdkghumv:
+        api_histograph:
             server_name: api.histograph.io
             server_aliases:
-                - api.local
+                - api.histograph.local
             www_root: /var/www/api
             listen_port: '80'
             client_max_body_size: 1m
@@ -142,10 +142,10 @@ nginx:
             ssl_ciphers: ''
             rewrite_to_https: '1'
             spdy: '1'
-        nxv_i1voe7flrzkn:
+        thesaurus_histograph:
             server_name: thesaurus.erfgeo.nl
             server_aliases:
-                - thesaurus.local
+                - thesaurus.histograph.local
             www_root: /var/www/thesaurus
             listen_port: '80'
             client_max_body_size: 1m
@@ -157,10 +157,10 @@ nginx:
             ssl_ciphers: ''
             rewrite_to_https: '1'
             spdy: '1'
-        nxv_drknsbb5edqn:
+        importeren_histograph:
             server_name: importeren.erfgeo.nl
             server_aliases:
-                - importeren.local
+                - importeren.histograph.local
             www_root: /var/www/importeren
             listen_port: '80'
             client_max_body_size: 1m
@@ -172,10 +172,10 @@ nginx:
             ssl_ciphers: ''
             rewrite_to_https: '1'
             spdy: '1'
-        ggggfgqeryefgdfgdv:
+        viewer_histograph:
             server_name: viewer.histograph.io
             server_aliases:
-                - viewer.histograph.vagrant.test
+                - viewer.histograph.local
             www_root: /var/www/viewer
             listen_port: '80'
             client_max_body_size: 1m

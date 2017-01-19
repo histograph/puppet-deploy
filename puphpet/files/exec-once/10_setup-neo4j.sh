@@ -6,24 +6,15 @@ echo "----%%%%% INSTALLING NEO4J PLUGIN %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
-source $(dirname $0)/set-vars.sh
+#set -x
+source $(dirname $0)/set-vars "${1}"
+
+export MY_MODULE="neo4j-plugin"
 
 # install maven
 apt-get install -y maven >/dev/null
 
-if [ ! -d ${SRC_HOME}/neo4j-plugin/ ]
-then
-	sudo su $MYUSER -c "git clone https://github.com/histograph/neo4j-plugin.git ${SRC_HOME}/neo4j-plugin/"
-	if [ ! "${MY_BRANCH} " == " " ]
-  then
-    sudo su $MYUSER -c "git checkout ${MY_BRANCH}"
-  elif [ ! "${MY_TAG} " == " " ]
-	then
-		sudo su $MYUSER -c "git checkout tags/${MY_TAG}"
-	fi
-else
-	sudo su $MYUSER -c "git -C ${SRC_HOME}/neo4j-plugin/ pull"
-fi
+install_code
 
 # build and install plugin
 cd ${SRC_HOME}/neo4j-plugin/

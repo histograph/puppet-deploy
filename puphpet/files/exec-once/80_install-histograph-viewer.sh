@@ -7,33 +7,12 @@ echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x
-source $(dirname $0)/set-vars.sh
+source $(dirname $0)/set-vars "${1}"
 
-MY_MODULE="viewer"
+export MY_MODULE="viewer"
 
 # install histograph-viewer
-
-cd ${SRC_HOME}
-
-if [ ! -d ${SRC_HOME}/${MY_MODULE} ]
-then
-  # clone master branch
-  sudo su $MYUSER -c "git clone https://github.com/histograph/${MY_MODULE}.git"
-  if [ ! "${MY_BRANCH} " == " " ]
-  then
-    sudo su $MYUSER -c "git checkout ${MY_BRANCH}"
-  elif [ ! "${MY_TAG} " == " " ]
-  then
-    sudo su $MYUSER -c "git checkout tags/${MY_TAG}"
-  fi
-else
-  sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_MODULE}/ pull"
-fi
-# install node dependencies
-
-cd ${SRC_HOME}/${MY_MODULE}
-
-sudo su $MYUSER -c "${NPM_INSTALL}"
+install_code
 
 sudo su $MYUSER -c "HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run production"
 cp -r config.json index.html css dist js images fonts /var/www/${MY_MODULE}
