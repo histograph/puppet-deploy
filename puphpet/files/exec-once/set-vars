@@ -16,17 +16,18 @@ export LOG_DIR="/var/log/histograph"
 
 export MYUSER=histograph
 
-export BASEPORT=3000
+export APIBASEPORT=3000
 # export BASEHOST=localhost
 
 if [ "${1} " != " " ]
 then
-  export BASEHOST="${1}"
+  export APIBASEHOST="api.${1}"
 else
-  export BASEHOST="histograph.local"
+  export APIBASEHOST="api.histograph.local"
 fi
 
-export BASEURL="http://${BASEHOST}:${BASEPORT}"
+# export APIBASEURL="http://${APIBASEHOST}:${APIBASEPORT}"
+export APIBASEURL="http://${APIBASEHOST}:${APIBASEPORT}"
 
 export MY_BRANCH="puppetdeploy"
 export MY_TAG=""

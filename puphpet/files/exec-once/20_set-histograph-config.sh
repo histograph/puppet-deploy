@@ -17,8 +17,8 @@ source $(dirname $0)/set-vars "${1}"
 cat > ${SRC_HOME}/config.yaml << HISTOGRAPH
 api:
   bindHost: 0.0.0.0
-  bindPort: ${BASEPORT}
-  baseUrl: ${BASEURL}
+  bindPort: ${APIBASEPORT}
+  baseUrl: ${APIBASEURL}
   dataDir: ${UPLOADS_DIR}
   admin:
     name: histograph
