@@ -52,25 +52,28 @@ fi
 install_service()
 {
 
-SERVICE=${1}
-FOREVER_CONFIG="${SRC_HOME}/${SERVICE}.forever.json"
+FOREVER_CONFIG="${SRC_HOME}/${MY_MODULE}.forever.json"
+
+echo "${SRC_HOME}/${MY_MODULE}.forever.json"
 
 cat > ${FOREVER_CONFIG} << FOREVER
 {
-    "uid": "${SERVICE}",
+    "uid": "${MY_MODULE}",
     "append": true,
     "watch": false,
     "script": "index.js",
-    "sourceDir": "${SRC_HOME}/${SERVICE}",
-    "pidFile": "${RUN_DIR}/${SERVICE}.pid",
-    "logFile": "${LOG_DIR}/${SERVICE}.log",
+    "sourceDir": "${SRC_HOME}/${MY_MODULE}",
+    "pidFile": "${RUN_DIR}/${MY_MODULE}.pid",
+    "logFile": "${LOG_DIR}/${MY_MODULE}.log",
     "args": ["--config", "${SRC_HOME}/config.yaml"]
 }
 FOREVER
 
 chown ${MYUSER}:${MYUSER} ${FOREVER_CONFIG}
 
-cat > /etc/init.d/histograph-${SERVICE} << INITD
+rm -rf /etc/init.d/histograph-${MY_MODULE}
+
+cat > /etc/init.d/histograph-${MY_MODULE} << INITD
 #!/bin/bash
 ### BEGIN INIT INFO
 # If you wish the Daemon to be lauched at boot / stopped at shutdown :
@@ -84,17 +87,17 @@ cat > /etc/init.d/histograph-${SERVICE} << INITD
 #      (UNINSTALL : chkconfig --level 35 scriptname off)
 #
 # chkconfig:         2345 90 60
-# Provides:          ${SRC_HOME}/${SERVICE}/index.js
+# Provides:          ${SRC_HOME}/${MY_MODULE}/index.js
 # Required-Start:    \$remote_fs \$syslog
 # Required-Stop:     \$remote_fs \$syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Histograph ${SERVICE}
-# Description:       histograph-${SERVICE}
+# Short-Description: Histograph ${MY_MODULE}
+# Description:       histograph-${MY_MODULE}
 ### END INIT INFO
 
 FOREVER_CONFIG="${FOREVER_CONFIG}"
-FOREVER_UID=${SERVICE}
+FOREVER_UID=${MY_MODULE}
 FOREVER_USER=${MYUSER}
 
 case "\$1" in
@@ -123,11 +126,11 @@ exit \$RETVAL
 INITD
 
 # start on startup
-chmod +x /etc/init.d/histograph-${SERVICE}
-update-rc.d histograph-${SERVICE} defaults
+chmod +x /etc/init.d/histograph-${MY_MODULE}
+update-rc.d histograph-${MY_MODULE} defaults
 
-service histograph-${SERVICE} restart
-service histograph-${SERVICE} status
+service histograph-${MY_MODULE} restart
+service histograph-${MY_MODULE} status
 
 }
 
