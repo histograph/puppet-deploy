@@ -11,8 +11,9 @@ source $(dirname $0)/set-vars "${1}"
 
 
 export MY_MODULE="import"
+export MY_REPO="https://github.com/histograph"
 
 # install histograph-import
 install_code
 
-sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REPOSITORIES}"
+sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REPOSITORIES} ${EL_DATA_REPOSITORIES}"

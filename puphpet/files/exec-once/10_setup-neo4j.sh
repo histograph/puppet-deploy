@@ -10,6 +10,7 @@ echo
 source $(dirname $0)/set-vars "${1}"
 
 export MY_MODULE="neo4j-plugin"
+export MY_REPO="https://github.com/histograph"
 
 # install maven
 apt-get install -y maven >/dev/null

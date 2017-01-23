@@ -11,6 +11,7 @@ source $(dirname $0)/set-vars "${1}"
 
 
 export MY_MODULE="core"
+export MY_REPO="https://github.com/histograph"
 
 # install histograph-core
 install_code

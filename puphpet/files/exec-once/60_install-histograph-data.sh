@@ -9,9 +9,7 @@ echo
 #set -x
 source $(dirname $0)/set-vars "${1}"
 
-
-export MY_MODULE="data"
 # install histograph-data
-install_code
+install_data
 
-sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REPOSITORIES}"
+#sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REPOSITORIES}"

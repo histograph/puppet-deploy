@@ -31,7 +31,7 @@ core:
 import:
   dirs:
     - ${SRC_HOME}/data/
-    # - ${SRC_HOME}/extra-data/
+    - ${SRC_HOME}/e_l_data/
 
 redis:
   host: 127.0.0.1

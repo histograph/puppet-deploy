@@ -38,6 +38,8 @@ export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 # export DATA_REPOSITORIES="bag bag-geonames-tgn cshapes geonames geonames-tgn nwb tgn whosonfirst"
 # export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
 export DATA_REPOSITORIES="geonames tgn whosonfirst"
+export EL_DATA_REPOSITORIES="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
+
 export PAGE_SIZE=1000
 export SHARD_NR=1
 export REPLICA_NR=0
@@ -139,19 +141,24 @@ install_code()
 {
   cd ${SRC_HOME}
 
+  if [ "${MY_DEST} " == " " ]
+  then
+    MY_DEST="${MY_MODULE}"
+  fi
+
   if [ ! -d ${SRC_HOME}/${MY_MODULE} ]
   then
     # clone master branch
-    sudo su $MYUSER -c "git clone https://github.com/histograph/${MY_MODULE}"
+    sudo su $MYUSER -c "git clone ${MY_REPO}/${MY_MODULE} ${MY_DEST}"
     if [ ! "${MY_BRANCH} " == " " ]
     then
-      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_MODULE}/ checkout ${MY_BRANCH}"
+      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_DEST}/ checkout ${MY_BRANCH}"
     elif [ ! "${MY_TAG} " == " " ]
     then
-      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_MODULE}/ checkout tags/${MY_TAG}"
+      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_DEST}/ checkout tags/${MY_TAG}"
     fi
   else
-    sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_MODULE}/ pull"
+    sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_DEST}/ pull"
   fi
 
   if [ "${MY_MODULE}" != "neo4j-plugin" ]
@@ -160,6 +167,21 @@ install_code()
     cd ${SRC_HOME}/${MY_MODULE}
     sudo su $MYUSER -c "${NPM_INSTALL}"
   fi
+}
+
+install_data()
+{
+  export MY_MODULE=data
+  export MY_REPO="https://github.com/histograph"
+
+  install_code
+
+  export MY_MODULE=data
+  export MY_REPO="https://github.com/erfgoed-en-locatie"
+  export MY_DEST=e_l_data
+
+  install_code
+
 }
 
 

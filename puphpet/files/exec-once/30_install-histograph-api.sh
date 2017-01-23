@@ -11,6 +11,7 @@ source $(dirname $0)/set-vars "${1}"
 
 
 export MY_MODULE="api"
+export MY_REPO="https://github.com/histograph"
 
 
 install_code
