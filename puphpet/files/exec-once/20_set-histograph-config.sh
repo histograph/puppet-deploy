@@ -45,6 +45,7 @@ elasticsearch:
   pagesize: ${PAGE_SIZE}
   number_of_shards: ${SHARD_NR}
   number_of_replicas: ${REPLICA_NR}
+  requestTimeoutMs: 60000 
 
 neo4j:
   host: 127.0.0.1

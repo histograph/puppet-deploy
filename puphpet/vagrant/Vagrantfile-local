@@ -74,7 +74,7 @@ machines.each do |i, machine|
 
         # let's use the Google free DNS
         config.landrush.upstream '8.8.8.8'
-        config.landrush.guest_redirect_dns = true
+        # config.landrush.guest_redirect_dns = true
         # config.landrush.host_redirect_dns = true
     end
     # END Landrush configuration

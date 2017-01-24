@@ -9,12 +9,13 @@ then
   echo "WARNING: environment tested with ${V_VERS}, you have $(vagrant --version)"
 fi
 
-MY_BOX=$(grep 'box: ' puphpet/config.yaml | grep ubuntu | sed 's/.*box: \(.*\)/\1/g')
+MY_BOX=$(grep 'box: ' puphpet/config.yaml | sed 's/.*box: \(.*\)/\1/g')
+MY_BOXVERSION=$(grep 'box_version: ' puphpet/config.yaml | sed "s/.*box_version: '\(.*\)'/\1/g")
 
-if ! vagrant box list | grep ${MY_BOX} > /dev/null
+if ! vagrant box list | grep ${MY_BOX} | grep ${MY_BOXVERSION} > /dev/null
 then
-  echo "Adding box"
-  vagrant box add ${MY_BOX} --provider virtualbox
+  echo "Adding box ${MY_BOX} version ${MY_BOXVERSION}"
+  vagrant box add --provider virtualbox --box-version ${MY_BOXVERSION} ${MY_BOX}
 fi
 
 PLUGINS="$(vagrant plugin list)"

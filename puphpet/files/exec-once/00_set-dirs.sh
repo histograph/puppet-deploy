@@ -9,6 +9,8 @@ echo
 #set -x
 source $(dirname $0)/set-vars "${1}"
 
+# apt-get update
+
 if [ ! -d ${SRC_HOME} ]
 then
   mkdir ${SRC_HOME}
