@@ -160,13 +160,13 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-              1_direct_files:
+              direct_files:
                 priority: 510
                 location: "/"
                 try_files:
                   - $uri
                   - /index.php$is_args$args
-              2_indexphp:
+              indexphp:
                 priority: 520
                 location: '~ ^/index\.php(/|$)'
                 fastcgi: 127.0.0.1:9000
@@ -176,9 +176,11 @@ nginx:
                 fastcgi_split_path: '^(.+\.php)(/.*)$'
                 # include:
                 #   - fastcgi_params
-              3_allphp:
+              allphp:
                 priority: 530
                 location: '~ \.php$'
+                location_custom_cfg:
+                  return: 404
         viewer_histograph:
             server_name: viewer.histograph.io
             server_aliases:
@@ -311,6 +313,8 @@ histograph:
     system_user: histograph
     api_user: histograph
     api_password: histograph
+    import_user: Menno
+    import_password: histograph
   api:
     base_port: 3000
   core:
@@ -326,6 +330,11 @@ histograph:
     shard_nr: 1
     replica_nr: 0
     timeout: 600000
+  aws:
+    key: ''
+    secret: ''
+    bucket: ''
+    region: ''
 
 
 
