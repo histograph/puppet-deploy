@@ -15,7 +15,7 @@ export MY_REPO="https://github.com/histograph"
 # install maven
 apt-get install -y maven >/dev/null
 
-install_code
+install_source
 
 # build and install plugin
 cd ${SRC_HOME}/neo4j-plugin/

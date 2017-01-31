@@ -57,7 +57,7 @@ define puphpet::nginx::vhosts (
       default => join($puphpet::nginx::params::allowed_ciphers, ':'),
     }
     $rewrite_to_https = $ssl and array_true($vhost, 'rewrite_to_https') ? {
-      true    => true,
+      true    => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
       default => undef,
     }
 
@@ -70,41 +70,61 @@ define puphpet::nginx::vhosts (
       default => $ssl_key,
     }
 
-    $vhost_cfg_append = deep_merge(
-      {'vhost_cfg_append' => {'sendfile' => 'off'}},
+    $server_cfg_append = deep_merge(
+      {'server_cfg_append' => {'sendfile' => 'off'}},
       $vhost
     )
 
     # rewrites
     $rewrites = array_true($vhost, 'rewrites') ? {
       true    =>  $vhost['rewrites'],
-      default =>  {}
+      default =>  []
     }
 
-    $vhost_rewrites_append = deep_merge($vhost_cfg_append, {
-      'rewrites'  => $rewrites
+    $vhost_rewrites_append = deep_merge($server_cfg_append, {
+      'rewrite_rules'  => $rewrites
     })
 
-    # puppet-nginx is stupidly strict about ssl value datatypes
-    $merged = delete(merge($vhost_rewrites_append, {
-      'server_name'          => $server_names,
-      'use_default_location' => false,
-      'ssl'                  => $ssl,
-      'ssl_cert'             => $ssl_cert_real,
-      'ssl_key'              => $ssl_key_real,
-      'ssl_port'             => $ssl_port,
-      'ssl_protocols'        => $ssl_protocols,
-      'ssl_ciphers'          => "\"${ssl_ciphers}\"",
-      'rewrite_to_https'     => $rewrite_to_https,
-    }), ['server_aliases', 'proxy', 'locations'])
+    if ($rewrite_to_https){
 
-    create_resources(nginx::resource::vhost, { "${key}" => $merged })
+      # puppet-nginx is stupidly strict about ssl value datatypes
+      $merged = delete(merge($vhost_rewrites_append, {
+        'server_name'          => $server_names,
+        'use_default_location' => false,
+        'ssl'                  => $ssl,
+        'ssl_cert'             => $ssl_cert_real,
+        'ssl_key'              => $ssl_key_real,
+        'ssl_port'             => $ssl_port,
+        'ssl_protocols'        => $ssl_protocols,
+        'ssl_ciphers'          => "\"${ssl_ciphers}\"",
+        'location_cfg_append'     => $rewrite_to_https,
+      }), ['server_aliases', 'proxy', 'locations', 'rewrite_to_https'])
+
+    }else{
+
+      # puppet-nginx is stupidly strict about ssl value datatypes
+      $merged = delete(merge($vhost_rewrites_append, {
+        'server_name'          => $server_names,
+        'use_default_location' => false,
+        'ssl'                  => $ssl,
+        'ssl_cert'             => $ssl_cert_real,
+        'ssl_key'              => $ssl_key_real,
+        'ssl_port'             => $ssl_port,
+        'ssl_protocols'        => $ssl_protocols,
+        'ssl_ciphers'          => "\"${ssl_ciphers}\"",
+      }), ['server_aliases', 'proxy', 'locations', 'rewrite_to_https'])
+
+    }
+
+    create_resources(nginx::resource::server, { "${key}" => $merged })
 
     # config file could contain no vhost.locations key
     $locations = array_true($vhost, 'locations') ? {
       true    => $vhost['locations'],
       default => { }
     }
+
+    # notify{"locations ${key}: ${locations}":}
 
     puphpet::nginx::locations { "from puphpet::nginx::vhosts, ${vhost['www_root']} @ key ${key}":
       locations => $locations,

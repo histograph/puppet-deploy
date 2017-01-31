@@ -17,11 +17,12 @@ class puphpet::nginx::params
     'listen_port'          => 80,
     'client_max_body_size' => '1m',
     'use_default_location' => false,
-    'vhost_cfg_append'     => {'sendfile' => 'off'},
+    'server_cfg_append'     => {'sendfile' => 'off'},
     'index_files'          => [
       'index', 'index.html', 'index.htm', 'index.php'
     ],
-    'locations'            => [
+    'locations'            => {
+      first_key =>
       {
         'location'              => '/',
         'autoindex'             => 'off',
@@ -33,6 +34,7 @@ class puphpet::nginx::params
         'fast_cgi_params_extra' => [],
         'index_files'           => [],
       },
+      second_key =>
       {
         'location'              => '~ \.php$',
         'autoindex'             => 'off',
@@ -49,7 +51,7 @@ class puphpet::nginx::params
         ],
         'index_files'           => [],
       }
-    ]
+    }
   }
 
   $allowed_ciphers = [

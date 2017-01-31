@@ -21,12 +21,12 @@ api:
   baseUrl: ${APIBASEURL}
   dataDir: ${UPLOADS_DIR}
   admin:
-    name: histograph
-    password: histograph
+    name: ${APIUSER}
+    password: ${APIPASSWORD}
 
 core:
-  batchSize: 1500
-  batchTimeout: 1500
+  batchSize: ${COREBATCHSIZE}
+  batchTimeout: ${COREBATCHTIMEOUT}
 
 import:
   dirs:
@@ -37,7 +37,7 @@ redis:
   host: 127.0.0.1
   port: 6379
   queue: histograph
-  maxQueueSize: 50000
+  maxQueueSize: ${REDISMAXQUEUESIZE}
 
 elasticsearch:
   host: 127.0.0.1
@@ -45,7 +45,7 @@ elasticsearch:
   pagesize: ${PAGE_SIZE}
   number_of_shards: ${SHARD_NR}
   number_of_replicas: ${REPLICA_NR}
-  requestTimeoutMs: 60000 
+  requestTimeoutMs: ${ES_TIMEOUT}
 
 neo4j:
   host: 127.0.0.1

@@ -13,7 +13,7 @@ export MY_MODULE="viewer"
 export MY_REPO="https://github.com/histograph"
 
 # install histograph-viewer
-install_code
+install_nodecode
 
 sudo su $MYUSER -c "HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run production"
 cp -r config.json index.html css dist js images fonts /var/www/${MY_MODULE}

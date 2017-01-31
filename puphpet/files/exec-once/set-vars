@@ -7,42 +7,56 @@
 # echo
 
 # set -x
-export SRC_HOME="/home/histograph/src"
-export DEV_HOME="/home/vagrant/src"
-export UPLOADS_DIR="/uploads"
-export NEO_PLUGIN_DIR="/var/lib/neo4j/plugins"
-export RUN_DIR="/var/run/histograph"
-export LOG_DIR="/var/log/histograph"
 
-export MYUSER=histograph
+read_params(){
+    hiera --config /vagrant/puphpet/puppet/hiera.yaml $1
+}
 
-export APIBASEPORT=3000
+export SRC_HOME="$(read_params  histograph.directories.src_home)"
+export DEV_HOME="$(read_params  histograph.directories.dev_home)"
+export UPLOADS_DIR="$(read_params  histograph.directories.uploads_dir)"
+export NEO_PLUGIN_DIR="$(read_params  histograph.directories.neo_plugin_dir)"
+export RUN_DIR="$(read_params  histograph.directories.run_dir)"
+export LOG_DIR="$(read_params  histograph.directories.log_dir)"
+
+export MYUSER="$(read_params  histograph.users.system_user)"
+export APIUSER="$(read_params  histograph.users.api_user)"
+export APIPASSWORD="$(read_params  histograph.users.api_password)"
+
+export APIBASEPORT="$(read_params  histograph.api.base_port)"
 # export BASEHOST=localhost
 
 if [ "${1} " != " " ]
 then
-  export APIBASEHOST="api.${1}"
+  export APIBASEHOST="${1}"
 else
-  export APIBASEHOST="api.histograph.local"
+  echo "ERROR: name of host not provided"
+  exit 1
 fi
 
 # export APIBASEURL="http://${APIBASEHOST}:${APIBASEPORT}"
 export APIBASEURL="http://${APIBASEHOST}:${APIBASEPORT}"
 
-export MY_BRANCH="puppetdeploy"
-export MY_TAG=""
+export COREBATCHSIZE="$(read_params  histograph.core.batchSize)"
+export COREBATCHTIMEOUT="$(read_params  histograph.core.batchTimeout)"
+
+export MY_BRANCH="$(read_params  histograph.git.branch)"
+export MY_TAG="$(read_params  histograph.git.tag)"
 # export MY_TAG="v0.5.1"
 
-export NPM_INSTALL="npm prune && npm install 1>/dev/null"
+export REDISMAXQUEUESIZE="$(read_params  histograph.redis.maxQueueSize)"
 
 # export DATA_REPOSITORIES="bag bag-geonames-tgn cshapes geonames geonames-tgn nwb tgn whosonfirst"
 # export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
 export DATA_REPOSITORIES="geonames tgn whosonfirst"
 export EL_DATA_REPOSITORIES="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
 
-export PAGE_SIZE=1000
-export SHARD_NR=1
-export REPLICA_NR=0
+export PAGE_SIZE="$(read_params  histograph.es.page_size)"
+export SHARD_NR="$(read_params  histograph.es.shard_nr)"
+export REPLICA_NR="$(read_params  histograph.es.replica_nr)"
+export ES_TIMEOUT="$(read_params  histograph.es.timeout)"
+
+export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
 if [ -d ${DEV_HOME} ]
 then
@@ -137,13 +151,13 @@ service histograph-${MY_MODULE} status
 
 }
 
-install_code()
+install_source()
 {
   cd ${SRC_HOME}
 
   if [ "${MY_DEST} " == " " ]
   then
-    MY_DEST="${MY_MODULE}"
+    export MY_DEST="${MY_MODULE}"
   fi
 
   if [ ! -d ${SRC_HOME}/${MY_MODULE} ]
@@ -161,12 +175,24 @@ install_code()
     sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_DEST}/ pull"
   fi
 
-  if [ "${MY_MODULE}" != "neo4j-plugin" ]
-  then
-    # install node dependencies
-    cd ${SRC_HOME}/${MY_MODULE}
-    sudo su $MYUSER -c "${NPM_INSTALL}"
-  fi
+}
+
+install_nodecode()
+{
+  install_source
+  # install node dependencies
+  cd ${SRC_HOME}/${MY_MODULE}
+  sudo su $MYUSER -c "${NPM_INSTALL}"
+
+}
+
+install_phpcode()
+{
+  install_source
+  # install php dependencies
+  cd ${SRC_HOME}/${MY_MODULE}
+  sudo su $MYUSER -c "composer install"
+
 }
 
 install_data()

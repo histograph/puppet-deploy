@@ -42,7 +42,7 @@ define puphpet::nginx::locations (
     # Removes fast_cgi_params_extra because it only exists in gui
     # not puppet-nginx
     $location_no_root = delete(merge({
-      'vhost'                      => $vhost_key,
+      'server'                      => $vhost_key,
       'ssl'                        => $ssl,
       'location_custom_cfg_append' => $location_custom_cfg_append,
     }, $location_custom_data), 'fast_cgi_params_extra')
@@ -59,9 +59,9 @@ define puphpet::nginx::locations (
 
     # location rewrites
     $location_merged = deep_merge($location_root_merged, {
-      'rewrites'  => array_true($location_root_merged, 'rewrites') ? {
+      'rewrite_rules'  => array_true($location_root_merged, 'rewrites') ? {
         true    => $location_root_merged['rewrites'],
-        default => { }
+        default => []
       }
     })
 

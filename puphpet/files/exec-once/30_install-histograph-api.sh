@@ -14,7 +14,7 @@ export MY_MODULE="api"
 export MY_REPO="https://github.com/histograph"
 
 
-install_code
+install_nodecode
 
 # install service and start it
 install_service

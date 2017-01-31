@@ -20,8 +20,8 @@ vagrantfile:
                         update_guest_tools: 0
                 machines:
                     vflm_z0hq0o0rwzjy:
-                        id: histograph_id
-                        hostname: histograph.local
+                        id: api_histograph_id
+                        hostname: api.histograph.local
                         network:
                             private_network: 192.168.56.101
                             forwarded_port:
@@ -86,7 +86,9 @@ vagrantfile:
         no_proxy: ''
 server:
     install: '1'
-    packages: {  }
+    packages:
+      - zip
+      - unzip
 users_groups:
     install: '1'
     groups:
@@ -118,7 +120,7 @@ nginx:
     install: '1'
     settings:
         version: present
-        default_vhost: 1
+        default_vhost: 0
         proxy_buffers: '4 256k'
         proxy_buffer_size: 128k
         proxy_connect_timeout: 600s
@@ -127,21 +129,6 @@ nginx:
         names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        api_histograph:
-            server_name: api.histograph.io
-            server_aliases:
-                - api.histograph.local
-            www_root: /var/www/api
-            listen_port: '80'
-            client_max_body_size: 1m
-            ssl: '0'
-            ssl_cert: LETSENCRYPT
-            ssl_key: LETSENCRYPT
-            ssl_port: '443'
-            ssl_protocols: ''
-            ssl_ciphers: ''
-            rewrite_to_https: '1'
-            spdy: '1'
         thesaurus_histograph:
             server_name: thesaurus.erfgeo.nl
             server_aliases:
@@ -161,7 +148,7 @@ nginx:
             server_name: importeren.erfgeo.nl
             server_aliases:
                 - importeren.histograph.local
-            www_root: /var/www/importeren
+            www_root: /var/www/importeren/web
             listen_port: '80'
             client_max_body_size: 1m
             ssl: '0'
@@ -172,6 +159,26 @@ nginx:
             ssl_ciphers: ''
             rewrite_to_https: '1'
             spdy: '1'
+            locations:
+              1_direct_files:
+                priority: 510
+                location: "/"
+                try_files:
+                  - $uri
+                  - /index.php$is_args$args
+              2_indexphp:
+                priority: 520
+                location: '~ ^/index\.php(/|$)'
+                fastcgi: 127.0.0.1:9000
+                fastcgi_param:
+                  SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
+                  HTTPS: 'off'
+                fastcgi_split_path: '^(.+\.php)(/.*)$'
+                # include:
+                #   - fastcgi_params
+              3_allphp:
+                priority: 530
+                location: '~ \.php$'
         viewer_histograph:
             server_name: viewer.histograph.io
             server_aliases:
@@ -202,6 +209,9 @@ php:
             - cli
             - intl
             - xml
+            - curl
+            - mbstring
+            - zip
         pear: {  }
         pecl: {  }
     ini:
@@ -251,7 +261,7 @@ elastic_search:
 neo4j:
     install: '1'
     settings:
-        version: 3.1.0
+        version: 3.1.1
         edition: community
         install_java: false
         dbms_security_auth_enabled: false
@@ -267,6 +277,58 @@ java:
     settings:
         # version: 3.1.0
         distribution: 'jdk'
+mysql:
+    install: '1'
+    settings:
+        version: '5.7'
+        root_password: root_password
+        override_options: {  }
+    adminer: 0
+    users:
+        histograph:
+            name: pipo_username
+            password: pipo_userpassword
+    databases:
+        histograph:
+            name: pipo_db
+            sql: ''
+    grants:
+        mysqlng_2ecqbzfaqb15:
+            user: pipo_username
+            table: 'pipo_db.*'
+            privileges:
+                - ALL
+
+histograph:
+  directories:
+    src_home: "/home/histograph/src"
+    dev_home: "/home/vagrant/src"
+    uploads_dir: "/uploads"
+    neo_plugin_dir: "/var/lib/neo4j/plugins"
+    run_dir: "/var/run/histograph"
+    log_dir: "/var/log/histograph"
+  users:
+    system_user: histograph
+    api_user: histograph
+    api_password: histograph
+  api:
+    base_port: 3000
+  core:
+    batchSize: 1500
+    batchTimeout: 1500
+  redis:
+    maxQueueSize: 50000
+  git:
+    branch: "puppetdeploy"
+    tag: ""
+  es:
+    page_size: 1000
+    shard_nr: 1
+    replica_nr: 0
+    timeout: 600000
+
+
+
 # apache:
 #     install: '0'
 #     settings:

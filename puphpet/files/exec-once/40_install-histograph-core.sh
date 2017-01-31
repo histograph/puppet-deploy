@@ -14,7 +14,7 @@ export MY_MODULE="core"
 export MY_REPO="https://github.com/histograph"
 
 # install histograph-core
-install_code
+install_nodecode
 
 # install service and start it
 install_service
