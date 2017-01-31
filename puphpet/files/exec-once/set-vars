@@ -207,8 +207,24 @@ install_data()
   export MY_DEST=e_l_data
 
   install_code
+}
+
+clean_webdir()
+{
+  find ${MY_WEBDIR} -mindepth 1 -type d -exec rm -rf {} \; 2>/dev/null
+
+  find ${MY_WEBDIR} -type f -exec rm -rf {} \;
 
 }
 
+set_permissionswebdir()
+{
+  chown -R www-data:www-data ${MY_WEBDIR}
+
+  chmod -R ug+wxrX ${MY_WEBDIR}
+  chmod -R o-wxrX ${MY_WEBDIR}
+
+  service nginx restart
+}
 
 # set +x

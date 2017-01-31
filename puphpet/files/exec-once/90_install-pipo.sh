@@ -26,9 +26,7 @@ mysql --user="$(read_params mysql.users.histograph.name)" \
 
 
 
-find ${MY_WEBDIR} -mindepth 1 -type d -exec rm -rf {} \;
-
-find ${MY_WEBDIR} -type f -exec rm -rf {} \;
+clean_webdir
 
 cp -r app images web vendor src ${MY_WEBDIR}
 
@@ -90,10 +88,4 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 \$app['twig.options.cache'] = \$app['cache.path'] . '/twig';
 EOF
 
-chown -R www-data:www-data ${MY_WEBDIR}
-
-# chmod -R ug+wxrX ${MY_WEBDIR}/app/storage/cache ${MY_WEBDIR}/app/storage/log ${MY_WEBDIR}/app/storage/uploads
-chmod -R ug+wxrX ${MY_WEBDIR}
-chmod -R o-wxrX ${MY_WEBDIR}
-
-service nginx restart
+set_permissionswebdir

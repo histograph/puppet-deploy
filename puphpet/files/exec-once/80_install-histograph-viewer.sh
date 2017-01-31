@@ -11,10 +11,14 @@ source $(dirname $0)/set-vars "${1}"
 
 export MY_MODULE="viewer"
 export MY_REPO="https://github.com/histograph"
+export MY_WEBDIR="$(read_params nginx.vhosts.viewer_histograph.www_root)"
 
 # install histograph-viewer
 install_nodecode
+clean_webdir
 
 sudo su $MYUSER -c "HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run production"
-cp -r config.json index.html css dist js images fonts /var/www/${MY_MODULE}
-chown -R www-data:www-data /var/www/${MY_MODULE}
+
+cp -r config.json index.html css dist js images fonts ${MY_WEBDIR}
+
+set_permissionswebdir

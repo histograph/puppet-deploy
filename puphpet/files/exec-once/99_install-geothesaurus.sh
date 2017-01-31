@@ -12,9 +12,17 @@ source $(dirname $0)/set-vars "${1}"
 export MY_MODULE="geothesaurus"
 export MY_REPO="https://github.com/erfgoed-en-locatie"
 
+export MY_WEBDIR="$(read_params nginx.vhosts.thesaurus_histograph.www_root)"
+
+MY_WEBDIR=${MY_WEBDIR%/web}
+
+
 # install e&L pipo
 install_source
+clean_webdir
 
-# sudo su $MYUSER -c "HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run production"
-# cp -r config.json index.html css dist js images fonts /var/www/${MY_MODULE}
-# chown -R www-data:www-data /var/www/${MY_MODULE}
+cd ${SRC_HOME}/${MY_DEST}
+
+cp -r application assets system .htaccess index.php ${MY_WEBDIR}
+
+set_permissionswebdir
