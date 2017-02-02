@@ -88,4 +88,4 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 \$app['twig.options.cache'] = \$app['cache.path'] . '/twig';
 EOF
 
-set_permissionswebdir
+set_PHP_webdirperm

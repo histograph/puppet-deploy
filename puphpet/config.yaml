@@ -144,6 +144,28 @@ nginx:
             ssl_ciphers: ''
             rewrite_to_https: '1'
             spdy: '1'
+            locations:
+              images_files_th:
+                priority: 505
+                location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                location_custom_cfg:
+                  expires: 'max'
+                  log_not_found: 'off'
+              index_php_th:
+                priority: 520
+                location: '/'
+                try_files:
+                  - $uri
+                  - $uri/
+                  - /index.php
+              all_php_th:
+                priority: 530
+                location: '~* \.php$'
+                fastcgi: 'unix:/var/run/php/php-fpm.sock'
+                fastcgi_param:
+                  SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
+                  HTTPS: 'off'
+                fastcgi_split_path: '^(.+\.php)(/.*)$'
         importeren_histograph:
             server_name: importeren.erfgeo.nl
             server_aliases:
@@ -160,23 +182,29 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-              direct_files:
+              images_files_ih:
+                priority: 505
+                location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                location_custom_cfg:
+                  expires: 'max'
+                  log_not_found: 'off'
+              direct_files_ih:
                 priority: 510
-                location: "/"
+                location: '/'
                 try_files:
                   - $uri
                   - /index.php$is_args$args
-              indexphp:
+              index_php_ih:
                 priority: 520
                 location: '~ ^/index\.php(/|$)'
-                fastcgi: 127.0.0.1:9000
+                fastcgi: 'unix:/var/run/php/php-fpm.sock'
                 fastcgi_param:
                   SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
                   HTTPS: 'off'
                 fastcgi_split_path: '^(.+\.php)(/.*)$'
                 # include:
                 #   - fastcgi_params
-              allphp:
+              all_php_ih:
                 priority: 530
                 location: '~ \.php$'
                 location_custom_cfg:
@@ -221,13 +249,15 @@ php:
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
         date.timezone: UTC
+        short_open_tag: 'On'
     fpm_ini:
         error_log: /var/log/php-fpm.log
+        # short_open_tag: On
     fpm_pools:
         phpfp_l5al3m7gvfde:
             ini:
                 prefix: www
-                listen: '127.0.0.1:9000'
+                listen: '/var/run/php/php-fpm.sock'
                 security.limit_extensions: .php
                 user: www-user
                 group: www-data
@@ -248,7 +278,7 @@ redis:
 elastic_search:
     install: '1'
     settings:
-        version: 5.1.2
+        version: 5.2.0
         java_install: true
         restart_on_change: true
         config:

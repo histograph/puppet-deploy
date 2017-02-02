@@ -200,13 +200,13 @@ install_data()
   export MY_MODULE=data
   export MY_REPO="https://github.com/histograph"
 
-  install_code
+  install_nodecode
 
   export MY_MODULE=data
   export MY_REPO="https://github.com/erfgoed-en-locatie"
   export MY_DEST=e_l_data
 
-  install_code
+  install_nodecode
 }
 
 clean_webdir()
@@ -217,12 +217,23 @@ clean_webdir()
 
 }
 
-set_permissionswebdir()
+set_CLIENT_webdirperm()
 {
   chown -R www-data:www-data ${MY_WEBDIR}
 
-  chmod -R ug+wxrX ${MY_WEBDIR}
-  chmod -R o-wxrX ${MY_WEBDIR}
+  chmod -R ug=rX ${MY_WEBDIR}
+  chmod -R o-rwxX ${MY_WEBDIR}
+
+  service nginx restart
+}
+
+set_PHP_webdirperm()
+{
+  chown -R www-user:www-data ${MY_WEBDIR}
+
+  chmod -R u=rwxX ${MY_WEBDIR}
+  chmod -R g=rX ${MY_WEBDIR}
+  chmod -R o-rwxX ${MY_WEBDIR}
 
   service nginx restart
 }

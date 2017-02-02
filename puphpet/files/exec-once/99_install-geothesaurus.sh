@@ -25,4 +25,4 @@ cd ${SRC_HOME}/${MY_DEST}
 
 cp -r application assets system .htaccess index.php ${MY_WEBDIR}
 
-set_permissionswebdir
+set_PHP_webdirperm

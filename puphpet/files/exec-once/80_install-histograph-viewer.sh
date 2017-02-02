@@ -21,4 +21,4 @@ sudo su $MYUSER -c "HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run produc
 
 cp -r config.json index.html css dist js images fonts ${MY_WEBDIR}
 
-set_permissionswebdir
+set_CLIENT_webdirperm
