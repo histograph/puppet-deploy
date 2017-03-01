@@ -7,18 +7,18 @@ vagrantfile:
                 machines:
                     vflm_oevdf16x1ev6:
                         id: histograph.aws
-                        hostname: histograph.aws
+                        hostname: api.histograph.aws
                         keypair_name: single_histograph
                         private_key_path: puphpet/files/dot/ssh/id_rsa
                         ssh_username: ubuntu
                         region: eu-central-1
-                        # instance_type: t2.xlarge
-                        instance_type: t2.micro
+                        instance_type: t2.xlarge
+                        # instance_type: t2.micro
                         ami: ami-3f1bd150
                         subnet_id: subnet-18fd8970
                         # elastic_ip: 52.58.166.63
                         security_groups: sg-aad62ec1
-                        ebs_size: 8
+                        ebs_size: 100
                         ebs_type: gp2
                         ebs_delete_on_termination: true
                         ebs_optimized: false

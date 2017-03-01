@@ -7,6 +7,11 @@ class puphpet::server {
 
   $server = $puphpet::params::hiera['server']
 
+  host { $fqdn:
+    ensure       => 'present',
+    ip           => '127.0.0.1',
+  }
+
   each( ['puppet', 'www-data', 'www-user'] ) |$group| {
     if ! defined(Group[$group]) {
       group { $group:

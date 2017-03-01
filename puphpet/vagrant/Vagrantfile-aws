@@ -56,6 +56,27 @@ machines.each do |i, machine|
       end
     end
 
+    # BEGIN Landrush (https://github.com/phinze/landrush) configuration
+    # This section will only be triggered if you have installed "landrush"
+    #     vagrant plugin install landrush
+    # if Vagrant.has_plugin?('landrush')
+    #     config.landrush.enable
+    #
+    #     url_basename = machine_id.vm.hostname.sub('api', '')
+    #
+    #     config.landrush.tld = "#{url_basename}"
+    #     config.landrush.host "viewer.#{url_basename}", "#{machine_id.vm.hostname}"
+    #     config.landrush.host "thesaurus.#{url_basename}", "#{machine_id.vm.hostname}"
+    #     config.landrush.host "importeren.#{url_basename}", "#{machine_id.vm.hostname}"
+    #
+    #     # let's use the Google free DNS
+    #     config.landrush.upstream '8.8.8.8'
+    #     config.landrush.guest_redirect_dns = false
+    #     # config.landrush.host_redirect_dns = true
+    # end
+    # END Landrush configuration
+
+
     sync_folders = !provider['synced_folder'].nil? ? provider['synced_folder'] : { }
 
     sync_folders.each do |i, folder|
@@ -98,7 +119,7 @@ machines.each do |i, machine|
 
     machine_id.vm.provision :shell do |s|
       s.path = 'puphpet/shell/execute-files.sh'
-      s.args = ['exec-once', 'exec-always']
+      s.args = ['exec-once', 'exec-always', "#{machine_id.vm.hostname}"]
     end
     machine_id.vm.provision :shell, run: 'always' do |s|
       s.path = 'puphpet/shell/execute-files.sh'

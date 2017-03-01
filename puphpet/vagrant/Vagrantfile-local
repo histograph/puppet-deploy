@@ -70,10 +70,12 @@ machines.each do |i, machine|
     if Vagrant.has_plugin?('landrush')
         config.landrush.enable
 
-        config.landrush.tld = 'histograph.local'
-        config.landrush.host 'viewer.histograph.local', 'api.histograph.local'
-        config.landrush.host 'thesaurus.histograph.local', 'api.histograph.local'
-        config.landrush.host 'importeren.histograph.local', 'api.histograph.local'
+        url_basename = machine_id.vm.hostname.sub('api', '')
+
+        config.landrush.tld = "#{url_basename}"
+        config.landrush.host "viewer.#{url_basename}", "#{machine_id.vm.hostname}"
+        config.landrush.host "thesaurus.#{url_basename}", "#{machine_id.vm.hostname}"
+        config.landrush.host "importeren.#{url_basename}", "#{machine_id.vm.hostname}"
 
         # let's use the Google free DNS
         config.landrush.upstream '8.8.8.8'

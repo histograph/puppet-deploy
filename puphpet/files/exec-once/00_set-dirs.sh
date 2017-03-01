@@ -6,7 +6,7 @@ echo "----%%%%% INSTALLING HISTOGRAPH DIRS %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
-#set -x
+# set -x
 source $(dirname $0)/set-vars "${1}"
 
 # apt-get update
@@ -42,3 +42,5 @@ then
   mkdir -p ${RUN_DIR}
   chown ${MYUSER}:${MYUSER} ${RUN_DIR}
 fi
+
+# set +x

@@ -84,287 +84,287 @@ vagrantfile:
         https: ''
         ftp: ''
         no_proxy: ''
-    server:
-        install: '1'
-        packages:
-          - zip
-          - unzip
-    users_groups:
-        install: '1'
-        groups:
-            - histograph
-        users:
-            - 'histograph:histograph'
-    locale:
-        install: '1'
-        settings:
-            default_locale: en_US.UTF-8
-            locales:
-                - en_GB.UTF-8
-                - en_US.UTF-8
-                - nl_NL.UTF-8
-            timezone: Europe/Amsterdam
-    firewall:
-        install: '1'
-        rules:
-          fr_cqfgv4r494fr:
-            port:
-                - 3000
-            priority: '200'
-            proto: tcp
-            action: accept
-    cron:
-        install: '1'
-        jobs: {  }
-    nginx:
-        install: '1'
-        settings:
-            version: present
-            default_vhost: 0
-            proxy_buffers: '4 256k'
-            proxy_buffer_size: 128k
-            proxy_connect_timeout: 600s
-            proxy_send_timeout: 600s
-            proxy_read_timeout: 600s
-            names_hash_bucket_size: 128
-        upstreams: {  }
-        vhosts:
-            thesaurus_histograph:
-                server_name: thesaurus.erfgeo.nl
-                server_aliases:
-                    - thesaurus.histograph.local
-                www_root: /var/www/thesaurus
-                listen_port: '80'
-                client_max_body_size: 1m
-                ssl: '0'
-                ssl_cert: ''
-                ssl_key: ''
-                ssl_port: '443'
-                ssl_protocols: ''
-                ssl_ciphers: ''
-                rewrite_to_https: '1'
-                spdy: '1'
-                locations:
-                  images_files_th:
-                    priority: 505
-                    location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
-                    location_custom_cfg:
-                      expires: 'max'
-                      log_not_found: 'off'
-                  index_php_th:
-                    priority: 520
-                    location: '/'
-                    try_files:
-                      - $uri
-                      - $uri/
-                      - /index.php
-                  all_php_th:
-                    priority: 530
-                    location: '~* \.php$'
-                    fastcgi: 'unix:/var/run/php/php-fpm.sock'
-                    fastcgi_param:
-                      SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
-                      HTTPS: 'off'
-                    fastcgi_split_path: '^(.+\.php)(/.*)$'
-            importeren_histograph:
-                server_name: importeren.erfgeo.nl
-                server_aliases:
-                    - importeren.histograph.local
-                www_root: /var/www/importeren/web
-                listen_port: '80'
-                client_max_body_size: 1m
-                ssl: '0'
-                ssl_cert: ''
-                ssl_key: ''
-                ssl_port: '443'
-                ssl_protocols: ''
-                ssl_ciphers: ''
-                rewrite_to_https: '1'
-                spdy: '1'
-                locations:
-                  images_files_ih:
-                    priority: 505
-                    location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
-                    location_custom_cfg:
-                      expires: 'max'
-                      log_not_found: 'off'
-                  direct_files_ih:
-                    priority: 510
-                    location: '/'
-                    try_files:
-                      - $uri
-                      - /index.php$is_args$args
-                  index_php_ih:
-                    priority: 520
-                    location: '~ ^/index\.php(/|$)'
-                    fastcgi: 'unix:/var/run/php/php-fpm.sock'
-                    fastcgi_param:
-                      SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
-                      HTTPS: 'off'
-                    fastcgi_split_path: '^(.+\.php)(/.*)$'
-                    # include:
-                    #   - fastcgi_params
-                  all_php_ih:
-                    priority: 530
-                    location: '~ \.php$'
-                    location_custom_cfg:
-                      return: 404
-            viewer_histograph:
-                server_name: viewer.histograph.io
-                server_aliases:
-                    - viewer.histograph.local
-                www_root: /var/www/viewer
-                listen_port: '80'
-                client_max_body_size: 1m
-                ssl: '0'
-                ssl_cert: LETSENCRYPT
-                ssl_key: LETSENCRYPT
-                ssl_port: '443'
-                ssl_protocols: ''
-                ssl_ciphers: ''
-                rewrite_to_https: '1'
-                spdy: '1'
-        proxies: {  }
-    letsencrypt:
-        install: '1'
-        settings:
-            email: histograph@api.histograph.io
-        domains: {  }
-    php:
-        install: '1'
-        settings:
-            version: '7.0'
-        modules:
-            php:
-                - cli
-                - intl
-                - xml
-                - curl
-                - mbstring
-                - zip
-            pear: {  }
-            pecl: {  }
-        ini:
-            display_errors: 'On'
-            error_reporting: '-1'
-            session.save_path: /var/lib/php/session
-            date.timezone: UTC
-            short_open_tag: 'On'
-        fpm_ini:
-            error_log: /var/log/php-fpm.log
-            # short_open_tag: On
-        fpm_pools:
-            phpfp_l5al3m7gvfde:
-                ini:
-                    prefix: www
-                    listen: '/var/run/php/php-fpm.sock'
-                    security.limit_extensions: .php
-                    user: www-user
-                    group: www-data
-        composer: '1'
-        composer_home: ''
-    nodejs:
-        install: '1'
-        settings:
-            version: '6'
-        npm_packages:
-          - forever
-          - npm-clean
-          - npm-check-updates
-    redis:
-        install: '1'
-        settings:
-            port: '6379'
-    elastic_search:
-        install: '1'
-        settings:
-            version: 5.2.0
-            java_install: true
-            restart_on_change: true
-            config:
-              action.auto_create_index: false
-            # plugins:
-            #   royrusso/elasticsearch-HQ:
-            #     instances: histograph
-        instances:
-            esi_qw50fjtgvbjn:
-                name: histograph
-                heap_size: 1g
-    neo4j:
-        install: '1'
-        settings:
-            version: 3.1.1
-            edition: community
-            install_java: false
-            dbms_security_auth_enabled: false
-            dbms_logs_http_enabled: false
-            dbms_logs_http_rotation_keep_number: 5
-            dbms_unmanaged_extension_classes:
-              org.waag.histograph.plugins: '/histograph'
-            # install_prefix:
-            # allow_remote_connections: false
-            # address: 0.0.0.0
-    java:
-        install: '1'
-        settings:
-            # version: 3.1.0
-            distribution: 'jdk'
-    mysql:
-        install: '1'
-        settings:
-            version: '5.7'
-            root_password: root_password
-            override_options: {  }
-        adminer: 0
-        users:
-            histograph:
-                name: pipo_username
-                password: pipo_userpassword
-        databases:
-            histograph:
-                name: pipo_db
-                sql: ''
-        grants:
-            mysqlng_2ecqbzfaqb15:
-                user: pipo_username
-                table: 'pipo_db.*'
-                privileges:
-                    - ALL
+server:
+    install: '1'
+    packages:
+      - zip
+      - unzip
+users_groups:
+    install: '1'
+    groups:
+        - histograph
+    users:
+        - 'histograph:histograph'
+locale:
+    install: '1'
+    settings:
+        default_locale: en_US.UTF-8
+        locales:
+            - en_GB.UTF-8
+            - en_US.UTF-8
+            - nl_NL.UTF-8
+        timezone: Europe/Amsterdam
+firewall:
+    install: '1'
+    rules:
+      fr_cqfgv4r494fr:
+        port:
+            - 3000
+        priority: '200'
+        proto: tcp
+        action: accept
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    install: '1'
+    settings:
+        version: present
+        default_vhost: 0
+        proxy_buffers: '4 256k'
+        proxy_buffer_size: 128k
+        proxy_connect_timeout: 600s
+        proxy_send_timeout: 600s
+        proxy_read_timeout: 600s
+        names_hash_bucket_size: 128
+    upstreams: {  }
+    vhosts:
+        thesaurus_histograph:
+            server_name: thesaurus.erfgeo.nl
+            server_aliases:
+                - thesaurus.histograph.local
+            www_root: /var/www/thesaurus
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+              images_files_th:
+                priority: 505
+                location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                location_custom_cfg:
+                  expires: 'max'
+                  log_not_found: 'off'
+              index_php_th:
+                priority: 520
+                location: '/'
+                try_files:
+                  - $uri
+                  - $uri/
+                  - /index.php
+              all_php_th:
+                priority: 530
+                location: '~* \.php$'
+                fastcgi: 'unix:/var/run/php/php-fpm.sock'
+                fastcgi_param:
+                  SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
+                  HTTPS: 'off'
+                fastcgi_split_path: '^(.+\.php)(/.*)$'
+        importeren_histograph:
+            server_name: importeren.erfgeo.nl
+            server_aliases:
+                - importeren.histograph.local
+            www_root: /var/www/importeren/web
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+              images_files_ih:
+                priority: 505
+                location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                location_custom_cfg:
+                  expires: 'max'
+                  log_not_found: 'off'
+              direct_files_ih:
+                priority: 510
+                location: '/'
+                try_files:
+                  - $uri
+                  - /index.php$is_args$args
+              index_php_ih:
+                priority: 520
+                location: '~ ^/index\.php(/|$)'
+                fastcgi: 'unix:/var/run/php/php-fpm.sock'
+                fastcgi_param:
+                  SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
+                  HTTPS: 'off'
+                fastcgi_split_path: '^(.+\.php)(/.*)$'
+                # include:
+                #   - fastcgi_params
+              all_php_ih:
+                priority: 530
+                location: '~ \.php$'
+                location_custom_cfg:
+                  return: 404
+        viewer_histograph:
+            server_name: viewer.histograph.io
+            server_aliases:
+                - viewer.histograph.local
+            www_root: /var/www/viewer
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+    proxies: {  }
+letsencrypt:
+    install: '1'
+    settings:
+        email: histograph@api.histograph.io
+    domains: {  }
+php:
+    install: '1'
+    settings:
+        version: '7.0'
+    modules:
+        php:
+            - cli
+            - intl
+            - xml
+            - curl
+            - mbstring
+            - zip
+        pear: {  }
+        pecl: {  }
+    ini:
+        display_errors: 'On'
+        error_reporting: '-1'
+        session.save_path: /var/lib/php/session
+        date.timezone: UTC
+        short_open_tag: 'On'
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+        # short_open_tag: On
+    fpm_pools:
+        phpfp_l5al3m7gvfde:
+            ini:
+                prefix: www
+                listen: '/var/run/php/php-fpm.sock'
+                security.limit_extensions: .php
+                user: www-user
+                group: www-data
+    composer: '1'
+    composer_home: ''
+nodejs:
+    install: '1'
+    settings:
+        version: '6'
+    npm_packages:
+      - forever
+      - npm-clean
+      - npm-check-updates
+redis:
+    install: '1'
+    settings:
+        port: '6379'
+elastic_search:
+    install: '1'
+    settings:
+        version: 5.2.0
+        java_install: true
+        restart_on_change: true
+        config:
+          action.auto_create_index: false
+        # plugins:
+        #   royrusso/elasticsearch-HQ:
+        #     instances: histograph
+    instances:
+        esi_qw50fjtgvbjn:
+            name: histograph
+            heap_size: 1g
+neo4j:
+    install: '1'
+    settings:
+        version: 3.1.1
+        edition: community
+        install_java: false
+        dbms_security_auth_enabled: false
+        dbms_logs_http_enabled: false
+        dbms_logs_http_rotation_keep_number: 5
+        dbms_unmanaged_extension_classes:
+          org.waag.histograph.plugins: '/histograph'
+        # install_prefix:
+        # allow_remote_connections: false
+        # address: 0.0.0.0
+java:
+    install: '1'
+    settings:
+        # version: 3.1.0
+        distribution: 'jdk'
+mysql:
+    install: '1'
+    settings:
+        version: '5.7'
+        root_password: root_password
+        override_options: {  }
+    adminer: 0
+    users:
+        histograph:
+            name: pipo_username
+            password: pipo_userpassword
+    databases:
+        histograph:
+            name: pipo_db
+            sql: ''
+    grants:
+        mysqlng_2ecqbzfaqb15:
+            user: pipo_username
+            table: 'pipo_db.*'
+            privileges:
+                - ALL
 
-    histograph:
-      directories:
-        src_home: "/home/histograph/src"
-        dev_home: "/home/vagrant/src"
-        uploads_dir: "/uploads"
-        neo_plugin_dir: "/var/lib/neo4j/plugins"
-        run_dir: "/var/run/histograph"
-        log_dir: "/var/log/histograph"
-      users:
-        system_user: histograph
-        api_user: histograph
-        api_password: histograph
-        import_user: Menno
-        import_password: histograph
-      api:
-        base_port: 3000
-      core:
-        batchSize: 1500
-        batchTimeout: 1500
-      redis:
-        maxQueueSize: 50000
-      git:
-        branch: "puppetdeploy"
-        tag: ""
-      es:
-        page_size: 1000
-        shard_nr: 1
-        replica_nr: 0
-        timeout: 600000
-      aws:
-        key: ''
-        secret: ''
-        bucket: ''
-        region: ''
+histograph:
+  directories:
+    src_home: "/home/histograph/src"
+    dev_home: "/home/vagrant/src"
+    uploads_dir: "/uploads"
+    neo_plugin_dir: "/var/lib/neo4j/plugins"
+    run_dir: "/var/run/histograph"
+    log_dir: "/var/log/histograph"
+  users:
+    system_user: histograph
+    api_user: histograph
+    api_password: histograph
+    import_user: Menno
+    import_password: histograph
+  api:
+    base_port: 3000
+  core:
+    batchSize: 1500
+    batchTimeout: 1500
+  redis:
+    maxQueueSize: 50000
+  git:
+    branch: "puppetdeploy"
+    tag: ""
+  es:
+    page_size: 1000
+    shard_nr: 1
+    replica_nr: 0
+    timeout: 600000
+  aws:
+    key: ''
+    secret: ''
+    bucket: ''
+    region: ''
 
 
 

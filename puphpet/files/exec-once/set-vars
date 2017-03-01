@@ -157,22 +157,24 @@ install_source()
 
   if [ "${MY_DEST} " == " " ]
   then
-    export MY_DEST="${MY_MODULE}"
+    export MY_PLACE="${MY_MODULE}"
+  else
+    export MY_PLACE="${MY_DEST}"
   fi
 
-  if [ ! -d ${SRC_HOME}/${MY_MODULE} ]
+  if [ ! -d ${SRC_HOME}/${MY_PLACE} ]
   then
     # clone master branch
-    sudo su $MYUSER -c "git clone ${MY_REPO}/${MY_MODULE} ${MY_DEST}"
+    sudo su $MYUSER -c "git clone ${MY_REPO}/${MY_MODULE} ${MY_PLACE}"
     if [ ! "${MY_BRANCH} " == " " ]
     then
-      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_DEST}/ checkout ${MY_BRANCH}"
+      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_PLACE}/ checkout ${MY_BRANCH}"
     elif [ ! "${MY_TAG} " == " " ]
     then
-      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_DEST}/ checkout tags/${MY_TAG}"
+      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_PLACE}/ checkout tags/${MY_TAG}"
     fi
   else
-    sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_DEST}/ pull"
+    sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_PLACE}/ pull"
   fi
 
 }
@@ -181,7 +183,7 @@ install_nodecode()
 {
   install_source
   # install node dependencies
-  cd ${SRC_HOME}/${MY_MODULE}
+  cd ${SRC_HOME}/${MY_PLACE}
   sudo su $MYUSER -c "${NPM_INSTALL}"
 
 }
@@ -190,8 +192,8 @@ install_phpcode()
 {
   install_source
   # install php dependencies
-  cd ${SRC_HOME}/${MY_MODULE}
-  sudo su $MYUSER -c "composer install"
+  cd ${SRC_HOME}/${MY_PLACE}
+  sudo su $MYUSER -c "composer install" > /dev/null
 
 }
 
@@ -202,9 +204,10 @@ install_data()
 
   install_nodecode
 
-  export MY_MODULE=data
-  export MY_REPO="https://github.com/erfgoed-en-locatie"
-  export MY_DEST=e_l_data
+  export MY_MODULE=e_l_data
+  # export MY_DEST=e_l_data
+  # export MY_REPO="https://github.com/histograph"
+
 
   install_nodecode
 }

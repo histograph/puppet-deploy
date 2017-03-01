@@ -48,7 +48,7 @@ dbms.jvm.additional=<%= scope['neo4j::dbms_jvm_additional_disable_explicit_gc'] 
 #dbms.jvm.additional=-Dcom.sun.management.jmxremote.access.file=<%= scope['neo4j::config_dir'] %>/<%= scope['neo4j::dbms_jvm_additional_jmxremote_access_file'] %>
 
 # Some systems cannot discover host name automatically, and need this line configured:
-dbms.jvm.additional=-Djava.rmi.server.hostname=<%= scope['neo4j::dbms_jvm_additional_rmi_server_hostname'] %>
+#dbms.jvm.additional=-Djava.rmi.server.hostname=<%= scope['neo4j::dbms_jvm_additional_rmi_server_hostname'] %>
 
 # Expand Diffie Hellman (DH) key size from default 1024 to 2048 for DH-RSA cipher suites used in server TLS handshakes.
 # This is to protect the server from any potential passive eavesdropping.
