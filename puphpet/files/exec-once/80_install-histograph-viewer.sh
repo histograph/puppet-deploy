@@ -17,7 +17,7 @@ export MY_WEBDIR="$(read_params nginx.vhosts.viewer_histograph.www_root)"
 install_nodecode
 clean_webdir
 
-sudo su $MYUSER -c "HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run production"
+sudo su $MYUSER -c "npm run prebuild && HISTOGRAPH_CONFIG=\"${SRC_HOME}/config.yaml\" npm run production"
 
 cp -r config.json index.html css dist js images fonts ${MY_WEBDIR}
 

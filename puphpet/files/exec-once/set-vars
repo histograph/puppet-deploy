@@ -46,10 +46,10 @@ export MY_TAG="$(read_params  histograph.git.tag)"
 
 export REDISMAXQUEUESIZE="$(read_params  histograph.redis.maxQueueSize)"
 
-# export DATA_REPOSITORIES="bag bag-geonames-tgn cshapes geonames geonames-tgn nwb tgn whosonfirst"
+export DATA_REP_TODOWNLOAD="geonames nwb tgn bag"
 # export DATA_REPOSITORIES="geonames nwb tgn whosonfirst"
-export DATA_REPOSITORIES="geonames tgn whosonfirst"
-export EL_DATA_REPOSITORIES="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
+export DATA_REP_ONDISK="bag-geonames-tgn cshapes geonames-tgn whosonfirst"
+export EL_DATA_REP="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
 
 export PAGE_SIZE="$(read_params  histograph.es.page_size)"
 export SHARD_NR="$(read_params  histograph.es.shard_nr)"
@@ -184,7 +184,7 @@ install_nodecode()
   install_source
   # install node dependencies
   cd ${SRC_HOME}/${MY_PLACE}
-  sudo su $MYUSER -c "${NPM_INSTALL}"
+  sudo su $MYUSER -c "${NPM_INSTALL}" 2>/dev/null
 
 }
 
@@ -208,8 +208,7 @@ install_data()
   # export MY_DEST=e_l_data
   # export MY_REPO="https://github.com/histograph"
 
-
-  install_nodecode
+  install_source
 }
 
 clean_webdir()
