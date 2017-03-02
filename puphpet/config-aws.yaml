@@ -47,6 +47,5 @@ nginx:
             server_aliases:
                 - viewer.histograph.aws
 elastic_search:
-    instances:
-        esi_qw50fjtgvbjn:
-            heap_size: 4g
+    settings:
+        heap_size: 4g

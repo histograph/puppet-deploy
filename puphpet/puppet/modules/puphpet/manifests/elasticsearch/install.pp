@@ -25,11 +25,25 @@ class puphpet::elasticsearch::install
     }
   }
 
-  $merged = merge($settings, {
-    'java_install' => false,
-    'manage_repo'  => true,
-    'repo_version' => '5.x',
-  })
+  if array_true($settings, 'heap_size') {
+
+    $heap_size = $settings['heap_size']
+    $mergedsettings = merge(delete($settings,'heap_size'), { "jvm_options" => ["-Xms$heap_size", "-Xmx$heap_size"]})
+
+    $merged = merge($mergedsettings, {
+      'java_install' => false,
+      'manage_repo'  => true,
+      'repo_version' => '5.x',
+    })
+  }else{
+    $merged = merge($settings, {
+      'java_install' => false,
+      'manage_repo'  => true,
+      'repo_version' => '5.x',
+    })
+  }
+
+  notify{"Dump of ES settings: ${merged}": }
 
   # create_resources('class', { 'elasticsearch' => $merged }, { 'require' => Class['java'] })
   create_resources('class', { 'elasticsearch' => $merged })
@@ -42,19 +56,7 @@ class puphpet::elasticsearch::install
 
   each( $instances ) |$key, $instance| {
     $name = $instance['name']
-
-    if array_true($instance, 'heap_size') {
-      $heap_size = $instance['heap_size']
-
-      $mergedinstance = merge(delete($instance,'heap_size'), { "init_defaults" => {
-        'ES_JAVA_OPTS' => "\"-Xms$heap_size -Xmx$heap_size\"",
-      }})
-
-      create_resources( elasticsearch::instance, { "${name}" => $mergedinstance })
-
-    }else{
-      create_resources( elasticsearch::instance, { "${name}" => $instance })
-    }
+    create_resources( elasticsearch::instance, { "${name}" => $instance })
   }
 
 }

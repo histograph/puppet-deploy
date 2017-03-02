@@ -1,39 +1,13 @@
 {
-  "name": "elasticsearch-elasticsearch",
-  "version": "0.15.1",
-  "source": "https://github.com/elastic/puppet-elasticsearch",
-  "author": "elasticsearch",
-  "license": "Apache-2.0",
+  "name": "elastic-elasticsearch",
+  "version": "5.1.0",
+  "author": "elastic",
   "summary": "Module for managing and configuring Elasticsearch nodes",
-  "description": "Module for managing and configuring Elasticsearch nodes",
+  "license": "Apache-2.0",
+  "source": "https://github.com/elastic/puppet-elasticsearch",
   "project_page": "https://github.com/elastic/puppet-elasticsearch",
   "issues_url": "https://github.com/elastic/puppet-elasticsearch/issues",
-  "dependencies": [
-    {
-      "name": "puppetlabs/apt",
-      "version_requirement": ">= 2.0.0 < 3.0.0"
-    },
-    {
-      "name": "richardc/datacat",
-      "version_requirement": ">= 0.6.2 < 1.0.0"
-    },
-    {
-      "name": "puppetlabs/java",
-      "version_requirement": ">= 1.0.0 < 2.0.0"
-    },
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.6.0 < 5.0.0"
-    },
-    {
-      "name": "thias/sysctl",
-      "version_requirement": ">= 1.0.6 < 2.0.0"
-    },
-    {
-      "name": "ceritsc/yum",
-      "version_requirement": ">= 0.9.6"
-    }
-  ],
+  "description": "Module for managing and configuring Elasticsearch nodes",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -70,7 +44,6 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -78,7 +51,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "10.04",
         "12.04",
         "14.04",
         "16.04"
@@ -87,15 +59,15 @@
     {
       "operatingsystem": "OpenSuSE",
       "operatingsystemrelease": [
-        "12",
-        "13"
+        "42.1",
+        "42.2"
       ]
     },
     {
       "operatingsystem": "SLES",
       "operatingsystemrelease": [
-        "12.0",
-        "12.1"
+        "12.1",
+        "12.2"
       ]
     }
   ],
@@ -108,5 +80,12 @@
       "name": "puppet",
       "version_requirement": ">=3.8.0 <5.0.0"
     }
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/apt","version_requirement":">= 2.0.0 < 3.0.0"},
+    {"name":"richardc/datacat","version_requirement":">= 0.6.2 < 1.0.0"},
+    {"name":"puppetlabs/java","version_requirement":">= 1.0.0 < 2.0.0"},
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 5.0.0"},
+    {"name":"puppet/yum","version_requirement":">= 0.9.6"}
   ]
 }

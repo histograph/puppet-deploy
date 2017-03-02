@@ -280,6 +280,7 @@ elastic_search:
     settings:
         version: 5.2.0
         java_install: true
+        heap_size: 1g
         restart_on_change: true
         config:
           action.auto_create_index: false
@@ -289,7 +290,6 @@ elastic_search:
     instances:
         esi_qw50fjtgvbjn:
             name: histograph
-            heap_size: 1g
 neo4j:
     install: '1'
     settings:
@@ -365,6 +365,32 @@ histograph:
     secret: ''
     bucket: ''
     region: ''
+  data:
+    doDownload: false
+    doImport: false
+    repositories:
+      toDownload:
+        - geonames
+        - nwb
+        - tgn
+        - bag
+      onDisk:
+        - 'bag-geonames-tgn'
+        - cshapes
+        - 'geonames-tgn'
+        - whosonfirst
+      erfLoc:
+        - Departementen
+        - 'atlas-verstedelijking'
+        - gemeentegeschiedenis
+        - kloeke
+        - poorterboeken
+        - 'voc-opvarenden'
+        - carnaval
+        - ilvb
+        - pleiades
+        - 'verdwenen-dorpen'
+
 
 
 
