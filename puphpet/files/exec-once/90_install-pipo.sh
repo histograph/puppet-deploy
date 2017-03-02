@@ -18,7 +18,7 @@ MY_WEBDIR=${MY_WEBDIR%/web}
 # install e&L pipo
 install_phpcode
 
-cd ${SRC_HOME}/${MY_DEST}
+cd ${SRC_HOME}/${MY_PLACE}
 
 mysql --user="$(read_params mysql.users.histograph.name)" \
       --password="$(read_params mysql.users.histograph.password)" \

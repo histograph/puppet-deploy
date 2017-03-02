@@ -166,12 +166,15 @@ install_source()
   then
     # clone master branch
     sudo su $MYUSER -c "git clone ${MY_REPO}/${MY_MODULE} ${MY_PLACE}"
-    if [ ! "${MY_BRANCH} " == " " ]
+    if [ "${MY_REPO} " == "https://github.com/histograph " ]
     then
-      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_PLACE}/ checkout ${MY_BRANCH}"
-    elif [ ! "${MY_TAG} " == " " ]
-    then
-      sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_PLACE}/ checkout tags/${MY_TAG}"
+      if [ ! "${MY_BRANCH} " == " " ]
+      then
+        sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_PLACE}/ checkout ${MY_BRANCH}"
+      elif [ ! "${MY_TAG} " == " " ]
+      then
+        sudo su $MYUSER -c "git  -C ${SRC_HOME}/${MY_PLACE}/ checkout tags/${MY_TAG}"
+      fi
     fi
   else
     sudo su $MYUSER -c "git -C ${SRC_HOME}/${MY_PLACE}/ pull"
@@ -193,7 +196,7 @@ install_phpcode()
   install_source
   # install php dependencies
   cd ${SRC_HOME}/${MY_PLACE}
-  sudo su $MYUSER -c "composer install" > /dev/null
+  sudo su $MYUSER -c "composer install" 2> /dev/null
 
 }
 

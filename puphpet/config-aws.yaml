@@ -16,14 +16,14 @@ vagrantfile:
                         # instance_type: t2.micro
                         ami: ami-3f1bd150
                         subnet_id: subnet-18fd8970
-                        # elastic_ip: 52.58.166.63
+                        elastic_ip: 35.157.220.235
                         security_groups: sg-aad62ec1
                         ebs_size: 100
                         ebs_type: gp2
                         ebs_delete_on_termination: true
                         ebs_optimized: false
                         monitoring:
-                        # associate_public_ip: true
+                        associate_public_ip: true
                         package_tags:
                         elb:
                         terminate_on_shutdown: true
@@ -34,3 +34,19 @@ vagrantfile:
                 #     vflm_oevdf16x1rdc:
                 #         source: ./server/conf
                 #         target: /aws-conf
+
+nginx:
+    vhosts:
+        thesaurus_histograph:
+            server_aliases:
+                - thesaurus.histograph.aws
+        importeren_histograph:
+            server_aliases:
+                - importeren.histograph.aws
+        viewer_histograph:
+            server_aliases:
+                - viewer.histograph.aws
+elastic_search:
+    instances:
+        esi_qw50fjtgvbjn:
+            heap_size: 4g

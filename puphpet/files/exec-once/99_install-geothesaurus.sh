@@ -21,7 +21,7 @@ MY_WEBDIR=${MY_WEBDIR%/web}
 install_source
 clean_webdir
 
-cd ${SRC_HOME}/${MY_DEST}
+cd ${SRC_HOME}/${MY_PLACE}
 
 cp -r application assets system .htaccess index.php ${MY_WEBDIR}
 
