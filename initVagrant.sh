@@ -34,17 +34,17 @@ then
     vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
   fi
 
-  export VAGRANT_DEFAULT_PROVIDER=aws && echo VAGRANT_DEFAULT_PROVIDER=$VAGRANT_DEFAULT_PROVIDER!!
+  export VAGRANT_TARGET=aws && echo VAGRANT_TARGET=$VAGRANT_TARGET!!
   export AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials | grep -i AWS_ACCESS_KEY_ID | tr -d ' ' | cut -d'=' -f2) && echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID!!
   export AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials | grep -i AWS_SECRET_ACCESS_KEY | tr -d ' ' | cut -d'=' -f2) && echo AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY!!
 elif [ "${MY_CMD}" = "LOCAL" ]
 then
   echo "Resetting Vagrant to local environment and preparing repositories"
-  unset VAGRANT_DEFAULT_PROVIDER
+  unset VAGRANT_TARGET
   unset AWS_ACCESS_KEY_ID
   unset AWS_SECRET_ACCESS_KEY
 
-  export VAGRANT_DEFAULT_PROVIDER=local && echo VAGRANT_DEFAULT_PROVIDER=$VAGRANT_DEFAULT_PROVIDER!!
+  export VAGRANT_TARGET=local && echo VAGRANT_TARGET=$VAGRANT_TARGET!!
 
   MY_BOX=$(grep 'box: ' puphpet/config.yaml | sed 's/.*box: \(.*\)/\1/g')
   MY_BOXVERSION=$(grep 'box_version: ' puphpet/config.yaml | sed "s/.*box_version: '\(.*\)'/\1/g")

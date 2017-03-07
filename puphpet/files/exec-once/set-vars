@@ -59,6 +59,7 @@ export PAGE_SIZE="$(read_params  histograph.es.page_size)"
 export SHARD_NR="$(read_params  histograph.es.shard_nr)"
 export REPLICA_NR="$(read_params  histograph.es.replica_nr)"
 export ES_TIMEOUT="$(read_params  histograph.es.timeout)"
+export ES_PRECISION="$(read_params  histograph.es.precision)"
 
 export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 

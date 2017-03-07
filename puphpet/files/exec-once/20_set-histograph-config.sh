@@ -46,6 +46,7 @@ elasticsearch:
   number_of_shards: ${SHARD_NR}
   number_of_replicas: ${REPLICA_NR}
   requestTimeoutMs: ${ES_TIMEOUT}
+  precision: ${ES_PRECISION}
 
 neo4j:
   host: 127.0.0.1

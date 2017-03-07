@@ -9,7 +9,7 @@ require "#{dir}/puphpet/ruby/puppet.rb"
 
 configValues = YAML.load_file("#{dir}/puphpet/config.yaml")
 
-provider = ENV['VAGRANT_DEFAULT_PROVIDER'] ? ENV['VAGRANT_DEFAULT_PROVIDER'] : 'local'
+provider = ENV['VAGRANT_TARGET'] ? ENV['VAGRANT_TARGET'] : 'local'
 if File.file?("#{dir}/puphpet/config-#{provider}.yaml")
   custom = YAML.load_file("#{dir}/puphpet/config-#{provider}.yaml")
   configValues.deep_merge!(custom)
