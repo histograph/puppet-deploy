@@ -374,7 +374,7 @@ histograph:
         - geonames
         - nwb
         - tgn
-        - bag
+        # - bag
       onDisk:
         - 'bag-geonames-tgn'
         - cshapes

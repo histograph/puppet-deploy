@@ -52,7 +52,7 @@ export DATA_REP_TODOWNLOAD="$(read_params  histograph.data.repositories.toDownlo
 export DATA_REP_ONDISK="$(read_params  histograph.data.repositories.onDisk | tr -d '[],"\n')"
 # export DATA_REP_ONDISK="bag-geonames-tgn cshapes geonames-tgn whosonfirst"
 
-export EL_DATA_REP="$(read_params  histograph.repositories.data.erfLoc | tr -d '[],"\n')"
+export EL_DATA_REP="$(read_params  histograph.data.repositories.erfLoc | tr -d '[],"\n')"
 # export EL_DATA_REP="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
 
 export PAGE_SIZE="$(read_params  histograph.es.page_size)"
