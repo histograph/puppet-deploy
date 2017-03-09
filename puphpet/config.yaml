@@ -293,7 +293,7 @@ elastic_search:
 neo4j:
     install: '1'
     settings:
-        version: 3.1.1
+        version: 3.1.2
         edition: community
         install_java: false
         dbms_security_auth_enabled: false
@@ -360,7 +360,7 @@ histograph:
     shard_nr: 1
     replica_nr: 0
     timeout: 1800000
-    precision: '3m'
+    precision: '10m'
   aws:
     key: ''
     secret: ''

@@ -16,7 +16,9 @@ export MY_REPO="https://github.com/histograph"
 # install histograph-import
 install_nodecode
 
-if [ "$(read_params  histograph.repositories.data.doImport) " == "true " ]
+if [ "$(read_params  histograph.data.doImport) " == "true " ]
 then
-  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REP_ONDISK} ${DATA_REP_TODOWNLOAD} ${EL_DATA_REP}"
+  THE_REPOS="${DATA_REP_ONDISK} ${DATA_REP_TODOWNLOAD} ${EL_DATA_REP}"
+  echo "Import repos ${THE_REPOS}"
+  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${THE_REPOS}"
 fi
