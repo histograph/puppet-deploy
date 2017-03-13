@@ -288,7 +288,7 @@ elastic_search:
         #   royrusso/elasticsearch-HQ:
         #     instances: histograph
     instances:
-        esi_qw50fjtgvbjn:
+        histograph_instance:
             name: histograph
 neo4j:
     install: '1'

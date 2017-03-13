@@ -55,11 +55,12 @@ export DATA_REP_ONDISK="$(read_params  histograph.data.repositories.onDisk | tr 
 export EL_DATA_REP="$(read_params  histograph.data.repositories.erfLoc | tr -d '[],"\n')"
 # export EL_DATA_REP="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
 
-export PAGE_SIZE="$(read_params  histograph.es.page_size)"
-export SHARD_NR="$(read_params  histograph.es.shard_nr)"
-export REPLICA_NR="$(read_params  histograph.es.replica_nr)"
-export ES_TIMEOUT="$(read_params  histograph.es.timeout)"
-export ES_PRECISION="$(read_params  histograph.es.precision)"
+export PAGE_SIZE="$(read_params histograph.es.page_size)"
+export SHARD_NR="$(read_params histograph.es.shard_nr)"
+export REPLICA_NR="$(read_params histograph.es.replica_nr)"
+export ES_TIMEOUT="$(read_params histograph.es.timeout)"
+export ES_PRECISION="$(read_params histograph.es.precision)"
+export ES_INSTNAME="$(read_params elastic_search.instances.histograph_instanceß.name)"
 
 export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
