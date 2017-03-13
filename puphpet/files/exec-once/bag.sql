@@ -1,0 +1,30 @@
+\c postgres
+
+DROP DATABASE IF EXISTS bag;
+
+CREATE DATABASE bag
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.UTF-8'
+    LC_CTYPE = 'en_US.UTF-8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+\c bag
+
+-- Extension: postgis
+
+DROP EXTENSION IF EXISTS postgis CASCADE;
+
+CREATE EXTENSION postgis
+    SCHEMA public;
+
+
+CREATE ROLE kademo WITH
+  NOLOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION;

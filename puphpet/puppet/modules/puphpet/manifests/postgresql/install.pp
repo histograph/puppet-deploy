@@ -68,6 +68,10 @@ class puphpet::postgresql::install
     grants => $grants,
   }
 
+  if array_true($postgresql, 'postgis') {
+    class { 'postgresql::server::postgis': }
+  }
+
   include puphpet::postgresql::php
 
 }

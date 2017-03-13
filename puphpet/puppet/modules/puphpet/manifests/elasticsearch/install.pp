@@ -43,7 +43,7 @@ class puphpet::elasticsearch::install
     })
   }
 
-  notify{"Dump of ES settings: ${merged}": }
+  # notify{"Dump of ES settings: ${merged}": }
 
   # create_resources('class', { 'elasticsearch' => $merged }, { 'require' => Class['java'] })
   create_resources('class', { 'elasticsearch' => $merged })

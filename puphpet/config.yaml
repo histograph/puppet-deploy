@@ -330,7 +330,21 @@ mysql:
             table: 'pipo_db.*'
             privileges:
                 - ALL
-
+postgresql:
+    install: '1'
+    settings:
+        global:
+            encoding: UTF8
+            version: '9.5'
+        server:
+            postgres_password: postgres
+    databases:
+      bag:
+        dbname: bag
+    users: {  }
+    grants:
+    adminer: 0
+    postgis: true
 histograph:
   directories:
     src_home: "/home/histograph/src"

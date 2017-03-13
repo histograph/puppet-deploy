@@ -55,6 +55,9 @@ export DATA_REP_ONDISK="$(read_params  histograph.data.repositories.onDisk | tr 
 export EL_DATA_REP="$(read_params  histograph.data.repositories.erfLoc | tr -d '[],"\n')"
 # export EL_DATA_REP="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
 
+export BAG_PASSWORD="$(read_params  postgresql.settings.server.postgres_password)"
+export BAG_NAME="$(read_params  postgresql.databases.bag.dbname)"
+
 export PAGE_SIZE="$(read_params histograph.es.page_size)"
 export SHARD_NR="$(read_params histograph.es.shard_nr)"
 export REPLICA_NR="$(read_params histograph.es.replica_nr)"
@@ -125,6 +128,12 @@ FOREVER_USER=${MYUSER}
 
 case "\$1" in
     start)
+        if [ ! -d ${RUN_DIR} ]
+        then
+          mkdir -p ${RUN_DIR}
+        fi
+        chown \$FOREVER_USER:\$FOREVER_USER ${RUN_DIR}
+
         su "\$FOREVER_USER" -c "NODE_ENV=production forever start --uid \$FOREVER_UID \$FOREVER_CONFIG"
         RETVAL=\$?
         ;;
@@ -133,6 +142,12 @@ case "\$1" in
         RETVAL=\$?
         ;;
     restart)
+        if [ ! -d ${RUN_DIR} ]
+        then
+          mkdir -p ${RUN_DIR}
+        fi
+        chown \$FOREVER_USER:\$FOREVER_USER ${RUN_DIR}
+
         su "\$FOREVER_USER" -c "NODE_ENV=production forever restart \$FOREVER_UID"
         RETVAL=\$?
         ;;

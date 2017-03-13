@@ -51,6 +51,21 @@ elasticsearch:
 neo4j:
   host: 127.0.0.1
   port: 7474
+data:                                       # Data module options (http://github.com/histograph/data)
+  geonames:
+    countries:
+      - NL
+    extraUris: ./extra-uris.json
+  tgn:
+    parents:
+      - tgn:7016845                         # The Netherlands
+  bag:
+    db:
+      host: localhost
+      port: 5432
+      user: postgres
+      password: ${BAG_PASSWORD}
+      database: ${BAG_NAME}
 HISTOGRAPH
 
 # fi

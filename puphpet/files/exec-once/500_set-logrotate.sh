@@ -2,7 +2,7 @@
 # run as root
 echo
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
-echo "----%%%%% INSTALLING E&L GEOTHESAURUS %%%%%----"
+echo "----%%%%% INSTALLING LOGROTATE %%%%%----"
 echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
