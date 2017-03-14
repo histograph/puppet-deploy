@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # run as root
 echo
-echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
-echo "----%%%%% INSTALLING HISTOGRAPH VIEWER %%%%%----"
-echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
+echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
+echo "  ---%%%%% INSTALLING HISTOGRAPH VIEWER %%%%%---"
+echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x

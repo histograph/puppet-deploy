@@ -18,7 +18,7 @@ vagrantfile:
                         subnet_id: subnet-18fd8970
                         elastic_ip: 35.157.220.235
                         security_groups: sg-aad62ec1
-                        ebs_size: 100
+                        ebs_size: 500
                         ebs_type: gp2
                         ebs_delete_on_termination: true
                         ebs_optimized: false

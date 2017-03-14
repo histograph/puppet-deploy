@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # run as root
 echo
-echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
-echo "----%%%%% INSTALLING HISTOGRAPH CONFIG %%%%%----"
-echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
+echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
+echo "  ---%%%%% INSTALLING HISTOGRAPH CONFIG %%%%%---"
+echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x

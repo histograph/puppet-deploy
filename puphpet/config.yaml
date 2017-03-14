@@ -381,14 +381,14 @@ histograph:
     bucket: ''
     region: ''
   data:
-    doDownload: false
-    doImport: false
+    doDownload: true
+    doImport: true
     repositories:
       toDownload:
         - geonames
         - nwb
         - tgn
-        # - bag
+        - bag
       onDisk:
         - 'bag-geonames-tgn'
         - cshapes

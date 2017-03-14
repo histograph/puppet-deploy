@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # run as root
 echo
-echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
-echo "----%%%%% INSTALLING LOGROTATE %%%%%----"
-echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%---"
+echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
+echo "  ---%%%%% INSTALLING LOGROTATE %%%%%---"
+echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x
