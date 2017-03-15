@@ -48,4 +48,4 @@ nginx:
                 - viewer.histograph.aws
 elastic_search:
     settings:
-        heap_size: 4g
+        heap_size: 8g
