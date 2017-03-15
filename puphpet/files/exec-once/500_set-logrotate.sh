@@ -11,17 +11,17 @@ echo
 LOGROTATE_HOME="/etc/logrotate.d"
 
 
-cat > ${LOGROTATE_HOME}/elasticsearch << ELASTICSEARCH
-/var/log/elasticsearch/${ES_INSTNAME}/*.log {
-  copytruncate
-  daily
-  rotate 7
-  compress
-  missingok
-  notifempty
-  size 10M
-}
-ELASTICSEARCH
+# cat > ${LOGROTATE_HOME}/elasticsearch << ELASTICSEARCH
+# /var/log/elasticsearch/${ES_INSTNAME}/*.log {
+#   copytruncate
+#   daily
+#   rotate 7
+#   compress
+#   missingok
+#   notifempty
+#   size 10M
+# }
+# ELASTICSEARCH
 
 
 cat > ${LOGROTATE_HOME}/histograph << HISTOGRAPH

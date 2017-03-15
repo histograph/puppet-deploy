@@ -208,7 +208,7 @@ install_nodecode()
   install_source
   # install node dependencies
   cd ${SRC_HOME}/${MY_PLACE}
-  sudo su $MYUSER -c "${NPM_INSTALL}" 2>/dev/null
+  sudo su $MYUSER -c "${NPM_INSTALL}"
 
 }
 

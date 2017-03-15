@@ -9,6 +9,8 @@ echo
 # set -x
 source $(dirname $0)/set-vars "${1}"
 
+service postgresql stop
+
 # apt-get update
 
 if [ ! -d ${SRC_HOME} ]

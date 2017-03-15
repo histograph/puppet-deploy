@@ -17,15 +17,24 @@ then
 
     if [ ! -f bag-laatst.backup -o bag-laatst.backup.new -nt bag-laatst.backup ]
     then
+      service postgresql start
       mv bag-laatst.backup.new bag-laatst.backup
       su postgres -c "psql" < $(dirname $0)/bag.sql
       su postgres -c "pg_restore --jobs 4 --dbname=bag --exit-on-error bag-laatst.backup"
+      FILTERED_DATA_REP_TODOWNLOAD="${DATA_REP_TODOWNLOAD}"
+    else
+      FILTERED_DATA_REP_TODOWNLOAD="$(echo ${DATA_REP_TODOWNLOAD} | sed 's/\(.*\)bag\(.*\)/\1\2/g')"
     fi
   fi
 
   cd ${HIST_DATA_DIR}
-  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${DATA_REP_TODOWNLOAD}"
+  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${FILTERED_DATA_REP_TODOWNLOAD}"
+
+  service postgresql stop
 fi
+
+# The fact to leave the bag repo even though it might be updated is based on the believe that
+# import will not import it if it is not new, and this solution is more resilient to a earlier failed import
 
 if [ "$(read_params  histograph.data.doImport) " == "true " ]
 then

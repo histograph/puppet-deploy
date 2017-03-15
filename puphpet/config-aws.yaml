@@ -12,7 +12,7 @@ vagrantfile:
                         private_key_path: puphpet/files/dot/ssh/id_rsa
                         ssh_username: ubuntu
                         region: eu-central-1
-                        instance_type: t2.xlarge
+                        instance_type: m4.4xlarge
                         # instance_type: t2.micro
                         ami: ami-3f1bd150
                         subnet_id: subnet-18fd8970
@@ -48,4 +48,4 @@ nginx:
                 - viewer.histograph.aws
 elastic_search:
     settings:
-        heap_size: 8g
+        heap_size: 32g
