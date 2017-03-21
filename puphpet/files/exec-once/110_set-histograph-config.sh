@@ -29,6 +29,7 @@ core:
   batchTimeout: ${COREBATCHTIMEOUT}
 
 import:
+  diffTool: ${DIFF_TOOL_PATH}
   dirs:
     - ${SRC_HOME}/data/
     - ${SRC_HOME}/e_l_data/
