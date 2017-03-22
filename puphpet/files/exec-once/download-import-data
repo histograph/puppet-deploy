@@ -41,5 +41,5 @@ then
   cd ${HIST_IMPORT_DIR}
   THE_REPOS="${DATA_REP_ONDISK} ${DATA_REP_TODOWNLOAD} ${EL_DATA_REP}"
   echo "Import repos ${THE_REPOS}"
-  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${THE_REPOS}"
+  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml --force ${THE_REPOS}"
 fi

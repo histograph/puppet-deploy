@@ -16,6 +16,7 @@ source $(dirname $0)/set-vars "${1}"
   # histograph config file
 cat > ${SRC_HOME}/config.yaml << HISTOGRAPH
 api:
+  logLevel: info
   bindHost: 0.0.0.0
   bindPort: ${APIBASEPORT}
   baseUrl: ${APIBASEURL}
@@ -25,6 +26,7 @@ api:
     password: ${APIPASSWORD}
 
 core:
+  logLevel: info
   batchSize: ${COREBATCHSIZE}
   batchTimeout: ${COREBATCHTIMEOUT}
 
@@ -67,6 +69,10 @@ data:                                       # Data module options (http://github
       user: postgres
       password: ${BAG_PASSWORD}
       database: ${BAG_NAME}
+graphmalizer:
+  logLevel: info
+io:
+  logLevel: info
 HISTOGRAPH
 
 # fi

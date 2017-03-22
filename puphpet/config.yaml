@@ -386,8 +386,8 @@ histograph:
     repositories:
       toDownload:
         - geonames
-        - nwb
         - tgn
+        - nwb
         - bag
       onDisk:
         - 'bag-geonames-tgn'
