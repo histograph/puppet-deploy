@@ -370,7 +370,7 @@ histograph:
     branch: "puppetdeploy"
     tag: ""
   es:
-    page_size: 1000
+    page_size: 10000
     shard_nr: 1
     replica_nr: 0
     timeout: 1800000
