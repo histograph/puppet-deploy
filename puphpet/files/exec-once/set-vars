@@ -63,7 +63,7 @@ export SHARD_NR="$(read_params histograph.es.shard_nr)"
 export REPLICA_NR="$(read_params histograph.es.replica_nr)"
 export ES_TIMEOUT="$(read_params histograph.es.timeout)"
 export ES_PRECISION="$(read_params histograph.es.precision)"
-export ES_INSTNAME="$(read_params elastic_search.instances.histograph_instanceß.name)"
+export ES_INSTNAME="$(read_params elastic_search.instances.histograph_instance.name)"
 
 export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
