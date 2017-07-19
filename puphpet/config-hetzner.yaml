@@ -1,0 +1,38 @@
+vagrantfile:
+    target: hetzner
+    vm:
+        provider:
+          hetzner:
+              box: tknerr/managed-server-dummy
+              box_url:
+              box_version: '0'
+              machines:
+                  vflm_44862eu6idwer:
+                      id: histograph.nl.id
+                      hostname: histograph.nl
+                      iphost: 136.243.177.32
+                      startuser: stefano
+                      ssh:
+                          # host: 'false'
+                          port: 2234
+                          private_key_path: 'puphpet/files/dot/ssh/el_hetzner'
+                          username: puppetdeploy
+                          keep_alive: '1'
+                          # forward_agent: 'false'
+                          # forward_x11: 'false'
+                          shell: 'bash -l'
+                          # insert_key: 'false'
+nginx:
+    vhosts:
+        thesaurus_histograph:
+            server_aliases:
+                - thesaurus.histograph.nl
+        importeren_histograph:
+            server_aliases:
+                - importeren.histograph.nl
+        viewer_histograph:
+            server_aliases:
+                - viewer.histograph.nl
+elastic_search:
+    settings:
+        heap_size: 16g

@@ -30,12 +30,23 @@ vagrantfile:
                                     guest: '22'
                         memory: '4096'
                         cpus: '1'
+                        ssh:
+                            # host: 'false'
+                            host_port: 7334
+                            # private_key_path: 'false'
+                            username: vagrant
+                            port: 23
+                            keep_alive: '1'
+                            # forward_agent: 'false'
+                            # forward_x11: 'false'
+                            shell: 'bash -l'
+                            insert_key: 'false'
         provision:
             puppet:
                 manifests_path: puphpet/puppet/manifests
-                module_path:
-                    - puphpet/puppet/modules
-                    - puphpet/puppet/manifests
+                module_path: puphpet/puppet/modules
+                    # - puphpet/puppet/modules
+                    # - puphpet/puppet/manifests
                 options:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
@@ -66,17 +77,6 @@ vagrantfile:
             start: 10200
             stop: 10500
         post_up_message: ''
-    ssh:
-        host: 'false'
-        port: 'false'
-        private_key_path: 'false'
-        username: vagrant
-        guest_port: 'false'
-        keep_alive: '1'
-        forward_agent: 'false'
-        forward_x11: 'false'
-        shell: 'bash -l'
-        insert_key: 'false'
     vagrant:
         host: detect
     proxy:

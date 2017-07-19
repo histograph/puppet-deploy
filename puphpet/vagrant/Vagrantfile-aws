@@ -23,8 +23,8 @@ machines.each do |i, machine|
       aws.access_key_id             = "#{provider['access_key_id']}"
       aws.secret_access_key         = "#{provider['secret_access_key']}"
       aws.keypair_name              = "#{machine['keypair_name']}"
-      override.ssh.private_key_path = "#{machine['private_key_path']}"
-      override.ssh.username         = "#{machine['ssh_username']}"
+      override.ssh.private_key_path = "#{machine['ssh']['private_key_path']}"
+      override.ssh.username         = "#{machine['ssh']['username']}"
       aws.region                    = "#{machine['region']}"
       aws.instance_type             = "#{machine['instance_type']}"
       aws.ami                       = "#{machine['ami']}"
@@ -103,11 +103,12 @@ machines.each do |i, machine|
     end
 
     machine_id.vm.provision :puppet do |puppet|
-      ssh_username = !machine['ssh_username'].nil? ? machine['ssh_username'] : 'vagrant'
+      ssh_username = !machine['ssh']['username'].nil? ? machine['ssh']['username'] : 'vagrant'
       puppet.facter = {
         'fqdn'             => "#{machine_id.vm.hostname}",
         'ssh_username'     => "#{ssh_username}",
         'provisioner_type' => ENV['VAGRANT_DEFAULT_PROVIDER'],
+        'machine_id' => "#{i}",
       }
       puppet.manifests_path = "#{data['vm']['provision']['puppet']['manifests_path']}"
       puppet.manifest_file  = ""
@@ -138,11 +139,11 @@ machines.each do |i, machine|
 
     machine_id.vm.provision :shell, :path => 'puphpet/shell/important-notices.sh'
 
-    if !data['ssh']['port'].nil? && data['ssh']['port'].to_bool
-      machine_id.ssh.port = "#{data['ssh']['port']}"
+    if !machine['ssh']['port'].nil?
+      machine_id.ssh.port = "#{machine['ssh']['port']}"
     end
-    if !data['ssh']['shell'].nil?
-      machine_id.ssh.shell = "#{data['ssh']['shell']}"
+    if !machine['ssh']['shell'].nil?
+      machine_id.ssh.shell = "#{machine['ssh']['shell']}"
     end
   end
 end

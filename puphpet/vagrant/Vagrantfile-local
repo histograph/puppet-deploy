@@ -24,7 +24,7 @@ machines.each do |i, machine|
       machine_id.vm.box_version = "#{provider['box_version']}"
     end
 
-    machine_id.ssh.insert_key = data['ssh']['insert_key'].to_bool
+    machine_id.ssh.insert_key = machine['ssh']['insert_key'].to_bool
 
     if machine['hostname'].to_s.strip.length != 0
       machine_id.vm.hostname = "#{machine['hostname']}"
@@ -369,8 +369,8 @@ machines.each do |i, machine|
       end
     end
 
-    ssh_username = !data['ssh']['username'].nil? ?
-      data['ssh']['username'] :
+    ssh_username = !machine['ssh']['username'].nil? ?
+      machine['ssh']['username'] :
       'vagrant'
 
     machine_id.vm.provision :shell,
@@ -396,6 +396,7 @@ machines.each do |i, machine|
         'fqdn'             => "#{machine_id.vm.hostname}",
         'ssh_username'     => "#{ssh_username}",
         'provisioner_type' => 'local',
+        'machine_id' => "#{i}",
       }
       puppet.manifests_path = "#{data['vm']['provision']['puppet']['manifests_path']}"
       puppet.manifest_file  = ""
@@ -429,6 +430,8 @@ machines.each do |i, machine|
     customKey  = "#{dir}/puphpet/files/dot/ssh/id_rsa"
     vagrantKey = "#{vagrant_dot}/machines/#{machine['id']}/#{ENV['VAGRANT_DEFAULT_PROVIDER']}/private_key"
 
+    # print "keys: #{dir}/puphpet/files/dot/ssh/id_rsa, #{vagrant_dot}/machines/#{machine['id']}/#{ENV['VAGRANT_DEFAULT_PROVIDER']}/private_key, #{vagrant_home}/insecure_private_key"
+    
     if File.file?(customKey)
       config.ssh.private_key_path = [
         customKey,
@@ -448,26 +451,26 @@ machines.each do |i, machine|
       end
     end
 
-    if !data['ssh']['port'].nil? && data['ssh']['port'].to_bool
-      machine_id.ssh.port = "#{data['ssh']['port']}"
+    if !machine['ssh']['port'].nil?
+      machine_id.ssh.port = "#{machine['ssh']['host_port']}"
     end
-    if !data['ssh']['username'].nil?
-      machine_id.ssh.username = "#{data['ssh']['username']}"
+    if !machine['ssh']['username'].nil?
+      machine_id.ssh.username = "#{machine['ssh']['username']}"
     end
-    if !data['ssh']['guest_port'].nil? && data['ssh']['guest_port'].to_bool
-      machine_id.ssh.guest_port = data['ssh']['guest_port']
+    if !machine['ssh']['port'].nil?
+      machine_id.ssh.guest_port = machine['ssh']['port']
     end
-    if !data['ssh']['shell'].nil?
-      machine_id.ssh.shell = "#{data['ssh']['shell']}"
+    if !machine['ssh']['shell'].nil?
+      machine_id.ssh.shell = "#{machine['ssh']['shell']}"
     end
-    if !data['ssh']['keep_alive'].nil?
-      machine_id.ssh.keep_alive = data['ssh']['keep_alive'].to_bool
+    if !machine['ssh']['keep_alive'].nil?
+      machine_id.ssh.keep_alive = machine['ssh']['keep_alive'].to_bool
     end
-    if !data['ssh']['forward_agent'].nil?
-      machine_id.ssh.forward_agent = data['ssh']['forward_agent'].to_bool
+    if !machine['ssh']['forward_agent'].nil?
+      machine_id.ssh.forward_agent = machine['ssh']['forward_agent'].to_bool
     end
-    if !data['ssh']['forward_x11'].nil?
-      machine_id.ssh.forward_x11 = data['ssh']['forward_x11'].to_bool
+    if !machine['ssh']['forward_x11'].nil?
+      machine_id.ssh.forward_x11 = machine['ssh']['forward_x11'].to_bool
     end
   end
 end

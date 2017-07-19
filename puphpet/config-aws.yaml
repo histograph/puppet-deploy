@@ -9,8 +9,16 @@ vagrantfile:
                         id: histograph.aws
                         hostname: api.histograph.aws
                         keypair_name: single_histograph
-                        private_key_path: puphpet/files/dot/ssh/id_rsa
-                        ssh_username: ubuntu
+                        ssh:
+                          private_key_path: puphpet/files/dot/ssh/id_rsa
+                          username: ubuntu
+                          # host: 'false'
+                          port: 22
+                          keep_alive: '1'
+                          # forward_agent: 'false'
+                          # forward_x11: 'false'
+                          shell: 'bash -l'
+                          # insert_key: 'false'
                         region: eu-central-1
                         instance_type: m4.4xlarge
                         # instance_type: t2.micro

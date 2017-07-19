@@ -68,8 +68,8 @@ then
 	fi
 elif [ "${MY_CMD}" = "HETZNER" ]
 then
-  echo "Hetzer is not implemented yet"
-  exit 1
+	echo "Setting Vagrant for HETZNER"
+  export VAGRANT_TARGET=hetzner && echo VAGRANT_TARGET=$VAGRANT_TARGET!!
 fi
 
 PLUGINS="$(vagrant plugin list)"

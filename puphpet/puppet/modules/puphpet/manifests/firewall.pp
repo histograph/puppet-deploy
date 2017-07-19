@@ -14,7 +14,10 @@ class puphpet::firewall
 
   $firewall = $puphpet::params::hiera['firewall']
   $vm       = $puphpet::params::hiera['vm']
-
+  $machineID= $vm['vm']['provider'][$::provisioner_type]['machines'][$::machine_id]
+  
+  # notice(" $puphpet::params::hiera['vm']['provider'] ${::provisioner_type} ${::machine_id}")
+  
   Firewall {
     before  => Class['puphpet::firewall::post'],
     require => Class['puphpet::firewall::pre'],
@@ -58,9 +61,9 @@ class puphpet::firewall
   }
 
   # Opens up SSH port defined in `vagrantfile-*` section
-  if has_key($vm, 'ssh') and has_key($vm['ssh'], 'port') {
-    $vm_ssh_port = array_true($vm['ssh'], 'port') ? {
-      true  => $vm['ssh']['port'],
+  if has_key($machineID, 'ssh') and has_key($machineID['ssh'], 'port') {
+    $vm_ssh_port = array_true($machineID['ssh'], 'port') ? {
+      true  => $machineID['ssh']['port'],
       false => 22,
     }
   } else {
