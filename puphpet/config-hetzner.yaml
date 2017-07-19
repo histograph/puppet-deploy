@@ -8,8 +8,8 @@ vagrantfile:
               box_version: '0'
               machines:
                   vflm_44862eu6idwer:
-                      id: histograph.nl.id
-                      hostname: histograph.nl
+                      id: enl.waag.org.id
+                      hostname: enl.waag.org
                       iphost: 136.243.177.32
                       startuser: stefano
                       ssh:
@@ -26,13 +26,13 @@ nginx:
     vhosts:
         thesaurus_histograph:
             server_aliases:
-                - thesaurus.histograph.nl
+                - thesaurus.enl.waag.org
         importeren_histograph:
             server_aliases:
-                - importeren.histograph.nl
+                - importeren.enl.waag.org
         viewer_histograph:
             server_aliases:
-                - viewer.histograph.nl
+                - viewer.enl.waag.org
 elastic_search:
     settings:
         heap_size: 16g

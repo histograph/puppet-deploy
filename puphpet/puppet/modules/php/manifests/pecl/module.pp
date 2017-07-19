@@ -121,7 +121,7 @@ define php::pecl::module (
       }
 
       $pecl_exec_unless = $ensure ? {
-        present => "pecl info ${name}",
+        present => "pecl info ${name} > /dev/null && if [ $? -eq 0 ]; then echo 'OK'; fi",
         absent  => undef
       }
 
@@ -132,7 +132,7 @@ define php::pecl::module (
 
       $pecl_exec_onlyif = $ensure ? {
         present => undef,
-        absent  => "pecl info ${name}",
+        absent => "pecl info ${name} > /dev/null && if [ $? -eq 0 ]; then echo 'OK'; fi",
       }
 
       exec { "pecl-${name}":

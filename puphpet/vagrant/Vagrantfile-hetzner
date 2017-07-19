@@ -1,5 +1,5 @@
 # -*- mode: ruby -*-
-ENV['VAGRANT_DEFAULT_PROVIDER'] = 'hetzner'
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'managed'
 
 provider = data['vm']['provider']['hetzner']
 machines = !provider['machines'].empty? ? provider['machines'] : { }
@@ -53,7 +53,7 @@ machines.each do |i, machine|
       puppet.facter = {
         'fqdn'             => "#{machine_id.vm.hostname}",
         'ssh_username'     => "#{ssh_username}",
-        'provisioner_type' => ENV['VAGRANT_DEFAULT_PROVIDER'],
+        'provisioner_type' => 'hetzner',
         'machine_id' => "#{i}",
       }
       puppet.manifests_path = "#{data['vm']['provision']['puppet']['manifests_path']}"
