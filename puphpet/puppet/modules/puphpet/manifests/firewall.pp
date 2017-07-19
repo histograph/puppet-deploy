@@ -49,6 +49,8 @@ class puphpet::firewall
         } else {
           $priority = 100
         }
+        
+        # notice("rule: ${rule['proto']}/${port}")
 
         puphpet::firewall::port { "${rule['proto']}/${port}":
           port     => $port,
@@ -70,12 +72,14 @@ class puphpet::firewall
     $vm_ssh_port = 22
   }
 
+  # notice("vm_ssh_port $vm_ssh_port")
+  
   if ! defined(Puphpet::Firewall::Port["${vm_ssh_port}"]) {
     puphpet::firewall::port { "${vm_ssh_port}": }
   }
 
   # Opens forwarded ports only on local machines
-  if array_true($vm['vm']['provider'], 'local') {
+  if "$::provisioner_type" == 'local' and array_true($vm['vm']['provider'], 'local') {
     each( $vm['vm']['provider']['local']['machines'] ) |$mId, $machine| {
       # config file could contain no forwarded ports
       $forwarded_ports = array_true($machine['network'], 'forwarded_port') ? {

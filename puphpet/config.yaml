@@ -35,7 +35,7 @@ vagrantfile:
                             host_port: 7334
                             # private_key_path: 'false'
                             username: vagrant
-                            port: 23
+                            port: 22
                             keep_alive: '1'
                             # forward_agent: 'false'
                             # forward_x11: 'false'
