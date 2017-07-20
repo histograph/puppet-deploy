@@ -91,6 +91,7 @@ server:
       - unzip
       - screen
       - time
+      - jq
 users_groups:
     install: '1'
     groups:

@@ -35,4 +35,4 @@ nginx:
                 - viewer.enl.waag.org
 elastic_search:
     settings:
-        heap_size: 16g
+        heap_size: 20g
