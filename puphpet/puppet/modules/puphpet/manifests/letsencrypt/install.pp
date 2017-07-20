@@ -6,17 +6,12 @@ class puphpet::letsencrypt::install
   inherits puphpet::letsencrypt::params
 {
 
-  include apache::params
   include nginx::params
 
   $letsencrypt = $puphpet::params::hiera['letsencrypt']
-  $apache      = $puphpet::params::hiera['apache']
   $nginx       = $puphpet::params::hiera['nginx']
 
-  if array_true($apache, 'install') {
-    $webserver_service = $::apache::params::service_name
-  }
-  elsif array_true($nginx, 'install') {
+  if array_true($nginx, 'install') {
     $webserver_service = $::nginx::params::package_name
   }
   else {
