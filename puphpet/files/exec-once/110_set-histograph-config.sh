@@ -48,6 +48,7 @@ elasticsearch:
   pagesize: ${PAGE_SIZE}
   number_of_shards: ${SHARD_NR}
   number_of_replicas: ${REPLICA_NR}
+  refresh_interval: ${REFRESH_INT}
   requestTimeoutMs: ${ES_TIMEOUT}
   precision: ${ES_PRECISION}
 

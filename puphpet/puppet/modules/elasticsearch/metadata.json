@@ -1,6 +1,6 @@
 {
   "name": "elastic-elasticsearch",
-  "version": "5.1.0",
+  "version": "5.3.1",
   "author": "elastic",
   "summary": "Module for managing and configuring Elasticsearch nodes",
   "license": "Apache-2.0",
@@ -51,7 +51,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12.04",
         "14.04",
         "16.04"
       ]
@@ -73,10 +72,6 @@
   ],
   "requirements": [
     {
-      "name": "pe",
-      "version_requirement": ">= 3.8.0"
-    },
-    {
       "name": "puppet",
       "version_requirement": ">=3.8.0 <5.0.0"
     }
@@ -86,6 +81,6 @@
     {"name":"richardc/datacat","version_requirement":">= 0.6.2 < 1.0.0"},
     {"name":"puppetlabs/java","version_requirement":">= 1.0.0 < 2.0.0"},
     {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0 < 5.0.0"},
-    {"name":"puppet/yum","version_requirement":">= 0.9.6"}
+    {"name":"puppet/yum","version_requirement":">= 0.9.6 < 2.0.0"}
   ]
 }
