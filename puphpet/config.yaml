@@ -281,7 +281,7 @@ redis:
 elastic_search:
     install: '1'
     settings:
-        version: 5.2.0
+        version: 5.5.0
         java_install: true
         heap_size: 1g
         restart_on_change: true
@@ -376,7 +376,7 @@ histograph:
     page_size: 10000
     shard_nr: 1
     replica_nr: 0
-    timeout: 1800000
+    timeout: 600000
     precision: '10m'
   aws:
     key: ''
