@@ -51,6 +51,7 @@ elasticsearch:
   refresh_interval: ${REFRESH_INT}
   requestTimeoutMs: ${ES_TIMEOUT}
   precision: ${ES_PRECISION}
+  retryTime: ${ES_RETRYTIME}
 
 neo4j:
   host: 127.0.0.1

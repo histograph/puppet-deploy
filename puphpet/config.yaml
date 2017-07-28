@@ -378,6 +378,8 @@ histograph:
     replica_nr: 0
     timeout: 600000
     precision: '10m'
+    refresh_interval: '30s'
+    retrytime: 5000
   aws:
     key: ''
     secret: ''

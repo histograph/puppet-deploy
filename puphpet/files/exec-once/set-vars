@@ -64,6 +64,7 @@ export REPLICA_NR="$(read_params histograph.es.replica_nr)"
 export REFRESH_INT="$(read_params histograph.es.refresh_interval)"
 export ES_TIMEOUT="$(read_params histograph.es.timeout)"
 export ES_PRECISION="$(read_params histograph.es.precision)"
+export ES_RETRYTIME="$(read_params histograph.es.retrytime)"
 export ES_INSTNAME="$(read_params elastic_search.instances.histograph_instance.name)"
 
 export NPM_INSTALL="npm prune && npm install 1>/dev/null"
