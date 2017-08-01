@@ -80,4 +80,10 @@ curl -XPUT "localhost:${MY_PORT}/${MY_INDEX}?pretty" -H 'Content-Type: applicati
 
 
 echo -e "\nBulk index ${MY_FILE}"
-curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:${MY_PORT}/_bulk --data-binary "@${MY_FILE}"; echo
+curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:${MY_PORT}/_bulk --data-binary "@${MY_FILE}" &
+
+while :
+do
+  curl localhost:${MY_PORT}/_cat/indices/${MY_INDEX}
+  sleep 30s
+done
