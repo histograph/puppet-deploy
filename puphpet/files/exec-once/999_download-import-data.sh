@@ -16,3 +16,6 @@ then
 fi
 
 screen -L -S DOWNLOADIMPORTDATA -d -m time $(dirname $0)/download-import-data "${1}"
+
+# curl -XPUT 'localhost:9200/_all/_settings?pretty' -H 'Content-Type: application/json' -d'{"index.indexing.slowlog.threshold.index.info": "25ms"}'
+# curl -XPUT 'localhost:9200/_all/_settings?pretty' -H 'Content-Type: application/json' -d'{"index.indexing.slowlog.threshold.index.warn": "100ms"}'
