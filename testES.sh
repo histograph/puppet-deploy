@@ -1,11 +1,29 @@
 MY_INDEX=test
 MY_PORT=9780
 MY_FILE="bulk.ndjson"
+PRECISION="10m"
+ERROR_PCT="0"
 
-echo "Delete ${MY_INDEX}"
+if [ "${1} " != " " ]
+then
+  MY_FILE="${1}"
+fi
+
+if [ "${2} " != " " ]
+then
+  PRECISION="${2}"
+fi
+
+if [ "${3} " != " " ]
+then
+  ERROR_PCT="${3}"
+fi
+
+
+echo -e "\n\nDelete ${MY_INDEX}"
 curl -XDELETE localhost:${MY_PORT}/${MY_INDEX}
 
-echo -e "\nCreate mapping"
+echo -e "\n\nCreate mapping"
 curl -XPUT "localhost:${MY_PORT}/${MY_INDEX}?pretty" -H 'Content-Type: application/json' -d'
 {
   "settings": {
@@ -29,7 +47,8 @@ curl -XPUT "localhost:${MY_PORT}/${MY_INDEX}?pretty" -H 'Content-Type: applicati
       },
       "properties": {
         "geometry": {
-          "precision": "10m",
+          "precision": '"\"${PRECISION}\""',
+          "distance_error_pct": '"${ERROR_PCT}"',
           "tree": "quadtree",
           "type": "geo_shape"
         },
@@ -79,11 +98,17 @@ curl -XPUT "localhost:${MY_PORT}/${MY_INDEX}?pretty" -H 'Content-Type: applicati
 # cat core.log | sed 's/},{"index":{"_index":"cshapes"/}\'$'\n{"index":{"_index":"cshapes"/g' | sed 's/"}},{"id":"/"}}\'$'\n{"id":"/g' | sed "s/cshapes/${MY_INDEX}/g" > bulk.ndjson
 
 
-echo -e "\nBulk index ${MY_FILE}"
-curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:${MY_PORT}/_bulk --data-binary "@${MY_FILE}" &
+echo -e "\n\nBulk index ${MY_FILE}"
+time curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:${MY_PORT}/_bulk --data-binary "@${MY_FILE}" &
 
 while :
+sleep 10s
 do
-  curl localhost:${MY_PORT}/_cat/indices/${MY_INDEX}
-  sleep 30s
+  curl -XGET "http://localhost:${MY_PORT}/_cat/indices/${MY_INDEX}"
+  curl -XGET "http://localhost:${MY_PORT}/_tasks?actions=indices:data/write/bulk*&detailed&pretty"
+  
+  if curl -XGET "http://localhost:${MY_PORT}/_tasks?actions=indices:data/write/bulk*&detailed&pretty" 2>&1| grep '"nodes" : { }' >/dev/null
+  then
+    break;
+  fi
 done

@@ -51,6 +51,7 @@ elasticsearch:
   refresh_interval: ${REFRESH_INT}
   requestTimeoutMs: ${ES_TIMEOUT}
   precision: ${ES_PRECISION}
+  distance_error_pct: ${DISTANCE_ERROR_PCT}
   retryTime: ${ES_RETRYTIME}
 
 neo4j:
