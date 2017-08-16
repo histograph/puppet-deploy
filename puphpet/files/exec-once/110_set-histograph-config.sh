@@ -31,6 +31,7 @@ core:
   batchTimeout: ${COREBATCHTIMEOUT}
 
 import:
+  logLevel: info
   diffTool: ${DIFF_TOOL_PATH}
   dirs:
     - ${SRC_HOME}/data/
@@ -58,6 +59,7 @@ neo4j:
   host: 127.0.0.1
   port: 7474
 data:                                       # Data module options (http://github.com/histograph/data)
+  logLevel: info
   geonames:
     countries:
       - NL
