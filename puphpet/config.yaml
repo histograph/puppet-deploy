@@ -378,7 +378,7 @@ histograph:
     replica_nr: 0
     timeout: 1800000
     precision: '1m'
-    distance_error_pct: 0.0001
+    distance_error_pct: 0.001
     refresh_interval: '30s'
     retrytime: 1800000
   aws:
