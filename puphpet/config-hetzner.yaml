@@ -36,3 +36,4 @@ nginx:
 elastic_search:
     settings:
         heap_size: 16g
+        # version: 1.5.2
