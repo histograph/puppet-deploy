@@ -15,3 +15,6 @@ export MY_REPO="https://github.com/histograph"
 
 # install histograph-import
 install_nodecode
+
+# add import user to the group that can read pipo exports
+sudo usermod -a -G www-data ${MYUSER}

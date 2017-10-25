@@ -36,6 +36,7 @@ import:
   dirs:
     - ${SRC_HOME}/data/
     - ${SRC_HOME}/e_l_data/
+    - ${PIPO_EXPORTS}/
 
 redis:
   host: 127.0.0.1

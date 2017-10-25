@@ -143,7 +143,7 @@ nginx:
                 - api.histograph.local
             www_root: /var/www/api
             listen_port: '80'
-            client_max_body_size: 1m
+            client_max_body_size: 10g
             ssl: '0'
             ssl_cert: ''
             ssl_key: ''
@@ -386,6 +386,7 @@ histograph:
     neo_plugin_dir: "/var/lib/neo4j/plugins"
     run_dir: "/var/run/histograph"
     log_dir: "/var/log/histograph"
+    pipo_exports: "../app/storage/exports"
   users:
     system_user: histograph
     api_user: histograph

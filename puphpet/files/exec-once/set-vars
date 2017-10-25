@@ -80,6 +80,8 @@ export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
 export DIFF_TOOL_PATH="/usr/local/bin/hashed-diff"
 
+export PIPO_EXPORTS="$(read_params nginx.vhosts.importeren_histograph.www_root)/$(read_params  histograph.directories.pipo_exports)"
+
 if [ -d ${DEV_HOME} ]
 then
   # we are in developer mode, change variables
