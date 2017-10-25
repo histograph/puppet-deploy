@@ -1,0 +1,120 @@
+ stefano@Ubuntu-1604-xenial-64-minimal:/home/histograph/src/import$ node index.js --config ../config.yaml
+Using http://api.enl.waag.org - colors: File system, Amazon S3
+
+File system:
+ - bag /home/histograph/src/data/bag
+ - bag-geonames-tgn /home/histograph/src/data/bag-geonames-tgn
+ - cshapes /home/histograph/src/data/cshapes
+ - geonames /home/histograph/src/data/geonames
+ - geonames-tgn /home/histograph/src/data/geonames-tgn
+ - nwb /home/histograph/src/data/nwb
+ - tgn /home/histograph/src/data/tgn
+ - whosonfirst /home/histograph/src/data/whosonfirst
+ - Departementen /home/histograph/src/e_l_data/Departementen
+ - atlas-verstedelijking /home/histograph/src/e_l_data/atlas-verstedelijking
+ - carnaval /home/histograph/src/e_l_data/carnaval
+ - gemeentegeschiedenis /home/histograph/src/e_l_data/gemeentegeschiedenis
+ - ilvb /home/histograph/src/e_l_data/ilvb
+ - kloeke /home/histograph/src/e_l_data/kloeke
+ - pleiades /home/histograph/src/e_l_data/pleiades
+ - poorterboeken /home/histograph/src/e_l_data/poorterboeken
+ - verdwenen-dorpen /home/histograph/src/e_l_data/verdwenen-dorpen
+ - voc-opvarenden /home/histograph/src/e_l_data/voc-opvarenden
+Amazon S3:
+ - bag histograph-data/bag
+ - geonames histograph-data/geonames
+ - nwb histograph-data/nwb
+ - tgn histograph-data/tgn
+ - alternatievenamendbpedia histograph-uploads/alternatievenamendbpedia
+ - atlas-verstedelijking histograph-uploads/atlas-verstedelijking
+ - belgie histograph-uploads/belgie
+ - bestuurlijke-grenzen-gemeenten-actueel histograph-uploads/bestuurlijke-grenzen-gemeenten-actueel
+ - bestuurlijke-grenzen-landgrens-actueel histograph-uploads/bestuurlijke-grenzen-landgrens-actueel
+ - bestuurlijke-grenzen-provincies-actueel histograph-uploads/bestuurlijke-grenzen-provincies-actueel
+ - carnaval histograph-uploads/carnaval
+ - cshapes histograph-uploads/cshapes
+ - dbpedia histograph-uploads/dbpedia
+ - departementen1812 histograph-uploads/departementen1812
+ - elo-straten histograph-uploads/elo-straten
+ - ilvb histograph-uploads/ilvb
+ - kloeke-altnames histograph-uploads/kloeke-altnames
+ - kloeke histograph-uploads/kloeke
+ - leiden-1600 histograph-uploads/leiden-1600
+ - leiden-1611 histograph-uploads/leiden-1611
+ - leiden1600 histograph-uploads/leiden1600
+ - leidse-panden-1879 histograph-uploads/leidse-panden-1879
+ - leidsebonnen histograph-uploads/leidsebonnen
+ - menno histograph-uploads/menno
+ - pleiades histograph-uploads/pleiades
+ - poorterboeken histograph-uploads/poorterboeken
+ - rm histograph-uploads/rm
+ - verdwenen-dorpen histograph-uploads/verdwenen-dorpen
+ - voc-opvarenden histograph-uploads/voc-opvarenden
+
+
+UNCLEAR WHETHER TO BE IMPORTED
+ - leiden-1600 histograph-uploads/leiden-1600
+ - leiden1600 histograph-uploads/leiden1600
+ - menno histograph-uploads/menno
+
+
+ONLY PRESENT IN S3
+ - alternatievenamendbpedia histograph-uploads/alternatievenamendbpedia
+ - belgie histograph-uploads/belgie
+ - bestuurlijke-grenzen-gemeenten-actueel histograph-uploads/bestuurlijke-grenzen-gemeenten-actueel
+ - bestuurlijke-grenzen-landgrens-actueel histograph-uploads/bestuurlijke-grenzen-landgrens-actueel
+ - bestuurlijke-grenzen-provincies-actueel histograph-uploads/bestuurlijke-grenzen-provincies-actueel
+ - dbpedia histograph-uploads/dbpedia
+ - departementen1812 histograph-uploads/departementen1812
+ - elo-straten histograph-uploads/elo-straten
+ - kloeke-altnames histograph-uploads/kloeke-altnames
+ - leiden-1611 histograph-uploads/leiden-1611
+ - leidsebonnen histograph-uploads/leidsebonnen
+ - leidse-panden-1879 histograph-uploads/leidse-panden-1879
+ - rm histograph-uploads/rm
+ 
+
+PRESENT IN BOTH S3 AND GITHUB
+ - atlas-verstedelijking histograph-uploads/atlas-verstedelijking
+ - atlas-verstedelijking /home/histograph/src/e_l_data/atlas-verstedelijking
+ - bag histograph-data/bag
+ - bag /home/histograph/src/data/bag
+ - carnaval histograph-uploads/carnaval
+ - carnaval /home/histograph/src/e_l_data/carnaval
+ - cshapes histograph-uploads/cshapes
+ - cshapes /home/histograph/src/data/cshapes
+ - geonames histograph-data/geonames
+ - geonames /home/histograph/src/data/geonames
+ - ilvb histograph-uploads/ilvb
+ - ilvb /home/histograph/src/e_l_data/ilvb
+ - kloeke histograph-uploads/kloeke
+ - kloeke /home/histograph/src/e_l_data/kloeke
+ - nwb histograph-data/nwb
+ - nwb /home/histograph/src/data/nwb
+ - pleiades histograph-uploads/pleiades
+ - pleiades /home/histograph/src/e_l_data/pleiades
+ - poorterboeken histograph-uploads/poorterboeken
+ - poorterboeken /home/histograph/src/e_l_data/poorterboeken
+ - tgn histograph-data/tgn
+ - tgn /home/histograph/src/data/tgn
+ - verdwenen-dorpen histograph-uploads/verdwenen-dorpen
+ - verdwenen-dorpen /home/histograph/src/e_l_data/verdwenen-dorpen
+ - voc-opvarenden histograph-uploads/voc-opvarenden
+ - voc-opvarenden /home/histograph/src/e_l_data/voc-opvarenden
+ 
+
+
+
+ node index.js --config ../config.yaml --force histograph-uploads/alternatievenamendbpedia \
+        histograph-uploads/belgie \
+        histograph-uploads/bestuurlijke-grenzen-gemeenten-actueel \
+        histograph-uploads/bestuurlijke-grenzen-landgrens-actueel \
+        histograph-uploads/bestuurlijke-grenzen-provincies-actueel \
+        histograph-uploads/dbpedia \
+        histograph-uploads/departementen1812 \
+        histograph-uploads/elo-straten \
+        histograph-uploads/kloeke-altnames \
+        histograph-uploads/leiden-1611 \
+        histograph-uploads/leidsebonnen \
+        histograph-uploads/leidse-panden-1879 \
+        histograph-uploads/rm
