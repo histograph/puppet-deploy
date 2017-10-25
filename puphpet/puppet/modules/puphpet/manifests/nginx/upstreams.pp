@@ -18,15 +18,15 @@ define puphpet::nginx::upstreams (
       default => { }
     }
 
-    each( $members ) |$key, $member| {
-      $member_array = $package_array = split($member, ':')
+    # each( $members ) |$key, $member| {
+    #   $member_array = $package_array = split($member, ':')
 
-      if count($member_array) == 2
-        and ! defined(Puphpet::Firewall::Port["${member_array[1]}"])
-      {
-        puphpet::firewall::port { "${member_array[1]}": }
-      }
-    }
+    #   if count($member_array) == 2
+    #     and ! defined(Puphpet::Firewall::Port["${member_array[1]}"])
+    #   {
+    #     puphpet::firewall::port { "${member_array[1]}": }
+    #   }
+    # }
   }
 
 }

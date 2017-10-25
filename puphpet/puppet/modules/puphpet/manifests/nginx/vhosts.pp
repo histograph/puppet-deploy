@@ -8,7 +8,7 @@ define puphpet::nginx::vhosts (
 
   each( $vhosts ) |$key, $vhost| {
     # Could be proxy vhost
-    if $vhost['www_root'] != '' {
+    if array_true($vhost, 'www_root') and $vhost['www_root'] != '' {
       exec { "exec mkdir -p ${vhost['www_root']} @ key ${key}":
         command => "mkdir -p ${vhost['www_root']}",
         user    => $puphpet::nginx::params::webroot_user,

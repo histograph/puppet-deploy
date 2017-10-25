@@ -24,18 +24,26 @@ export APIUSER="$(read_params  histograph.users.api_user)"
 export APIPASSWORD="$(read_params  histograph.users.api_password)"
 
 export APIBASEPORT="$(read_params  histograph.api.base_port)"
+export APIPROTOCOL="$(read_params  histograph.api.protocol)"
+export APIPROXY="$(read_params  histograph.api.proxy)"
 # export BASEHOST=localhost
 
 if [ "${1} " != " " ]
 then
-  export APIBASEHOST="${1}"
+  export APIBASEHOST="api.${1}"
 else
   echo "ERROR: name of host not provided"
   exit 1
 fi
 
 # export APIBASEURL="http://${APIBASEHOST}:${APIBASEPORT}"
-export APIBASEURL="http://${APIBASEHOST}:${APIBASEPORT}"
+if [ "$APIPROXY " == "1 " ]
+then
+  export APIBASEURL="${APIPROTOCOL}://${APIBASEHOST}"
+else
+  export APIBASEURL="${APIPROTOCOL}://${APIBASEHOST}:${APIBASEPORT}"
+fi
+
 
 export COREBATCHSIZE="$(read_params  histograph.core.batchSize)"
 export COREBATCHTIMEOUT="$(read_params  histograph.core.batchTimeout)"

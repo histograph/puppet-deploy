@@ -110,12 +110,12 @@ locale:
 firewall:
     install: '1'
     rules:
-      fr_cqfgv4r494fr:
-        port:
-            - 3000
-        priority: '200'
-        proto: tcp
-        action: accept
+    #   fr_cqfgv4r494fr:
+    #     port:
+    #         - 3000
+    #     priority: '200'
+    #     proto: tcp
+    #     action: accept
 cron:
     install: '1'
     jobs: {  }
@@ -130,8 +130,38 @@ nginx:
         proxy_send_timeout: 600s
         proxy_read_timeout: 600s
         names_hash_bucket_size: 128
-    upstreams: {  }
+    upstreams:
+        nxv_8yzpoed6xmgv:
+            name: api
+            upstream_fail_timeout: 10s
+            members:
+                - 'localhost:3000'
     vhosts:
+        api_histograph:
+            server_name: api.histograph.io
+            server_aliases:
+                - api.histograph.local
+            www_root: /var/www/api
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+              api_histograph:
+                priority: 520
+                location: '/'
+                # try_files:
+                #   - $uri
+                #   - $uri/
+                #   - /index.php
+                proxy: 'http://api'
+                proxy_redirect: default
         thesaurus_histograph:
             server_name: thesaurus.erfgeo.nl
             server_aliases:
@@ -364,6 +394,8 @@ histograph:
     import_password: histograph
   api:
     base_port: 3000
+    protocol: http
+    proxy: 1
   core:
     batchSize: 1000
     batchTimeout: 1500

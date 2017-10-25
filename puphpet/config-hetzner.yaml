@@ -24,6 +24,9 @@ vagrantfile:
                           # insert_key: 'false'
 nginx:
     vhosts:
+        api_histograph:
+            server_aliases:
+                - api.enl.waag.org
         thesaurus_histograph:
             server_aliases:
                 - thesaurus.enl.waag.org

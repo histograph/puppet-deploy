@@ -48,13 +48,21 @@ define puphpet::nginx::locations (
     }, $location_custom_data), 'fast_cgi_params_extra')
 
     # If www_root was removed with all the trimmings,
-    # add it back it
+    # add it back if there is no proxy, otherwise remove it
     if ! array_true($location_no_root, 'www_root') {
-      $location_root_merged = merge({
-        'www_root' => $www_root,
-      }, $location_no_root)
+      if ! array_true($location, 'proxy') {
+        $location_root_merged = merge({
+          'www_root' => $www_root,
+        }, $location_no_root)
+      } else {
+        $location_root_merged = $location_no_root
+      }
     } else {
-      $location_root_merged = $location_no_root
+      if ! array_true($location, 'proxy') {
+        $location_root_merged = $location_no_root
+      } else{
+        $location_root_merged = delete($location_no_root,'www_root')
+      }
     }
 
     # location rewrites
