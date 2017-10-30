@@ -7,7 +7,7 @@ echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x
-source $(dirname $0)/set-vars "${1}"
+source $(dirname $0)/../utils/set-vars "${1}"
 
 RUBY_PATH=/opt/puppetlabs/puppet/bin
 

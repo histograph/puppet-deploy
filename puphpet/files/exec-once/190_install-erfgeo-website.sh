@@ -7,7 +7,7 @@ echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x
-source $(dirname $0)/set-vars "${1}"
+source $(dirname $0)/../utils/set-vars "${1}"
 
 export MY_MODULE="erfgoed-en-locatie.github.io"
 export MY_REPO="https://github.com/histograph"
@@ -17,6 +17,8 @@ export MY_WEBDIR="$(read_params nginx.vhosts.erfgeo_website.www_root)"
 install_source
 clean_webdir
 
+cd ${SRC_HOME}/${MY_PLACE}
+# echo "current directory $PWD"
 cp -r _site/* ${MY_WEBDIR}
 
 set_CLIENT_webdirperm

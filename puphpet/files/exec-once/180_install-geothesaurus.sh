@@ -7,7 +7,7 @@ echo "  ---%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---"
 echo
 
 #set -x
-source $(dirname $0)/set-vars "${1}"
+source $(dirname $0)/../utils/set-vars "${1}"
 
 export MY_MODULE="geothesaurus"
 export MY_REPO="https://github.com/erfgoed-en-locatie"
