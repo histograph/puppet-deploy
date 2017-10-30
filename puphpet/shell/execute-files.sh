@@ -43,7 +43,7 @@ echo "Running files in files/${EXEC_ALWAYS_DIR}"
 
 find "${VAGRANT_CORE_FOLDER}/files/${EXEC_ALWAYS_DIR}" -maxdepth 1 -type f -name '*.sh' | sort | while read FILENAME; do
     chmod +x "${FILENAME}"
-    /bin/bash "${FILENAME}"
+    /bin/bash "${FILENAME}" "${HOSTNAME_VM}"
 done
 
 echo "Finished running files in files/${EXEC_ALWAYS_DIR}"
