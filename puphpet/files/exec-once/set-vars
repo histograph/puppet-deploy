@@ -227,6 +227,15 @@ install_nodecode()
 
 }
 
+install_jekyllcode()
+{
+  install_source
+  # install node dependencies
+  cd ${SRC_HOME}/${MY_PLACE}
+  sudo su $MYUSER -c "${NPM_INSTALL}"
+
+}
+
 install_phpcode()
 {
   install_source
@@ -262,8 +271,8 @@ set_CLIENT_webdirperm()
 {
   chown -R www-data:www-data ${MY_WEBDIR}
 
-  chmod -R ug=rX ${MY_WEBDIR}
-  chmod -R o-rwxX ${MY_WEBDIR}
+  chmod -R u=rX ${MY_WEBDIR}
+  chmod -R go-rwxX ${MY_WEBDIR}
 
   service nginx restart
 }
@@ -272,7 +281,7 @@ set_PHP_webdirperm()
 {
   chown -R www-user:www-data ${MY_WEBDIR}
 
-  chmod -R u=rwxX ${MY_WEBDIR}
+  chmod -R u=rxX ${MY_WEBDIR}
   chmod -R g=rX ${MY_WEBDIR}
   chmod -R o-rwxX ${MY_WEBDIR}
 

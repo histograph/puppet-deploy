@@ -137,6 +137,21 @@ nginx:
             members:
                 - 'localhost:3000'
     vhosts:
+        erfgeo_website:
+            server_name: http://erfgeo.nl/
+            server_aliases:
+                - erfgeo.histograph.local
+            www_root: /var/www/erfgeo
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
         api_histograph:
             server_name: api.histograph.io
             server_aliases:

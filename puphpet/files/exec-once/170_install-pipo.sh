@@ -10,7 +10,7 @@ echo
 source $(dirname $0)/set-vars "${1}"
 
 export MY_MODULE="pipo"
-export MY_REPO="https://github.com/erfgoed-en-locatie"
+export MY_REPO="https://github.com/histograph/"
 export MY_WEBDIR="$(read_params nginx.vhosts.importeren_histograph.www_root)"
 
 MY_WEBDIR=${MY_WEBDIR%/web}
@@ -89,3 +89,6 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 EOF
 
 set_PHP_webdirperm
+
+# pipo needs to write files to disk (exports, logs)
+chmod -R u+w ${MY_WEBDIR}/app/storage

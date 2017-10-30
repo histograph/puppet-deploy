@@ -24,6 +24,9 @@ vagrantfile:
                           # insert_key: 'false'
 nginx:
     vhosts:
+        erfgeo_website:
+            server_aliases:
+                - enl.waag.org
         api_histograph:
             server_aliases:
                 - api.enl.waag.org
