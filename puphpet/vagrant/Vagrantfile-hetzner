@@ -71,16 +71,16 @@ machines.each do |i, machine|
     end
     machine_id.vm.provision :shell, run: 'always' do |s|
       s.path = 'puphpet/shell/execute-files.sh'
-      s.args = ['startup-once', 'startup-always']
+      s.args = ['startup-once', 'startup-always', "#{machine_id.vm.hostname}"]
     end
 
     machine_id.vm.provision :shell, privileged: false do |s|
       s.path = 'puphpet/shell/execute-files.sh'
-      s.args = ['exec-once-unprivileged', 'exec-always-unprivileged']
+      s.args = ['exec-once-unprivileged', 'exec-always-unprivileged', "#{machine_id.vm.hostname}"]
     end
     machine_id.vm.provision :shell, run: 'always', privileged: false do |s|
       s.path = 'puphpet/shell/execute-files.sh'
-      s.args = ['startup-once-unprivileged', 'startup-always-unprivileged']
+      s.args = ['startup-once-unprivileged', 'startup-always-unprivileged', "#{machine_id.vm.hostname}"]
     end
 
     machine_id.vm.provision :shell, :path => 'puphpet/shell/important-notices.sh'

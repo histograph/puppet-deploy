@@ -21,4 +21,10 @@ cd ${SRC_HOME}/${MY_PLACE}
 # echo "current directory $PWD"
 cp -r _site/* ${MY_WEBDIR}
 
-set_CLIENT_webdirperm
+set_PHP_webdirperm
+
+# NOOOOO: all dir needs to be owned by www-user PHP daemon
+# Need to enable php execution
+# MY_WEBDIR=${MY_WEBDIR}/thesaurus
+# set_PHP_webdirperm 
+

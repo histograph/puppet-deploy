@@ -30,9 +30,9 @@ nginx:
         api_histograph:
             server_aliases:
                 - api.enl.waag.org
-        thesaurus_histograph:
-            server_aliases:
-                - thesaurus.enl.waag.org
+        # thesaurus_histograph:
+        #     server_aliases:
+        #         - thesaurus.enl.waag.org
         importeren_histograph:
             server_aliases:
                 - importeren.enl.waag.org
