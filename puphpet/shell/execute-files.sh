@@ -4,9 +4,15 @@ export DEBIAN_FRONTEND=noninteractive
 
 VAGRANT_CORE_FOLDER=$(cat '/.puphpet-stuff/vagrant-core-folder.txt')
 
-EXEC_ONCE_DIR="$1"
-EXEC_ALWAYS_DIR="$2"
-HOSTNAME_VM="$3"
+if [ "$#" = "3" ]
+then
+    EXEC_ONCE_DIR="$1"
+    EXEC_ALWAYS_DIR="$2"
+    HOSTNAME_VM="$3"
+else
+    EXEC_ONCE_DIR="$1"
+    HOSTNAME_VM="$2"
+fi
 
 echo "Running files in files/${EXEC_ONCE_DIR}"
 

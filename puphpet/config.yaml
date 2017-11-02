@@ -476,8 +476,9 @@ postfix:
     install: '1'
     settings:
         inet_interfaces: loopback-only
-        mydestination: '$myhostname, localhost.$mydomain, $mydomain'
+        mydestination: '$myhostname, localhost.$mydomain, localhost, $mydomain'
         root_mail_recipient: stefano@waag.org
+        relayhost: ''
 postgresql:
     install: '1'
     settings:

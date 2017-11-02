@@ -46,9 +46,9 @@ machines.each do |i, machine|
     end
     machine_id.vm.provision :shell do |s|
       s.path = 'puphpet/shell/execute-files.sh'
-      s.args = ['exec-preprovision']
+      s.args = ['exec-preprovision',"#{machine_id.vm.hostname}"]
     end
-
+    
     machine_id.vm.provision :puppet do |puppet|
       puppet.facter = {
         'fqdn'             => "#{machine_id.vm.hostname}",

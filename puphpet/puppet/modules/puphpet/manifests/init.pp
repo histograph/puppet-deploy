@@ -124,4 +124,8 @@ class puphpet  (
     include ::puphpet::neo4j::install
   }
 
+  if array_true($puphpet::params::hiera['postfix'], 'install') {
+    include ::puphpet::postfix::install
+  }
+
 }

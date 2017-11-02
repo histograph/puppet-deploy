@@ -36,6 +36,7 @@ class puphpet::params (
     neo4j          => hiera_hash('neo4j', {}),
     php            => hiera_hash('php', {}),
     postgresql     => hiera_hash('postgresql', {}),
+    postfix        => hiera_hash('postfix', {}),
     python         => hiera_hash('python', {}),
     rabbitmq       => hiera_hash('rabbitmq', {}),
     redis          => hiera_hash('redis', {}),
