@@ -10,7 +10,7 @@ echo
 source $(dirname $0)/../utils/set-vars "${1}"
 
 export MY_MODULE="pipo"
-export MY_REPO="https://github.com/histograph/"
+export MY_REPO="https://github.com/histograph"
 export MY_WEBDIR="$(read_params nginx.vhosts.importeren_histograph.www_root)"
 
 MY_WEBDIR=${MY_WEBDIR%/web}
@@ -20,9 +20,14 @@ install_phpcode
 
 cd ${SRC_HOME}/${MY_PLACE}
 
-mysql --user="$(read_params mysql.users.histograph.name)" \
-      --password="$(read_params mysql.users.histograph.password)" \
-      "$(read_params mysql.databases.histograph.name)" < ./sql/pipo.sql
+echo "CREATE DATABASE IF NOT EXISTS $(read_params mysql.databases.pipo.name) \
+            DEFAULT CHARACTER SET = 'utf8' \
+            DEFAULT COLLATE = 'utf8_general_ci' " | mysql --user="$(read_params mysql.users.pipo.name)" \
+      --password="$(read_params mysql.users.pipo.password)" 
+
+mysql --user="$(read_params mysql.users.pipo.name)" \
+      --password="$(read_params mysql.users.pipo.password)" \
+      "$(read_params mysql.databases.pipo.name)" < ./sql/pipo.sql
 
 
 
@@ -66,9 +71,9 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 \$app["db.options"] = array(
     'driver'   => 'pdo_mysql',
     'host'     => 'localhost',
-    'user'     => '$(read_params mysql.users.histograph.name)',
-    'password' => '$(read_params mysql.users.histograph.password)',
-    'dbname'   => '$(read_params mysql.databases.histograph.name)',
+    'user'     => '$(read_params mysql.users.pipo.name)',
+    'password' => '$(read_params mysql.users.pipo.password)',
+    'dbname'   => '$(read_params mysql.databases.pipo.name)',
     'charset'   => 'utf8',
 );
 

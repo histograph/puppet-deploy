@@ -27,6 +27,9 @@ nginx:
         erfgeo_website:
             server_aliases:
                 - enl.waag.org
+        standaardiseren_histograph:
+            server_aliases:
+                - standaardiseren.enl.waag.org                
         api_histograph:
             server_aliases:
                 - api.enl.waag.org

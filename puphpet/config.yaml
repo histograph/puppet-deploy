@@ -192,6 +192,49 @@ nginx:
                   SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
                   HTTPS: 'off'
                 fastcgi_split_path: '^(.+\.php)(/.*)$'
+        standaardiseren_histograph:
+            server_name: standaardiseren.erfgeo.nl
+            server_aliases:
+                - standaardiseren.histograph.local
+            www_root: /var/www/standaardiseren/web
+            listen_port: '80'
+            client_max_body_size: 100m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+              images_files_ii:
+                priority: 505
+                location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                location_custom_cfg:
+                    expires: 'max'
+                    log_not_found: 'off'
+              direct_files_ii:
+                priority: 510
+                location: '/'
+                try_files:
+                    - $uri
+                    - /index.php
+              index_php_ii:
+                priority: 520
+                location: '~ ^/index\.php(/|$)'
+                fastcgi: 'unix:/var/run/php/php-fpm.sock'
+                fastcgi_param:
+                    SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
+                    HTTPS: 'off'
+                fastcgi_split_path: '^(.+\.php)(/.*)$'
+                include:
+                    - fastcgi_params
+              all_php_ii:
+                priority: 530
+                location: '~ \.php$'
+                location_custom_cfg:
+                    return: 404
         api_histograph:
             server_name: api.histograph.io
             server_aliases:
@@ -316,7 +359,7 @@ nginx:
 letsencrypt:
     install: '1'
     settings:
-        email: histograph@api.histograph.io
+        email: stefano@waag.org
     domains: {  }
 php:
     install: '1'
@@ -405,19 +448,36 @@ mysql:
         override_options: {  }
     adminer: 0
     users:
-        histograph:
+        pipo:
             name: pipo_username
             password: pipo_userpassword
+        standaardiseren:
+            name: standaardiseren_username
+            password: standaardiseren_userpassword
     databases:
-        histograph:
+        pipo:
             name: pipo_db
             sql: ''
+        standaardiseren:
+            name: standaardiseren_db
+            sql: ''
     grants:
-        mysqlng_2ecqbzfaqb15:
+        mysqlng_pipo:
             user: pipo_username
             table: 'pipo_db.*'
             privileges:
                 - ALL
+        mysqlng_standaardiseren:
+            user: standaardiseren_username
+            table: 'standaardiseren_db.*'
+            privileges:
+                - ALL
+postfix:
+    install: '1'
+    settings:
+        inet_interfaces: loopback-only
+        mydestination: '$myhostname, localhost.$mydomain, $mydomain'
+        root_mail_recipient: stefano@waag.org
 postgresql:
     install: '1'
     settings:
