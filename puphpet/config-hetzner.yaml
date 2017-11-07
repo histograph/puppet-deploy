@@ -27,21 +27,26 @@ nginx:
         erfgeo_website:
             server_aliases:
                 - enl.waag.org
+            ssl_hostname: enl.waag.org
         standaardiseren_histograph:
             server_aliases:
-                - standaardiseren.enl.waag.org                
+                - standaardiseren.enl.waag.org
+            ssl_hostname: standaardiseren.enl.waag.org
         api_histograph:
             server_aliases:
                 - api.enl.waag.org
+            ssl_hostname: api.enl.waag.org
         # thesaurus_histograph:
         #     server_aliases:
         #         - thesaurus.enl.waag.org
         importeren_histograph:
             server_aliases:
                 - importeren.enl.waag.org
+            ssl_hostname: importeren.enl.waag.org
         viewer_histograph:
             server_aliases:
                 - viewer.enl.waag.org
+            ssl_hostname: viewer.enl.waag.org
 elastic_search:
     settings:
         heap_size: 16g

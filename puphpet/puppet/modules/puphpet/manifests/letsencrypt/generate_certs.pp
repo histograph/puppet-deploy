@@ -25,8 +25,9 @@ define puphpet::letsencrypt::generate_certs (
     '--agree-tos',
     '--keep-until-expiring',
     '--standalone',
-    '--standalone-supported-challenges http-01',
+    '--preferred-challenges http',
     '--noninteractive',
+    '--expand',
     "--email '${puphpet::params::hiera['letsencrypt']['settings']['email']}'",
     $pre_hook,
     $post_host,
@@ -47,6 +48,8 @@ define puphpet::letsencrypt::generate_certs (
 
     $hour   = seeded_rand(23, $::fqdn)
     $minute = seeded_rand(59, $::fqdn)
+
+    # notify{"Dump of letsencrypt command: ${cmd_final}": }
 
     exec { "generate ssl cert for ${first_host}":
       command => $cmd_final,

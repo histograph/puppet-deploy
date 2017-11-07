@@ -22,6 +22,8 @@ class puphpet::letsencrypt::install
     puphpet::firewall::port { '80': }
   }
 
+  # notify{"Running letsencrypt with: ${webserver_service}": }
+
   include puphpet::letsencrypt::certbot
 
   puphpet::letsencrypt::generate_certs { 'from puphpet::letsencrypt::install':

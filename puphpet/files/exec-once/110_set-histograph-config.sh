@@ -84,3 +84,14 @@ HISTOGRAPH
 # fi
 
 chown ${MYUSER}:${MYUSER} ${SRC_HOME}/config.yaml 2>/dev/null
+
+if service --status-all 2>&1 | grep -Fq 'histograph-api'
+then
+  service histograph-api restart
+fi
+
+if service --status-all 2>&1 | grep -Fq 'histograph-core'
+then
+  service histograph-core restart
+fi
+

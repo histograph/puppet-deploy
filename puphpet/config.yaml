@@ -147,30 +147,34 @@ nginx:
             index_files:
                 - index.html
                 - index.htm
-            ssl: '0'
+            ssl: '1'
             ssl_cert: LETSENCRYPT
             ssl_key: LETSENCRYPT
             ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''
-            rewrite_to_https: '1'
+            ssl_redirect: '1'
             spdy: '1'
             locations:
               images_files_th:
                 priority: 505
                 location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                ssl: true
+                ssl_only: true
                 index_files:
-                    - index.html
-                    - index.htm
+                  - index.html
+                  - index.htm
                 location_custom_cfg:
                   expires: 'max'
                   log_not_found: 'off'
               index_th:
                 priority: 520
                 location: '/'
+                ssl: true
+                ssl_only: true
                 index_files:
-                    - index.html
-                    - index.htm
+                  - index.html
+                  - index.htm
                 # try_files:
                 #   - $uri
                 #   - $uri/
@@ -178,6 +182,8 @@ nginx:
               thesaurus_th:
                 priority: 520
                 location: '/thesaurus'
+                ssl: true
+                ssl_only: true
                 index_files:
                   - index.php
                 try_files:
@@ -186,6 +192,8 @@ nginx:
                   - /thesaurus/index.php
               all_php_th:
                 priority: 530
+                ssl: true
+                ssl_only: true
                 location: '~* index\.php$'
                 fastcgi: 'unix:/var/run/php/php-fpm.sock'
                 fastcgi_param:
@@ -199,29 +207,35 @@ nginx:
             www_root: /var/www/standaardiseren/web
             listen_port: '80'
             client_max_body_size: 100m
-            ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
+            ssl: '1'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
             ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''
-            rewrite_to_https: '1'
+            ssl_redirect: '1'
             spdy: '1'
             locations:
               images_files_ii:
                 priority: 505
+                ssl: true
+                ssl_only: true
                 location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
                 location_custom_cfg:
                     expires: 'max'
                     log_not_found: 'off'
               direct_files_ii:
                 priority: 510
+                ssl: true
+                ssl_only: true
                 location: '/'
                 try_files:
                     - $uri
                     - /index.php
               index_php_ii:
                 priority: 520
+                ssl: true
+                ssl_only: true
                 location: '~ ^/index\.php(/|$)'
                 fastcgi: 'unix:/var/run/php/php-fpm.sock'
                 fastcgi_param:
@@ -232,6 +246,8 @@ nginx:
                     - fastcgi_params
               all_php_ii:
                 priority: 530
+                ssl: true
+                ssl_only: true
                 location: '~ \.php$'
                 location_custom_cfg:
                     return: 404
@@ -242,18 +258,20 @@ nginx:
             www_root: /var/www/api
             listen_port: '80'
             client_max_body_size: 10g
-            ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
+            ssl: '1'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
             ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''
-            rewrite_to_https: '1'
+            ssl_redirect: '1'
             spdy: '1'
             locations:
               api_histograph:
                 priority: 520
                 location: '/'
+                ssl: true
+                ssl_only: true
                 # try_files:
                 #   - $uri
                 #   - $uri/
@@ -273,7 +291,7 @@ nginx:
         #     ssl_port: '443'
         #     ssl_protocols: ''
         #     ssl_ciphers: ''
-        #     rewrite_to_https: '1'
+        #     ssl_redirect: '1'
         #     spdy: '1'
         #     locations:
         #       images_files_th:
@@ -304,30 +322,36 @@ nginx:
             www_root: /var/www/importeren/web
             listen_port: '80'
             client_max_body_size: 1m
-            ssl: '0'
-            ssl_cert: ''
-            ssl_key: ''
+            ssl: '1'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
             ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''
-            rewrite_to_https: '1'
+            ssl_redirect: '1'
             spdy: '1'
             locations:
               images_files_ih:
                 priority: 505
                 location: '~* \.(ico|css|js|gif|jpe?g|png)(\?[0-9]+)?$'
+                ssl: true
+                ssl_only: true
                 location_custom_cfg:
                   expires: 'max'
                   log_not_found: 'off'
               direct_files_ih:
                 priority: 510
                 location: '/'
+                ssl: true
+                ssl_only: true
                 try_files:
                   - $uri
                   - /index.php$is_args$args
               index_php_ih:
                 priority: 520
                 location: '~ ^/index\.php(/|$)'
+                ssl: true
+                ssl_only: true
                 fastcgi: 'unix:/var/run/php/php-fpm.sock'
                 fastcgi_param:
                   SCRIPT_FILENAME: '$document_root$fastcgi_script_name'
@@ -338,6 +362,8 @@ nginx:
               all_php_ih:
                 priority: 530
                 location: '~ \.php$'
+                ssl: true
+                ssl_only: true
                 location_custom_cfg:
                   return: 404
         viewer_histograph:
@@ -347,20 +373,40 @@ nginx:
             www_root: /var/www/viewer
             listen_port: '80'
             client_max_body_size: 1m
-            ssl: '0'
+            ssl: '1'
             ssl_cert: LETSENCRYPT
             ssl_key: LETSENCRYPT
             ssl_port: '443'
             ssl_protocols: ''
             ssl_ciphers: ''
-            rewrite_to_https: '1'
+            ssl_redirect: '1'
             spdy: '1'
     proxies: {  }
 letsencrypt:
     install: '1'
     settings:
         email: stefano@waag.org
-    domains: {  }
+    domains:
+        api:
+          hosts:
+            # - api.histograph.io
+            - api.enl.waag.org
+        viewer:
+          hosts:
+            # - viewer.histograph.io
+            - viewer.enl.waag.org
+        standaardiseren:
+          hosts:
+            # - standaardiseren.erfgeo.nl
+            - standaardiseren.enl.waag.org
+        erfgeo:
+          hosts:
+            # - erfgeo.nl
+            - enl.waag.org
+        importeren:
+          hosts:
+            # - importeren.erfgeo.nl
+            - importeren.enl.waag.org
 php:
     install: '1'
     settings:
@@ -511,7 +557,7 @@ histograph:
     import_password: histograph
   api:
     base_port: 3000
-    protocol: http
+    protocol: https
     proxy: 1
   core:
     batchSize: 1000

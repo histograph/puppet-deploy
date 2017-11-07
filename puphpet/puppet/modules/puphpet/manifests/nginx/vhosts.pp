@@ -56,17 +56,22 @@ define puphpet::nginx::vhosts (
       true    => $vhost['ssl_ciphers'],
       default => join($puphpet::nginx::params::allowed_ciphers, ':'),
     }
-    $rewrite_to_https = $ssl and array_true($vhost, 'rewrite_to_https') ? {
+    $ssl_redirect = $ssl and array_true($vhost, 'ssl_redirect') ? {
       true    => { 'rewrite' => '^ https://$server_name$request_uri? permanent' },
       default => undef,
     }
 
+    $ssl_hostname = array_true($vhost, 'ssl_hostname') ? {
+      true    => $vhost['ssl_hostname'],
+      default => $vhost['server_name']
+    }
+
     $ssl_cert_real = ($ssl_cert == 'LETSENCRYPT') ? {
-      true    => "/etc/letsencrypt/live/${vhost['server_name']}/fullchain.pem",
+      true    => "/etc/letsencrypt/live/${ssl_hostname}/fullchain.pem",
       default => $ssl_cert,
     }
     $ssl_key_real = ($ssl_key == 'LETSENCRYPT') ? {
-      true    => "/etc/letsencrypt/live/${vhost['server_name']}/privkey.pem",
+      true    => "/etc/letsencrypt/live/${ssl_hostname}/privkey.pem",
       default => $ssl_key,
     }
 
@@ -85,7 +90,7 @@ define puphpet::nginx::vhosts (
       'rewrite_rules'  => $rewrites
     })
 
-    if ($rewrite_to_https){
+    if ($ssl_redirect){
 
       # puppet-nginx is stupidly strict about ssl value datatypes
       $merged = delete(merge($vhost_rewrites_append, {
@@ -97,8 +102,8 @@ define puphpet::nginx::vhosts (
         'ssl_port'             => $ssl_port,
         'ssl_protocols'        => $ssl_protocols,
         'ssl_ciphers'          => "\"${ssl_ciphers}\"",
-        'location_cfg_append'     => $rewrite_to_https,
-      }), ['server_aliases', 'proxy', 'locations', 'rewrite_to_https'])
+        'ssl_redirect'     => $ssl_redirect,
+      }), ['server_aliases', 'proxy', 'locations','ssl_hostname'])
 
     }else{
 
@@ -112,9 +117,11 @@ define puphpet::nginx::vhosts (
         'ssl_port'             => $ssl_port,
         'ssl_protocols'        => $ssl_protocols,
         'ssl_ciphers'          => "\"${ssl_ciphers}\"",
-      }), ['server_aliases', 'proxy', 'locations', 'rewrite_to_https'])
+      }), ['server_aliases', 'proxy', 'locations', 'ssl_redirect','ssl_hostname'])
 
     }
+
+    # notify{"Dump of all nginx values: ${key} => $merged": }
 
     create_resources(nginx::resource::server, { "${key}" => $merged })
 
@@ -143,16 +150,16 @@ define puphpet::nginx::vhosts (
       "${puphpet::nginx::params::webroot_location}/index.html"
 
     $default_vhost_source_file =
-      '/vagrant/puphpet/puppet/manifests/puphpet/files/webserver_landing.html'
+      "${puphpet::params::puphpet_manifest_dir}/files/webserver_landing.html"
 
     exec { "Set ${default_vhost_index_file} contents":
       command => "cat ${default_vhost_source_file} > ${default_vhost_index_file} && \
                   chmod 644 ${default_vhost_index_file} && \
                   chown root ${default_vhost_index_file} && \
                   chgrp ${puphpet::nginx::params::webroot_group} ${default_vhost_index_file} && \
-                  touch /.puphpet-stuff/default_vhost_index_file_set",
+                  touch ${puphpet::params::puphpet_state_dir}/default_vhost_index_file_set",
       returns => [0, 1],
-      creates => '/.puphpet-stuff/default_vhost_index_file_set',
+      creates => "${puphpet::params::puphpet_state_dir}/default_vhost_index_file_set",
       require => File[$puphpet::nginx::params::webroot_location],
     }
   }

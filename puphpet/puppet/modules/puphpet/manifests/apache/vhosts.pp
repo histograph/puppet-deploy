@@ -94,20 +94,25 @@ define puphpet::apache::vhosts (
 
     $letsencrypt = $ssl_cert == 'LETSENCRYPT'
 
+    $ssl_hostname = array_true($vhost, 'ssl_hostname') ? {
+      true    => $vhost['ssl_hostname'],
+      default => $vhost['servername']
+    }
+
     $ssl_cert_real = $letsencrypt ? {
-      true    => "/etc/letsencrypt/live/${vhost['servername']}/cert.pem",
+      true    => "/etc/letsencrypt/live/${ssl_hostname}/cert.pem",
       default => $ssl_cert,
     }
     $ssl_key_real = $letsencrypt ? {
-      true    => "/etc/letsencrypt/live/${vhost['servername']}/privkey.pem",
+      true    => "/etc/letsencrypt/live/${ssl_hostname}/privkey.pem",
       default => $ssl_key,
     }
     $ssl_chain_real = $letsencrypt ? {
-      true    => "/etc/letsencrypt/live/${vhost['servername']}/chain.pem",
+      true    => "/etc/letsencrypt/live/${ssl_hostname}/chain.pem",
       default => $ssl_chain,
     }
     $ssl_certs_dir_real = $letsencrypt ? {
-      true    => "/etc/letsencrypt/live/${vhost['servername']}",
+      true    => "/etc/letsencrypt/live/${ssl_hostname}",
       default => $ssl_certs_dir,
     }
 
