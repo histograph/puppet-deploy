@@ -5,7 +5,7 @@ source $(dirname $0)/../utils/set-vars "${1}"
 HIST_DATA_DIR="${SRC_HOME}/data"
 HIST_IMPORT_DIR="${SRC_HOME}/import"
 
-if [ "$(read_params  histograph.data.doDownload) " == "true " ]
+if [ "$(read_params  histograph data.doDownload) " == "true " ]
 then
   echo "Download repos ${DATA_REP_TODOWNLOAD}"
 
@@ -36,7 +36,7 @@ fi
 # The fact to leave the bag repo even though it might be updated is based on the believe that
 # import will not import it if it is not new, and this solution is more resilient to a earlier failed import
 
-if [ "$(read_params  histograph.data.doImport) " == "true " ]
+if [ "$(read_params  histograph data.doImport) " == "true " ]
 then
   cd ${HIST_IMPORT_DIR}
   THE_REPOS="${DATA_REP_ONDISK} ${DATA_REP_TODOWNLOAD} ${EL_DATA_REP}"

@@ -11,7 +11,7 @@ source $(dirname $0)/../utils/set-vars "${1}"
 
 export MY_MODULE="viewer"
 export MY_REPO="https://github.com/histograph"
-export MY_WEBDIR="$(read_params nginx.vhosts.viewer_histograph.www_root)"
+export MY_WEBDIR="$(read_params nginx vhosts.viewer_histograph.www_root)"
 
 # install histograph-viewer
 install_nodecode

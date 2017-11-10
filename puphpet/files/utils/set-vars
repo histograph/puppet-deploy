@@ -9,23 +9,23 @@
 # set -x
 
 read_params(){
-    hiera --config /vagrant/puphpet/puppet/hiera.yaml $1
+    hiera --hash --format json --config /vagrant/puphpet/puppet/hiera.yaml $1 | jq ".${2}" | tr -d '"'
 }
 
-export SRC_HOME="$(read_params  histograph.directories.src_home)"
-export DEV_HOME="$(read_params  histograph.directories.dev_home)"
-export UPLOADS_DIR="$(read_params  histograph.directories.uploads_dir)"
-export NEO_PLUGIN_DIR="$(read_params  histograph.directories.neo_plugin_dir)"
-export RUN_DIR="$(read_params  histograph.directories.run_dir)"
-export LOG_DIR="$(read_params  histograph.directories.log_dir)"
+export SRC_HOME="$(read_params  histograph directories.src_home)"
+export DEV_HOME="$(read_params  histograph directories.dev_home)"
+export UPLOADS_DIR="$(read_params  histograph directories.uploads_dir)"
+export NEO_PLUGIN_DIR="$(read_params  histograph directories.neo_plugin_dir)"
+export RUN_DIR="$(read_params  histograph directories.run_dir)"
+export LOG_DIR="$(read_params  histograph directories.log_dir)"
 
-export MYUSER="$(read_params  histograph.users.system_user)"
-export APIUSER="$(read_params  histograph.users.api_user)"
-export APIPASSWORD="$(read_params  histograph.users.api_password)"
+export MYUSER="$(read_params  histograph users.system_user)"
+export APIUSER="$(read_params  histograph users.api_user)"
+export APIPASSWORD="$(read_params  histograph users.api_password)"
 
-export APIBASEPORT="$(read_params  histograph.api.base_port)"
-export APIPROTOCOL="$(read_params  histograph.api.protocol)"
-export APIPROXY="$(read_params  histograph.api.proxy)"
+export APIBASEPORT="$(read_params  histograph api.base_port)"
+export APIPROTOCOL="$(read_params  histograph api.protocol)"
+export APIPROXY="$(read_params  histograph api.proxy)"
 # export BASEHOST=localhost
 
 if [ "${1} " != " " ]
@@ -45,42 +45,42 @@ else
 fi
 
 
-export COREBATCHSIZE="$(read_params  histograph.core.batchSize)"
-export COREBATCHTIMEOUT="$(read_params  histograph.core.batchTimeout)"
+export COREBATCHSIZE="$(read_params  histograph core.batchSize)"
+export COREBATCHTIMEOUT="$(read_params  histograph core.batchTimeout)"
 
-export MY_BRANCH="$(read_params  histograph.git.branch)"
-export MY_TAG="$(read_params  histograph.git.tag)"
+export MY_BRANCH="$(read_params  histograph git.branch)"
+export MY_TAG="$(read_params  histograph git.tag)"
 # export MY_TAG="v0.5.1"
 
-export REDISMAXQUEUESIZE="$(read_params  histograph.redis.maxQueueSize)"
+export REDISMAXQUEUESIZE="$(read_params  histograph redis.maxQueueSize)"
 
-export DATA_REP_TODOWNLOAD="$(read_params  histograph.data.repositories.toDownload | tr -d '[],"\n')"
+export DATA_REP_TODOWNLOAD="$(read_params  histograph data.repositories.toDownload | tr -d '[],"\n')"
 # export DATA_REP_TODOWNLOAD="geonames nwb tgn bag"
 
-export DATA_REP_ONDISK="$(read_params  histograph.data.repositories.onDisk | tr -d '[],"\n')"
+export DATA_REP_ONDISK="$(read_params  histograph data.repositories.onDisk | tr -d '[],"\n')"
 # export DATA_REP_ONDISK="bag-geonames-tgn cshapes geonames-tgn whosonfirst"
 
-export EL_DATA_REP="$(read_params  histograph.data.repositories.erfLoc | tr -d '[],"\n')"
+export EL_DATA_REP="$(read_params  histograph data.repositories.erfLoc | tr -d '[],"\n')"
 # export EL_DATA_REP="Departementen atlas-verstedelijking gemeentegeschiedenis kloeke poorterboeken voc-opvarenden carnaval ilvb pleiades verdwenen-dorpen"
 
-export BAG_PASSWORD="$(read_params  postgresql.settings.server.postgres_password)"
-export BAG_NAME="$(read_params  postgresql.databases.bag.dbname)"
+export BAG_PASSWORD="$(read_params  postgresql settings.server.postgres_password)"
+export BAG_NAME="$(read_params  postgresql databases.bag.dbname)"
 
-export PAGE_SIZE="$(read_params histograph.es.page_size)"
-export SHARD_NR="$(read_params histograph.es.shard_nr)"
-export REPLICA_NR="$(read_params histograph.es.replica_nr)"
-export REFRESH_INT="$(read_params histograph.es.refresh_interval)"
-export ES_TIMEOUT="$(read_params histograph.es.timeout)"
-export ES_PRECISION="$(read_params histograph.es.precision)"
-export DISTANCE_ERROR_PCT="$(read_params histograph.es.distance_error_pct)"
-export ES_RETRYTIME="$(read_params histograph.es.retrytime)"
-export ES_INSTNAME="$(read_params elastic_search.instances.histograph_instance.name)"
+export PAGE_SIZE="$(read_params histograph es.page_size)"
+export SHARD_NR="$(read_params histograph es.shard_nr)"
+export REPLICA_NR="$(read_params histograph es.replica_nr)"
+export REFRESH_INT="$(read_params histograph es.refresh_interval)"
+export ES_TIMEOUT="$(read_params histograph es.timeout)"
+export ES_PRECISION="$(read_params histograph es.precision)"
+export DISTANCE_ERROR_PCT="$(read_params histograph es.distance_error_pct)"
+export ES_RETRYTIME="$(read_params histograph es.retrytime)"
+export ES_INSTNAME="$(read_params elastic_search instances.histograph_instance.name)"
 
 export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
 export DIFF_TOOL_PATH="/usr/local/bin/hashed-diff"
 
-export PIPO_EXPORTS="$(read_params nginx.vhosts.importeren_histograph.www_root)/$(read_params  histograph.directories.pipo_exports)"
+export PIPO_EXPORTS="$(read_params nginx vhosts.importeren_histograph.www_root)/$(read_params  histograph directories.pipo_exports)"
 
 if [ -d ${DEV_HOME} ]
 then

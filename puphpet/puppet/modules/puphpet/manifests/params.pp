@@ -14,6 +14,8 @@ class puphpet::params (
 
   $yaml = merge_yaml($base_configs, $extra_config_files, $custom_config)
 
+  notify{"Dump of all yaml values: ${yaml}": }
+
   $hiera = {
     vm             => hiera_hash('vagrantfile', {}),
     apache         => $yaml['apache'],

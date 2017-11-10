@@ -11,7 +11,7 @@ source $(dirname $0)/../utils/set-vars "${1}"
 
 export MY_MODULE="place-identificator"
 export MY_REPO="https://github.com/histograph"
-export MY_WEBDIR="$(read_params nginx.vhosts.standaardiseren_histograph.www_root)"
+export MY_WEBDIR="$(read_params nginx vhosts.standaardiseren_histograph.www_root)"
 
 MY_WEBDIR=${MY_WEBDIR%/web}
 
@@ -21,19 +21,19 @@ install_phpcode
 cd ${SRC_HOME}/${MY_PLACE}
 
 
-echo "CREATE DATABASE IF NOT EXISTS $(read_params mysql.databases.standaardiseren.name) \
+echo "CREATE DATABASE IF NOT EXISTS $(read_params mysql databases.standaardiseren.name) \
             DEFAULT CHARACTER SET = 'utf8' \
-            DEFAULT COLLATE = 'utf8_general_ci' " | mysql --user="$(read_params mysql.users.standaardiseren.name)" \
-      --password="$(read_params mysql.users.standaardiseren.password)" 
+            DEFAULT COLLATE = 'utf8_general_ci' " | mysql --user="$(read_params mysql users.standaardiseren.name)" \
+      --password="$(read_params mysql users.standaardiseren.password)" 
 
 # echo "CREATE DATABASE IF NOT EXISTS standaardiseren_db \
 #             DEFAULT CHARACTER SET = 'utf8' \
 #             DEFAULT COLLATE = 'utf8_general_ci' " | mysql --user="standaardiseren_username" \
 #       --password="standaardiseren_userpassword" 
 
-mysql --user="$(read_params mysql.users.standaardiseren.name)" \
-      --password="$(read_params mysql.users.standaardiseren.password)" \
-      "$(read_params mysql.databases.standaardiseren.name)" < ./sql/pid3.sql
+mysql --user="$(read_params mysql users.standaardiseren.name)" \
+      --password="$(read_params mysql users.standaardiseren.password)" \
+      "$(read_params mysql databases.standaardiseren.name)" < ./sql/pid3.sql
 
 
 
@@ -64,9 +64,9 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 \$app["db.options"] = array(
     'driver'   => 'pdo_mysql',
     'host'     => 'localhost',
-    'user'     => '$(read_params mysql.users.standaardiseren.name)',
-    'password' => '$(read_params mysql.users.standaardiseren.password)',
-    'dbname'   => '$(read_params mysql.databases.standaardiseren.name)',
+    'user'     => '$(read_params mysql users.standaardiseren.name)',
+    'password' => '$(read_params mysql users.standaardiseren.password)',
+    'dbname'   => '$(read_params mysql databases.standaardiseren.name)',
     'charset'   => 'utf8',
 );
 

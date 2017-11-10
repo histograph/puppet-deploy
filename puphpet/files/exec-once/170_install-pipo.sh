@@ -11,7 +11,7 @@ source $(dirname $0)/../utils/set-vars "${1}"
 
 export MY_MODULE="pipo"
 export MY_REPO="https://github.com/histograph"
-export MY_WEBDIR="$(read_params nginx.vhosts.importeren_histograph.www_root)"
+export MY_WEBDIR="$(read_params nginx vhosts.importeren_histograph.www_root)"
 
 MY_WEBDIR=${MY_WEBDIR%/web}
 
@@ -20,14 +20,14 @@ install_phpcode
 
 cd ${SRC_HOME}/${MY_PLACE}
 
-echo "CREATE DATABASE IF NOT EXISTS $(read_params mysql.databases.pipo.name) \
+echo "CREATE DATABASE IF NOT EXISTS $(read_params mysql databases.pipo.name) \
             DEFAULT CHARACTER SET = 'utf8' \
-            DEFAULT COLLATE = 'utf8_general_ci' " | mysql --user="$(read_params mysql.users.pipo.name)" \
-      --password="$(read_params mysql.users.pipo.password)" 
+            DEFAULT COLLATE = 'utf8_general_ci' " | mysql --user="$(read_params mysql users.pipo.name)" \
+      --password="$(read_params mysql users.pipo.password)" 
 
-mysql --user="$(read_params mysql.users.pipo.name)" \
-      --password="$(read_params mysql.users.pipo.password)" \
-      "$(read_params mysql.databases.pipo.name)" < ./sql/pipo.sql
+mysql --user="$(read_params mysql users.pipo.name)" \
+      --password="$(read_params mysql users.pipo.password)" \
+      "$(read_params mysql databases.pipo.name)" < ./sql/pipo.sql
 
 
 
@@ -42,17 +42,17 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 \$app['sitename'] = 'Histograph - Pit Importer Part One';
 \$app['upload_dir'] = __DIR__ . '/../storage/uploads';
 \$app['export_dir'] = __DIR__ . '/../storage/exports';
-\$app['api_user'] = '$(read_params histograph.users.api_user)';
-\$app['api_pass'] = '$(read_params histograph.users.api_password)';
+\$app['api_user'] = '$(read_params histograph users.api_user)';
+\$app['api_pass'] = '$(read_params histograph users.api_password)';
 
-\$app['aws_key'] = '$(read_params histograph.aws.key)';
-\$app['aws_secret'] = '$(read_params histograph.aws.secret)';
-\$app['aws_bucket'] = '$(read_params histograph.aws.bucket)';
-\$app['aws_region'] = '$(read_params histograph.aws.region)';
+\$app['aws_key'] = '$(read_params histograph aws.key)';
+\$app['aws_secret'] = '$(read_params histograph aws.secret)';
+\$app['aws_bucket'] = '$(read_params histograph aws.bucket)';
+\$app['aws_region'] = '$(read_params histograph aws.region)';
 
 // BASIC USERS with PASSWORD
 \$app['users'] = array(
-    '$(read_params histograph.users.import_user)' => '$(read_params histograph.users.import_password)',
+    '$(read_params histograph users.import_user)' => '$(read_params histograph users.import_password)',
 );
 
 // FOR DEVELOPMENT
@@ -71,9 +71,9 @@ cat > ${MY_WEBDIR}/app/config/parameters.php<<EOF
 \$app["db.options"] = array(
     'driver'   => 'pdo_mysql',
     'host'     => 'localhost',
-    'user'     => '$(read_params mysql.users.pipo.name)',
-    'password' => '$(read_params mysql.users.pipo.password)',
-    'dbname'   => '$(read_params mysql.databases.pipo.name)',
+    'user'     => '$(read_params mysql users.pipo.name)',
+    'password' => '$(read_params mysql users.pipo.password)',
+    'dbname'   => '$(read_params mysql databases.pipo.name)',
     'charset'   => 'utf8',
 );
 

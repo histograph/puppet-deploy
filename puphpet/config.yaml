@@ -321,7 +321,7 @@ nginx:
                 - importeren.histograph.local
             www_root: /var/www/importeren/web
             listen_port: '80'
-            client_max_body_size: 1m
+            client_max_body_size: 1G
             ssl: '1'
             ssl_cert: LETSENCRYPT
             ssl_key: LETSENCRYPT
