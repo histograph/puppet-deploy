@@ -261,9 +261,23 @@ install_data()
 
 clean_webdir()
 {
+  EXISTSTORAGE="NO"
+
+  if [ -d ${MY_WEBDIR}/app/storage ]
+  then
+    EXISTSTORAGE="YES"
+    mv ${MY_WEBDIR}/app/storage /tmp
+  fi
+
   find ${MY_WEBDIR} -mindepth 1 -type d -exec rm -rf {} \; 2>/dev/null
 
   find ${MY_WEBDIR} -type f -exec rm -rf {} \;
+
+  if [ "${EXISTSTORAGE} " == "YES " ]
+  then
+    mkdir -p ${MY_WEBDIR}/app/ 
+    mv /tmp/storage ${MY_WEBDIR}/app/storage
+  fi
 
 }
 
