@@ -387,20 +387,20 @@ letsencrypt:
     settings:
         email: stefano@waag.org
     domains:
-        waag:
-          hosts:
-            - api.enl.waag.org
-            - viewer.enl.waag.org
-            - standaardiseren.enl.waag.org
-            - enl.waag.org
-            - importeren.enl.waag.org
-        # letsencrypt:
+        # waag:
         #   hosts:
-            # - api.histograph.io
-            # - viewer.histograph.io
-            # - standaardiseren.erfgeo.nl
-            # - erfgeo.nl
-            # - importeren.erfgeo.nl
+        #     - api.enl.waag.org
+        #     - viewer.enl.waag.org
+        #     - standaardiseren.enl.waag.org
+        #     - enl.waag.org
+        #     - importeren.enl.waag.org
+        letsencrypt:
+          hosts:
+            - api.histograph.io
+            - viewer.histograph.io
+            - standaardiseren.erfgeo.nl
+            - erfgeo.nl
+            - importeren.erfgeo.nl
 php:
     install: '1'
     settings:
