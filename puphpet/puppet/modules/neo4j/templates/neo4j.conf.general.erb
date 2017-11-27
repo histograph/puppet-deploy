@@ -26,7 +26,7 @@ dbms.directories.import=<%= scope['neo4j::dbms_directories_import']  %>
 dbms.security.auth_enabled=<%= scope['neo4j::dbms_security_auth_enabled'] -%>
 
 # Enable this to be able to upgrade a store from an older version.
-dbms.allow_format_migration=<%= scope['neo4j::dbms_allow_format_migration']  %>
+dbms.allow_upgrade=<%= scope['neo4j::dbms_allow_format_migration']  %>
 
 # Java Heap Size: by default the Java heap size is dynamically
 # calculated based on available system resources.

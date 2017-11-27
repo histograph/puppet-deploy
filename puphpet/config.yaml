@@ -464,11 +464,12 @@ elastic_search:
 neo4j:
     install: '1'
     settings:
-        version: 3.1.2
+        version: 3.3.0
         edition: community
         install_java: false
+        dbms_connector_bolt_enabled: true
         dbms_security_auth_enabled: false
-        dbms_logs_http_enabled: false
+        dbms_logs_http_enabled: true
         dbms_logs_http_rotation_keep_number: 5
         dbms_unmanaged_extension_classes:
           org.waag.histograph.plugins: '/histograph'
