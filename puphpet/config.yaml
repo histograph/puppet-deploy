@@ -601,6 +601,10 @@ histograph:
         - ilvb
         - pleiades
         - 'verdwenen-dorpen'
+  stats:
+    enabled: true
+    cronExpression: '0 0 3 * * *'
+
 
 
 

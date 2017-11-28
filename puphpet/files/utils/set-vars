@@ -82,6 +82,9 @@ export DIFF_TOOL_PATH="/usr/local/bin/hashed-diff"
 
 export PIPO_EXPORTS="$(read_params nginx vhosts.importeren_histograph.www_root)/$(read_params  histograph directories.pipo_exports)"
 
+export STATS_ACTIVE="$(read_params  histograph stats.enabled)"
+export STATS_CRONEXPR="$(read_params  histograph stats.cronExpression)"
+
 if [ -d ${DEV_HOME} ]
 then
   # we are in developer mode, change variables
@@ -223,6 +226,11 @@ install_nodecode()
   install_source
   # install node dependencies
   cd ${SRC_HOME}/${MY_PLACE}
+
+  for i in $(find node_modules/ -type d -name "histograph-*")
+  do
+    rm -rf ${i}
+  done
   sudo su $MYUSER -c "${NPM_INSTALL}"
 
 }

@@ -79,6 +79,9 @@ graphmalizer:
   logLevel: info
 io:
   logLevel: info
+stats:
+  enabled: ${STATS_ACTIVE}
+  cronExpression: '${STATS_CRONEXPR}'
 HISTOGRAPH
 
 # fi
