@@ -231,6 +231,12 @@ install_nodecode()
   do
     rm -rf ${i}
   done
+  
+  if [ -d node_modules/graphmalizer-core ]
+  then
+    rm -rf node_modules/graphmalizer-core
+  fi
+
   sudo su $MYUSER -c "${NPM_INSTALL}"
 
 }
