@@ -26,6 +26,7 @@ LOGROTATE_HOME="/etc/logrotate.d"
 
 cat > ${LOGROTATE_HOME}/histograph << HISTOGRAPH
 /var/log/histograph/*.log {
+  su histograph histograph
   copytruncate
   daily
   rotate 7
@@ -48,3 +49,8 @@ cat > ${LOGROTATE_HOME}/neo4j << NEO4J
   size 10M
 }
 NEO4J
+
+
+sudo chown root:root /etc/logrotate.d/*
+
+sudo chmod 644 /etc/logrotate.d/*
