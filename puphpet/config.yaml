@@ -555,7 +555,7 @@ histograph:
     protocol: https
     proxy: 1
   core:
-    batchSize: 1000
+    batchSize: 20
     batchTimeout: 1500
   redis:
     maxQueueSize: 50000
@@ -591,6 +591,7 @@ histograph:
         - 'geonames-tgn'
         - whosonfirst
       erfLoc:
+        - adamlinkstraten
         - Departementen
         - 'atlas-verstedelijking'
         - gemeentegeschiedenis
