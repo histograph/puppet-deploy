@@ -251,6 +251,33 @@ nginx:
                 location: '~ \.php$'
                 location_custom_cfg:
                     return: 404
+        rdf_histograph:
+            server_name: rdf.histograph.io
+            server_aliases:
+                - rdf.histograph.local
+            www_root: /var/www/api
+            listen_port: '80'
+            client_max_body_size: 1m
+            ssl: '1'
+            ssl_cert: LETSENCRYPT
+            ssl_key: LETSENCRYPT
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            ssl_redirect: '1'
+            spdy: '1'
+            locations:
+              rdf_histograph:
+                priority: 520
+                location: '/'
+                ssl: true
+                ssl_only: true
+                # try_files:
+                #   - $uri
+                #   - $uri/
+                #   - /index.php
+                proxy: 'http://api/ontology'
+                proxy_redirect: default
         api_histograph:
             server_name: api.histograph.io
             server_aliases:
