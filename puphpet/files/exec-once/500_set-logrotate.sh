@@ -50,6 +50,31 @@ cat > ${LOGROTATE_HOME}/neo4j << NEO4J
 }
 NEO4J
 
+cat > ${LOGROTATE_HOME}/standaardiseren << STANDARDISEEREN
+/var/www/importeren/app/storage/log/*.log {
+	su www-user www-data 
+	copytruncate
+	rotate 7
+	daily
+	compress
+	missingok
+	notifempty
+  size 10M
+}
+STANDARDISEEREN
+
+cat > ${LOGROTATE_HOME}/importeren << IMPORTEREN
+/var/www/importeren/app/storage/log/*.log {
+	su www-user www-data
+	copytruncate
+	rotate 7
+	daily
+	compress
+	missingok
+	notifempty
+  size 10M
+}
+IMPORTEREN
 
 sudo chown root:root /etc/logrotate.d/*
 
