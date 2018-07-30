@@ -449,6 +449,7 @@ php:
         session.save_path: /var/lib/php/session
         date.timezone: UTC
         short_open_tag: 'On'
+        upload_max_filesize: 100M
     fpm_ini:
         error_log: /var/log/php-fpm.log
         # short_open_tag: On

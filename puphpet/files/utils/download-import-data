@@ -33,8 +33,10 @@ then
   service postgresql stop
 fi
 
-# The fact to leave the bag repo even though it might be updated is based on the believe that
-# import will not import it if it is not new, and this solution is more resilient to a earlier failed import
+# The fact to leave the bag repo in the list of repositories DATA_REP_TODOWNLOAD,
+# even though the current version might be already up to date,
+# is based on the belief that import will not import it if the dataset is not different from the imported one,
+# and this solution is more resilient in case of an earlier failed import
 
 if [ "$(read_params  histograph data.doImport) " == "true " ]
 then
