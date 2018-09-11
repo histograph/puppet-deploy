@@ -17,7 +17,7 @@ then
 
     if [ ! -f bag-laatst.backup -o bag-laatst.backup.new -nt bag-laatst.backup ]
     then
-      service postgresql start
+      service postgresql restart
       mv bag-laatst.backup.new bag-laatst.backup
       su postgres -c "psql" < $(dirname $0)/../utils/bag.sql
       su postgres -c "pg_restore --jobs 4 --dbname=bag --exit-on-error bag-laatst.backup"
