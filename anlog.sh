@@ -26,7 +26,7 @@ do
     for i in $(seq 1 $END)
     do
         CURFILE=${PRF}.access.log.${i}
-        echo ${CURFILE}
+        #echo ${CURFILE}
         if [ -f ${CURFILE}.gz ]
         then
             MY_CMD="gunzip -c ${CURFILE}.gz >> ${MY_FILE}"
