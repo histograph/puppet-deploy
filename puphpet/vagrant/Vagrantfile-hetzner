@@ -13,14 +13,15 @@ machines.each do |i, machine|
     'vagrant'
 
   config.trigger.before :up  do
-    run "#{dir}/puphpet/shell/addVagrantUser.sh #{ssh_username} #{machine['iphost']} #{machine['ssh']['port']} #{machine['startuser']} #{machine['ssh']['private_key_path']}"
+    system "#{dir}/puphpet/shell/addVagrantUser.sh #{ssh_username} #{machine['iphost']} #{machine['ssh']['port']} #{machine['startuser']} #{machine['ssh']['private_key_path']}"
   end
 
   config.vm.define "#{machine['id']}" do |machine_id|
     machine_id.vm.box         = "#{provider['box']}"
 
-    machine_id.vm.synced_folder ".", "/vagrant", disabled: true
-    machine_id.vm.synced_folder "./puphpet", "/vagrant/puphpet",owner: "root", group: "root"
+    machine_id.vm.allowed_synced_folder_types = [:rsync]
+    machine_id.vm.synced_folder ".", "/vagrant", disabled: true, type: :rsync
+    machine_id.vm.synced_folder "./puphpet", "/vagrant/puphpet",owner: "root", group: "root", type: :rsync
 
     # machine_id.ssh.private_key_path = "#{machine['ssh']['private_key_path']}"
 

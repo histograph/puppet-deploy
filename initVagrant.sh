@@ -14,7 +14,7 @@ then
 	return 1
 fi
 
-V_VERS="1.8.7"
+V_VERS="2.2.4"
 
 if ! vagrant --version | grep "${V_VERS}" >/dev/null
 then
@@ -73,8 +73,8 @@ then
 fi
 
 PLUGINS="$(vagrant plugin list)"
-# PLUGIN_LIST="landrush vagrant-aws vagrant-managed-servers vagrant-share vagrant-triggers vagrant-bindfs"
-PLUGIN_LIST="landrush vagrant-bindfs"
+#PLUGIN_LIST="landrush vagrant-aws vagrant-managed-servers vagrant-share vagrant-triggers vagrant-bindfs"
+PLUGIN_LIST="vagrant-managed-servers"
 
 
 for i in ${PLUGIN_LIST}
