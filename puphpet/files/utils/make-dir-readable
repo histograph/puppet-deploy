@@ -1,0 +1,20 @@
+#!/bin/bash
+TARGET_DIR="${1}"
+echo ${TARGET_DIR}
+
+if ! cd "${TARGET_DIR}"
+then
+    echo "cannot cd dir"
+else
+  chmod -R o+Xr "${PWD}"
+  while :
+  do
+    if [ "${PWD} " == "/ " ]
+    then
+      break;
+    else
+      cd ..
+    fi
+    chmod o+X ${PWD}
+  done
+fi

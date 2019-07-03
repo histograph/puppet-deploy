@@ -80,7 +80,7 @@ export NPM_INSTALL="npm prune && npm install 1>/dev/null"
 
 export DIFF_TOOL_PATH="/usr/local/bin/hashed-diff"
 
-export PIPO_EXPORTS="$(read_params nginx vhosts.importeren_histograph.www_root)/$(read_params  histograph directories.pipo_exports)"
+export PIPO_EXPORTS="$(read_params  histograph directories.pipo_exports)"
 
 export STATS_ACTIVE="$(read_params  histograph stats.enabled)"
 export STATS_CRONEXPR="$(read_params  histograph stats.cronExpression)"

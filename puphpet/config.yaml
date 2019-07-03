@@ -572,7 +572,7 @@ histograph:
     neo_plugin_dir: "/var/lib/neo4j/plugins"
     run_dir: "/var/run/histograph"
     log_dir: "/var/log/histograph"
-    pipo_exports: "../app/storage/exports"
+    pipo_exports: "/var/www/importeren/app/storage/exports"
   users:
     system_user: histograph
     api_user: histograph

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source $(dirname $0)/../utils/set-vars "${1}"
+source $(dirname $0)/set-vars "${1}"
+source $(dirname $0)/make-dir-readable "${PIPO_EXPORTS}"
 
 HIST_DATA_DIR="${SRC_HOME}/data"
 HIST_IMPORT_DIR="${SRC_HOME}/import"
@@ -19,7 +20,7 @@ then
     then
       service postgresql restart
       mv bag-laatst.backup.new bag-laatst.backup
-      su postgres -c "psql" < $(dirname $0)/../utils/bag.sql
+      su postgres -c "psql" < $(dirname $0)/bag.sql
       su postgres -c "pg_restore --jobs 4 --dbname=bag --exit-on-error bag-laatst.backup"
       FILTERED_DATA_REP_TODOWNLOAD="${DATA_REP_TODOWNLOAD}"
     else
@@ -28,6 +29,7 @@ then
   fi
 
   cd ${HIST_DATA_DIR}
+  
   sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${FILTERED_DATA_REP_TODOWNLOAD}"
 
   service postgresql stop
@@ -43,5 +45,5 @@ then
   cd ${HIST_IMPORT_DIR}
   THE_REPOS="${DATA_REP_ONDISK} ${DATA_REP_TODOWNLOAD} ${EL_DATA_REP}"
   echo "Import repos ${THE_REPOS}"
-  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml --force ${THE_REPOS}"
+  sudo su $MYUSER -c "node index.js --config ${SRC_HOME}/config.yaml ${THE_REPOS}"
 fi
