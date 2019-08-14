@@ -63,8 +63,10 @@ define puphpet::letsencrypt::generate_certs (
       ],
     }
 
+    $cmd_cron = "${puphpet::letsencrypt::params::certbot} renew"
+    
     cron { "letsencrypt cron for ${first_host}":
-       command  => $cmd_final,
+       command  => $cmd_cron,
        minute   => "${minute}",
        hour     => "${hour}",
        weekday  => '*',
